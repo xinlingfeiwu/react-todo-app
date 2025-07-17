@@ -65,15 +65,38 @@ sudo firewall-cmd --list-all
 
 ### 4. 部署应用
 
-```bash
-# 克隆项目
-git clone https://github.com/xinlingfeiwu/react-todo-app.git
-cd react-todo-app
+#### 单应用部署
 
-# 运行 AlmaLinux 专用部署脚本
+```bash
+# 克隆项目后运行 - 基本部署 (localhost)
 chmod +x deploy/almalinux-deploy.sh
 sudo ./deploy/almalinux-deploy.sh
+
+# 二级域名部署 (推荐)
+sudo ./deploy/almalinux-deploy.sh -d todo.ylingtech.com -a todo-app
+
+# 交互式配置
+sudo ./deploy/almalinux-deploy.sh
 ```
+
+#### 多应用部署 (二级域名)
+
+```bash
+# 使用多应用部署工具
+chmod +x deploy/multi-app-deploy.sh
+sudo ./deploy/multi-app-deploy.sh
+
+# 直接部署多个应用到不同域名
+sudo ./deploy/almalinux-deploy.sh -d todo.ylingtech.com -a todo-app
+sudo ./deploy/almalinux-deploy.sh -d blog.ylingtech.com -a blog-app
+sudo ./deploy/almalinux-deploy.sh -d docs.ylingtech.com -a docs-app
+```
+
+#### 支持的配置选项
+
+- `-d, --domain`: 域名 (例如: todo.ylingtech.com)
+- `-a, --app`: 应用名称 (例如: todo-app)
+- `-h, --help`: 显示帮助信息
 
 ## 手动部署步骤
 
