@@ -336,15 +336,254 @@ EOF
     
     # SSL 证书提示
     print_step "SSL 证书配置..."
-    if [ ! -f "/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem" ]; then
-        print_warning "未找到 SSL 证书，需要配置 Let's Encrypt"
-        print_info "运行以下命令获取免费 SSL 证书:"
-        echo "  sudo dnf install -y certbot python3-certbot-nginx"
-        echo "  sudo certbot --nginx -d $DOMAIN_NAME"
-        echo ""
-        print_info "或者手动配置其他 SSL 证书"
+    
+    # 检查 certbot 是否已安装
+    if ! command -v certbot &> /dev/null; then
+        print_info "安装 certbot..."
+        sudo dnf install -y certbot python3-certbot-nginx
+    fi
+    
+    # 检查证书是否已存在
+    if [ -f "/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem" ]; then
+        print_info "📜 检测到现有 SSL 证书，检查有效期..."
+        
+        # 检查证书有效期
+        CERT_EXPIRY=$(sudo openssl x509 -enddate -noout -in /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem | cut -d= -f2)
+        EXPIRY_TIMESTAMP=$(date -d "$CERT_EXPIRY" +%s)
+        CURRENT_TIMESTAMP=$(date +%s)
+        DAYS_UNTIL_EXPIRY=$(( (EXPIRY_TIMESTAMP - CURRENT_TIMESTAMP) / 86400 ))
+        
+        if [ $DAYS_UNTIL_EXPIRY -gt 30 ]; then
+            print_success "✅ SSL 证书有效，剩余 $DAYS_UNTIL_EXPIRY 天"
+        else
+            print_warning "⚠️  SSL 证书即将过期（剩余 $DAYS_UNTIL_EXPIRY 天），尝试续期..."
+            sudo certbot renew --nginx --cert-name $DOMAIN_NAME
+        fi
     else
-        print_success "SSL 证书已存在: $DOMAIN_NAME"
+        print_warning "未找到 SSL 证书，需要获取新证书"
+        print_info "⚠️  请确保域名 $DOMAIN_NAME 已正确解析到此服务器"
+        
+        # 询问是否自动获取证书
+        read -p "是否现在自动获取 Let's Encrypt SSL 证书? [y/N]: " get_cert
+        
+        if [[ $get_cert =~ ^[Yy]$ ]]; then
+            # 获取邮箱地址
+            read -p "请输入邮箱地址 (用于 Let's Encrypt): " ssl_email
+            
+            if [ -n "$ssl_email" ]; then
+                print_info "🆕 获取新的 SSL 证书..."
+                
+                # 创建临时 HTTP 配置用于验证
+                sudo tee "$NGINX_CONFIG.temp" > /dev/null << EOF
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $DOMAIN_NAME;
+    
+    root $WEB_DIR/dist;
+    index index.html;
+    
+    # Let's Encrypt 验证路径
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+        try_files \$uri =404;
+    }
+    
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+EOF
+                
+                # 使用临时配置
+                sudo cp "$NGINX_CONFIG.temp" "$NGINX_CONFIG"
+                sudo systemctl reload nginx
+                
+                # 创建 webroot 目录
+                sudo mkdir -p /var/www/html/.well-known/acme-challenge
+                sudo chown -R nginx:nginx /var/www/html
+                
+                # 获取证书
+                if sudo certbot certonly --webroot -w /var/www/html -d $DOMAIN_NAME --non-interactive --agree-tos --email "$ssl_email"; then
+                    print_success "✅ SSL 证书获取成功"
+                    
+                    # 恢复完整的 HTTPS 配置
+                    sudo tee "$NGINX_CONFIG" > /dev/null << EOF
+# $APP_NAME Nginx 配置
+# 域名: $DOMAIN_NAME
+
+# HTTP 重定向到 HTTPS
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $DOMAIN_NAME;
+    
+    # Let's Encrypt 验证路径
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
+    
+    # HTTP 自动重定向到 HTTPS
+    location / {
+        return 301 https://\$server_name\$request_uri;
+    }
+}
+
+# HTTPS 配置
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name $DOMAIN_NAME;
+    
+    # SSL 证书配置 (Let's Encrypt)
+    ssl_certificate /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN_NAME/chain.pem;
+    
+    # 现代 SSL/TLS 优化配置
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:50m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+    
+    # OCSP Stapling - 在线证书状态协议
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver_timeout 5s;
+    
+    # 强化安全头配置
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io;" always;
+    
+    # 网站根目录
+    root $WEB_DIR/dist;
+    index index.html;
+    
+    # SPA 路由支持
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+    
+    # 静态资源缓存优化
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary "Accept-Encoding";
+        access_log off;
+        etag on;
+    }
+    
+    # 其他静态文件缓存
+    location ~* \.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)\$ {
+        expires 1M;
+        add_header Cache-Control "public";
+        add_header Vary "Accept-Encoding";
+        access_log off;
+        etag on;
+    }
+    
+    # HTML 文件缓存策略
+    location ~* \.(html)\$ {
+        expires 1h;
+        add_header Cache-Control "public, no-cache, must-revalidate";
+        add_header Vary "Accept-Encoding";
+        etag on;
+    }
+    
+    # JSON 和其他配置文件
+    location ~* \.(json|xml|txt)\$ {
+        expires 1d;
+        add_header Cache-Control "public";
+        add_header Vary "Accept-Encoding";
+        access_log off;
+    }
+    
+    # 高效 Gzip 压缩配置
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        text/json
+        application/javascript
+        application/json
+        application/xml+rss
+        application/atom+xml
+        image/svg+xml
+        font/woff
+        font/woff2;
+    
+    # 健康检查端点
+    location /health {
+        access_log off;
+        return 200 "healthy\\n";
+        add_header Content-Type text/plain;
+    }
+    
+    # 禁止访问隐藏文件和敏感文件
+    location ~ /\\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    location ~ \\.(md|txt|log)\$ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    # 日志配置
+    access_log /var/log/nginx/$APP_NAME-access.log;
+    error_log /var/log/nginx/$APP_NAME-error.log;
+}
+EOF
+                    
+                    # 测试新配置
+                    if sudo nginx -t; then
+                        sudo systemctl reload nginx
+                        print_success "✅ HTTPS 配置完成"
+                    else
+                        print_error "❌ Nginx 配置测试失败"
+                        sudo cp "$NGINX_CONFIG.temp" "$NGINX_CONFIG"
+                        sudo systemctl reload nginx
+                    fi
+                    
+                    # 清理临时文件
+                    sudo rm -f "$NGINX_CONFIG.temp"
+                else
+                    print_error "❌ SSL 证书获取失败"
+                    print_info "请检查域名 DNS 解析和网络连接"
+                fi
+            else
+                print_warning "未提供邮箱地址，跳过证书获取"
+            fi
+        else
+            print_info "跳过 SSL 证书获取，可以稍后手动配置:"
+            echo "  sudo certbot --nginx -d $DOMAIN_NAME"
+        fi
+    fi
+    
+    # 配置证书自动续期
+    print_step "配置证书自动续期..."
+    if ! sudo crontab -l 2>/dev/null | grep -q "certbot renew"; then
+        print_info "设置 certbot 自动续期任务..."
+        (sudo crontab -l 2>/dev/null; echo "0 2 * * * /usr/bin/certbot renew --quiet --post-hook 'systemctl reload nginx'") | sudo crontab -
+        print_success "✅ 证书自动续期已配置 (每日凌晨2点检查)"
+    else
+        print_info "证书自动续期任务已存在"
     fi
 elif command -v httpd &> /dev/null; then
     print_info "检测到 Apache HTTP Server"
@@ -374,31 +613,76 @@ sudo chmod -R 755 "$WEB_DIR"
 print_success "应用部署完成: $WEB_DIR"
 
 # 8. 防火墙配置
-print_step "检查防火墙配置..."
+print_step "配置防火墙..."
 if command -v firewall-cmd &> /dev/null; then
     if sudo firewall-cmd --state &> /dev/null; then
-        print_info "配置防火墙允许 HTTP/HTTPS..."
+        print_info "配置 firewalld 防火墙..."
+        
+        # 确保防火墙服务启动
+        sudo systemctl start firewalld
+        sudo systemctl enable firewalld
+        
+        # 开放必要端口
         sudo firewall-cmd --permanent --add-service=http
         sudo firewall-cmd --permanent --add-service=https
+        sudo firewall-cmd --permanent --add-service=ssh
+        
+        # 重载防火墙配置
         sudo firewall-cmd --reload
-        print_success "防火墙配置完成"
+        
+        print_success "✅ 防火墙配置完成"
+        
+        # 显示当前防火墙状态
+        print_info "当前开放的服务:"
+        sudo firewall-cmd --list-services
     else
-        print_info "防火墙未运行"
+        print_info "防火墙未运行，启动中..."
+        sudo systemctl start firewalld
+        sudo systemctl enable firewalld
+        # 递归调用防火墙配置
+        print_info "重新配置防火墙..."
     fi
+elif command -v ufw &> /dev/null; then
+    print_info "配置 UFW 防火墙..."
+    sudo ufw --force enable
+    sudo ufw allow ssh
+    sudo ufw allow http
+    sudo ufw allow https
+    print_success "✅ UFW 防火墙配置完成"
 else
-    print_info "未检测到 firewalld"
+    print_warning "未检测到防火墙管理工具，请手动配置防火墙"
 fi
 
 # 9. SELinux 配置（如果启用）
+print_step "检查 SELinux 配置..."
 if command -v getenforce &> /dev/null; then
     SELINUX_STATUS=$(getenforce)
+    print_info "SELinux 状态: $SELINUX_STATUS"
+    
     if [ "$SELINUX_STATUS" = "Enforcing" ]; then
         print_info "配置 SELinux 上下文..."
+        
+        # 允许 nginx 网络连接
         sudo setsebool -P httpd_can_network_connect on
+        
+        # 设置 Web 目录的 SELinux 上下文
         sudo semanage fcontext -a -t httpd_exec_t "$WEB_DIR(/.*)?" 2>/dev/null || true
         sudo restorecon -Rv "$WEB_DIR"
-        print_success "SELinux 配置完成"
+        
+        # 允许 nginx 访问 Let's Encrypt 证书
+        if [ -d "/etc/letsencrypt" ]; then
+            sudo semanage fcontext -a -t cert_t "/etc/letsencrypt(/.*)?" 2>/dev/null || true
+            sudo restorecon -Rv /etc/letsencrypt
+        fi
+        
+        print_success "✅ SELinux 配置完成"
+    elif [ "$SELINUX_STATUS" = "Permissive" ]; then
+        print_warning "SELinux 处于 Permissive 模式，建议设为 Enforcing"
+    else
+        print_info "SELinux 已禁用"
     fi
+else
+    print_info "系统未安装 SELinux"
 fi
 
 # 10. 完成
@@ -421,14 +705,26 @@ print_info "SSL 证书配置 (如未配置):"
 print_info "  sudo dnf install -y certbot python3-certbot-nginx"
 print_info "  sudo certbot --nginx -d $DOMAIN_NAME"
 echo ""
+print_info "证书续期检查:"
+print_info "  sudo certbot certificates"
+print_info "  sudo certbot renew --dry-run"
+echo ""
 print_info "服务管理命令:"
 print_info "  sudo systemctl status nginx"
 print_info "  sudo nginx -t"
 print_info "  sudo systemctl reload nginx"
+print_info "  sudo systemctl restart nginx"
 echo ""
 print_info "日志文件:"
 print_info "  访问日志: /var/log/nginx/$APP_NAME-access.log"
 print_info "  错误日志: /var/log/nginx/$APP_NAME-error.log"
+print_info "  系统日志: sudo journalctl -u nginx -f"
+echo ""
+print_info "实用命令:"
+print_info "  实时访问日志: sudo tail -f /var/log/nginx/$APP_NAME-access.log"
+print_info "  实时错误日志: sudo tail -f /var/log/nginx/$APP_NAME-error.log"
+print_info "  检查证书状态: sudo certbot certificates"
+print_info "  测试证书续期: sudo certbot renew --dry-run"
 echo "=============================================="
 
 # 多应用部署提示
