@@ -87,7 +87,15 @@ fi
 
 # 3. 构建测试
 print_info "测试构建..."
-if npm run build; then
+
+# 根据 Node.js 版本选择构建命令
+BUILD_CMD="npm run build"
+if [ $MAJOR_VERSION -le 16 ]; then
+    print_info "检测到 Node.js $NODE_VERSION，使用 Node.js 16 兼容构建"
+    BUILD_CMD="npm run build:node16"
+fi
+
+if $BUILD_CMD; then
     print_success "构建成功"
     
     # 检查构建产物

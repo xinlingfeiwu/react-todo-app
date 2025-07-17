@@ -29,7 +29,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:prod": "NODE_ENV=production vite build",
-    "build:node16": "vite build --mode production",
+    "build:node16": "./build-node16.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",

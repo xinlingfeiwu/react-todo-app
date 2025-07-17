@@ -1,18 +1,19 @@
 // Polyfills for Node.js 16 compatibility
 // 为 CentOS 7 Node.js 16 环境提供兼容性支持
 
-// 确保 globalThis 可用
+// 简化但更可靠的 polyfill 实现
 if (typeof globalThis === 'undefined') {
-  if (typeof window !== 'undefined') {
+  if (typeof global !== 'undefined') {
+    global.globalThis = global;
+  } else if (typeof window !== 'undefined') {
     window.globalThis = window;
   } else if (typeof self !== 'undefined') {
     self.globalThis = self;
   }
 }
 
-// crypto.getRandomValues polyfill
-if (typeof globalThis !== 'undefined' && typeof globalThis.crypto === 'undefined') {
-  // 使用基础的 Math.random 实现
+// 为 crypto.getRandomValues 提供 polyfill
+if (typeof globalThis !== 'undefined' && !globalThis.crypto) {
   globalThis.crypto = {
     getRandomValues: function(array) {
       for (let i = 0; i < array.length; i++) {

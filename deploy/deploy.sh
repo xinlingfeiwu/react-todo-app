@@ -186,7 +186,17 @@ fi
 
 # 构建生产版本
 print_info "🏗️  构建生产版本..."
-npm run build
+
+# 检查 Node.js 版本并选择合适的构建命令
+NODE_VERSION=$(node --version | cut -d 'v' -f 2)
+MAJOR_VERSION=$(echo $NODE_VERSION | cut -d '.' -f 1)
+
+if [ $MAJOR_VERSION -le 16 ]; then
+    print_info "检测到 Node.js $NODE_VERSION，使用兼容构建模式"
+    npm run build:node16
+else
+    npm run build
+fi
 
 # 验证构建结果
 if [ ! -d "dist" ]; then
