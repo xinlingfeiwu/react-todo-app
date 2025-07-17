@@ -1,0 +1,796 @@
+/* ============================================================
+   APP SETTINGS COMPONENT STYLES
+   ========================================================== */
+
+/* ========== 应用设置主容器 ========== */
+.app-settings {
+  padding: 20px 0;
+  height: 100%;
+  overflow-y: auto;
+  /* 自定义Select组件集成完成 */
+}
+
+/* ========== 设置页面头部 ========== */
+.app-settings-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-color, rgba(226, 232, 240, 0.6));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(10px);
+}
+
+.app-settings-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-settings-header .header-icon {
+  font-size: 1.4rem;
+  opacity: 0.8;
+}
+
+.settings-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted, #718096);
+  font-weight: 500;
+}
+
+/* ========== 消息提示 ========== */
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  border-left: 4px solid;
+}
+
+.message.success {
+  background-color: rgba(72, 187, 120, 0.1);
+  color: #2f855a;
+  border-color: #48bb78;
+}
+
+.message.error {
+  background-color: rgba(245, 101, 101, 0.1);
+  color: #c53030;
+  border-color: #f56565;
+}
+
+.message.warning {
+  background-color: rgba(237, 137, 54, 0.1);
+  color: #c05621;
+  border-color: #ed8936;
+}
+
+.message.info {
+  background-color: rgba(66, 153, 225, 0.1);
+  color: #2c5282;
+  border-color: #4299e1;
+}
+
+/* ========== 设置区块样式 ========== */
+.settings-section {
+  margin-bottom: 24px;
+  padding: 0 24px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+}
+
+.section-icon {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* 主题设置图标特殊样式 - 防止倾斜 */
+.section-icon.section-theme-icon {
+  display: inline-block !important;
+  transform: rotate(0deg) skew(0deg) !important; /* 确保不倾斜不扭曲 */
+  font-style: normal !important; /* 防止斜体样式 */
+  vertical-align: middle !important; /* 垂直居中对齐 */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important; /* 确保使用正确的emoji字体 */
+  text-align: center !important;
+  line-height: 1 !important;
+  font-variant: normal !important; /* 确保字体变体正常 */
+  text-transform: none !important; /* 防止文本变换 */
+  letter-spacing: 0 !important; /* 重置字符间距 */
+  word-spacing: 0 !important; /* 重置单词间距 */
+  writing-mode: horizontal-tb !important; /* 强制水平文本方向 */
+  text-orientation: mixed !important; /* 文本方向 */
+}
+
+/* ========== 主题设置样式 ========== */
+.theme-settings {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.current-theme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.current-theme-label {
+  color: var(--text-secondary, #4a5568);
+  font-weight: 500;
+}
+
+.current-theme-value {
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.current-theme-value.theme-light {
+  background: var(--primary-color);
+  color: white;
+}
+
+.current-theme-value.theme-dark {
+  background: var(--primary-color);
+  color: white;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: var(--bg-secondary, #f8f9fa);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary, #4a5568);
+}
+
+.theme-option:hover {
+  background: var(--bg-tertiary, #e9ecef);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+.theme-option.active {
+  border-color: var(--primary-color, #4c51bf);
+  background: linear-gradient(135deg, var(--primary-color, #4c51bf) 0%, #553c9a 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 81, 191, 0.3);
+}
+
+.theme-icon {
+  font-size: 1.5rem;
+}
+
+.theme-label {
+  font-weight: 600;
+}
+
+/* ========== 数据管理样式 ========== */
+.data-stats {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  /* 强制显示边框确保样式生效 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  color: var(--text-secondary, #4a5568);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-color, #4c51bf);
+}
+
+.data-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.action-group {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  /* 强制显示边框确保样式生效 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.action-group.danger {
+  border-color: rgba(245, 101, 101, 0.3);
+  background: rgba(245, 101, 101, 0.05);
+}
+
+.action-group h4 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+}
+
+.action-group.danger h4 {
+  color: #e53e3e;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* ========== 表单组样式（参考 FeedbackForm）========== */
+.app-settings .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.app-settings .form-group label {
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+/* ========== 操作按钮样式 ========== */
+.app-settings .action-btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+}
+
+.app-settings .action-btn.export {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.app-settings .action-btn.export:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+}
+
+.app-settings .action-btn.import {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+}
+
+.app-settings .action-btn.import:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
+}
+
+.app-settings .action-btn.danger {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+}
+
+.app-settings .action-btn.danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+}
+
+.app-settings .action-btn.privacy {
+  background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
+}
+
+.app-settings .action-btn.privacy:hover:not(:disabled) {
+  background: linear-gradient(135deg, #6b46c1 0%, #553c9a 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(128, 90, 213, 0.4);
+}
+
+.app-settings .action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ========== 强制按钮样式 ========== */
+.app-settings .action-buttons .action-btn,
+.app-settings .privacy-actions .action-btn,
+.app-settings .data-actions .action-btn {
+  padding: 12px 16px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  backdrop-filter: blur(10px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-height: 44px !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+/* 强制导出按钮样式 */
+.app-settings .action-buttons .action-btn.export,
+.app-settings .data-actions .action-btn.export {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3) !important;
+}
+
+/* 强制导入按钮样式 */
+.app-settings .action-buttons .action-btn.import,
+.app-settings .data-actions .action-btn.import {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3) !important;
+}
+
+/* 强制危险按钮样式 */
+.app-settings .action-buttons .action-btn.danger,
+.app-settings .data-actions .action-btn.danger {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4) !important;
+}
+
+/* 强制隐私按钮样式 */
+.app-settings .privacy-actions .action-btn.privacy {
+  background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3) !important;
+}
+
+/* ========== 隐私设置样式 ========== */
+.privacy-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  /* 强制显示边框确保样式生效 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  align-items: stretch;
+}
+
+/* ========== 侧边栏样式 ========== */
+.app-settings-sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(25px) saturate(1.4);
+  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  border-left: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  box-shadow: -10px 0 40px var(--shadow-color, rgba(0, 0, 0, 0.1));
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-settings-sidebar.open {
+  right: 0;
+}
+
+/* ========== 侧边栏头部 ========== */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-header .header-icon {
+  font-size: 1.4rem;
+  opacity: 0.8;
+}
+
+.close-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #4a5568;
+  transform: scale(1.1);
+}
+
+.close-btn-icon {
+  display: inline-block;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ========== 头部按钮组样式 ========== */
+.header-actions {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ========== 应用设置按钮样式 ========== */
+.app-settings-toggle {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.app-settings-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px) saturate(1.8);
+  transform: scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== 隐私政策弹窗样式 ========== */
+.privacy-policy-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.privacy-policy-fullscreen {
+  width: 90%;
+  max-width: 800px;
+  height: 90%;
+  background: var(--bg-primary, white);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-policy-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary, #4a5568);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.privacy-policy-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: var(--text-primary, #2d3748);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========== 深色主题样式 ========== */
+.theme-dark .app-settings-header {
+  background: var(--bg-secondary);
+  border-bottom-color: var(--border-color);
+}
+
+.theme-dark .app-settings-header h2 {
+  color: var(--text-primary);
+}
+
+.theme-dark .settings-subtitle {
+  color: var(--text-secondary);
+}
+
+.theme-dark .message.success {
+  background-color: rgba(72, 187, 120, 0.2);
+  color: #68d391;
+}
+
+.theme-dark .message.error {
+  background-color: rgba(245, 101, 101, 0.2);
+  color: #fc8181;
+}
+
+.theme-dark .message.warning {
+  background-color: rgba(237, 137, 54, 0.2);
+  color: #f6ad55;
+}
+
+.theme-dark .message.info {
+  background-color: rgba(66, 153, 225, 0.2);
+  color: #63b3ed;
+}
+
+.theme-dark .section-title {
+  color: var(--text-primary);
+}
+
+.theme-dark .privacy-policy-fullscreen {
+  background: var(--bg-primary);
+}
+
+.theme-dark .privacy-policy-close {
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+
+.theme-dark .privacy-policy-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-dark .theme-settings {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .current-theme-label {
+  color: var(--text-secondary);
+}
+
+.theme-dark .theme-option {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.theme-dark .theme-option:hover {
+  background: var(--bg-tertiary);
+}
+
+.theme-dark .data-stats,
+.theme-dark .action-group {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .action-group.danger {
+  background: rgba(245, 101, 101, 0.1);
+  border-color: rgba(245, 101, 101, 0.3);
+}
+
+.theme-dark .action-group h4 {
+  color: var(--text-primary);
+}
+
+.theme-dark .stat-label {
+  color: var(--text-secondary);
+}
+
+.theme-dark .stat-value {
+  color: var(--primary-color);
+}
+
+/* ========== 深色主题下的 form-group 样式 ========== */
+.theme-dark .app-settings .form-group label {
+  color: var(--text-primary, #ffffff);
+}
+
+/* ========== 响应式样式 ========== */
+@media (max-width: 768px) {
+  .app-settings-sidebar {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .settings-section {
+    padding: 0 16px;
+  }
+  
+  .app-settings-header {
+    padding: 20px 16px 12px;
+  }
+  
+  .theme-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .theme-option {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px 16px;
+  }
+  
+  .action-buttons {
+    gap: 8px;
+  }
+
+  /* ========== 侧边栏响应式 ========== */
+  .app-settings-sidebar {
+    width: 100vw;
+    right: -100vw;
+  }
+  
+  .sidebar-header {
+    padding: 16px 20px;
+  }
+  
+  .sidebar-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .sidebar-header .header-icon {
+    font-size: 1.3rem;
+  }
+  
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-settings-toggle {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+  
+  .header-actions {
+    gap: 8px;
+  }
+  
+  .action-btn {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ========== AppSettings 中 CustomSelect 的特殊层级设置 ========== */
+.app-settings .feedback-custom-select .custom-select-dropdown {
+  z-index: 9999 !important; /* 确保下拉菜单显示在所有其他元素之上 */
+}
+
+/* 导入/导出操作组的特殊层级设置 */
+.action-group.import-export-group {
+  z-index: 2; /* 确保导入/导出组在较高层级，避免遮挡 CustomSelect */
+}
+
+/* 导入模式标题间距优化 */
+.action-group .form-group h4 {
+  margin: 0 0 6px 0; /* 减少下边距，从 12px 改为 6px */
+  font-size: 1rem; /* 稍微减小字号，与其他表单标签保持一致 */
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+}
+
+/* 深色主题下的导入模式标题 */
+.theme-dark .action-group .form-group h4 {
+  color: var(--text-primary-dark, #e2e8f0);
+}

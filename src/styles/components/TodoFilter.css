@@ -1,0 +1,285 @@
+/* ========== TodoFilter 组件样式 ========== */
+
+/* 过滤器样式 */
+.todo-filter {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 15px 0;
+  flex-shrink: 0;
+}
+
+.filter-btn {
+  padding: 12px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(25px) saturate(1.3);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.filter-btn.active {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  color: #4c51bf;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 1px rgba(102, 126, 234, 0.1);
+}
+
+.filter-btn.active .filter-label {
+  font-weight: 700;
+  color: #4c51bf;
+  text-shadow: none;
+}
+
+.filter-label {
+  transition: all 0.3s ease;
+}
+
+.filter-btn .count {
+  background: rgba(102, 126, 234, 0.85);
+  backdrop-filter: blur(15px) saturate(1.2);
+  -webkit-backdrop-filter: blur(15px) saturate(1.2);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 
+    0 3px 10px rgba(102, 126, 234, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 桌面端大数字优化 */
+.filter-btn .count.large-number {
+  font-size: 10px;
+  padding: 4px 7px;
+  min-width: 24px;
+  border-radius: 12px;
+}
+
+.filter-btn:hover .count {
+  background: rgba(102, 126, 234, 0.95);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 5px 15px rgba(102, 126, 234, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.filter-btn.active .count {
+  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+  box-shadow: 
+    0 4px 15px rgba(76, 81, 191, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ========== TodoFilter 深色主题样式 ========== */
+
+.theme-dark .filter-btn {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* ========== 移动端响应式优化 ========== */
+
+/* 移动端主要适配 */
+@media (max-width: 768px) {
+  .todo-filter {
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: nowrap; /* 防止按钮折行 */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    padding: 10px 16px; /* 优化padding */
+    font-size: 13px;
+    gap: 8px;
+    border-radius: 22px;
+    min-width: auto;
+    min-height: 48px; /* 增加高度确保更好的点击体验 */
+    height: 48px; /* 固定高度 */
+    flex: 0 0 auto; /* 防止按钮被压缩 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* 防止文字换行 */
+  }
+  
+  .filter-btn .filter-label {
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-btn .count {
+    font-size: 10px;
+    padding: 4px 7px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  /* 大数字优化 - 移动端 */
+  .filter-btn .count.large-number {
+    font-size: 9px;
+    padding: 4px 6px;
+    min-width: 22px;
+    height: 20px;
+    border-radius: 10px; /* 稍微圆一些适应更宽的数字 */
+  }
+}
+
+/* 小屏幕手机适配 */
+@media (max-width: 480px) {
+  .todo-filter {
+    gap: 8px;
+    margin: 12px 0;
+    padding: 0 5px; /* 添加左右padding */
+  }
+  
+  .filter-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+    gap: 6px;
+    border-radius: 20px;
+    flex: 1 1 0; /* 让按钮平分空间 */
+    min-width: 0; /* 允许按钮缩小 */
+    max-width: calc(33.333% - 5px); /* 三等分减去gap */
+    min-height: 44px;
+    height: 44px; /* 固定高度 */
+  }
+  
+  .filter-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    line-height: 1.2;
+  }
+  
+  .filter-btn .count {
+    font-size: 9px;
+    padding: 3px 6px;
+    min-width: 18px;
+    height: 18px;
+    flex-shrink: 0; /* 数字不被压缩 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  /* 大数字优化 */
+  .filter-btn .count.large-number {
+    font-size: 8px;
+    padding: 3px 5px;
+    min-width: 22px;
+    height: 18px;
+    border-radius: 9px;
+  }
+}
+
+/* 极小屏幕适配 */
+@media (max-width: 360px) {
+  .todo-filter {
+    gap: 6px;
+    margin: 10px 0;
+    padding: 0 8px;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+    gap: 5px;
+    border-radius: 18px;
+    min-height: 40px;
+    height: 40px;
+  }
+  
+  .filter-label {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+  
+  .filter-btn .count {
+    font-size: 8px;
+    padding: 2px 5px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  .filter-btn .count.large-number {
+    font-size: 7px;
+    padding: 2px 4px;
+    min-width: 20px;
+    height: 16px;
+    border-radius: 8px;
+  }
+}

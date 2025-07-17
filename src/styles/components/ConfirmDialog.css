@@ -1,0 +1,379 @@
+/* ============================================================
+   CONFIRM DIALOG COMPONENT STYLES
+   ========================================================== */
+
+/* ========== 对话框遮罩层 ========== */
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ========== 确认对话框主体 ========== */
+.confirm-dialog {
+  position: relative; /* 改为相对定位，依赖遮罩层的flex居中 */
+  width: 90%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.9); /* 简化transform，去掉translate */
+  animation: modalSlideIn 0.3s ease forwards;
+  overflow: hidden;
+  margin: 20px; /* 添加外边距防止贴边 */
+  max-height: calc(100vh - 40px); /* 限制最大高度 */
+  overflow-y: auto; /* 内容过多时可滚动 */
+}
+
+.confirm-dialog.open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========== 对话框头部 ========== */
+.confirm-dialog .dialog-header {
+  padding: 25px 25px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, rgba(245, 101, 101, 0.1) 0%, rgba(229, 62, 62, 0.1) 100%);
+}
+
+.confirm-dialog .dialog-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3748;
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== 成功类型对话框头部样式 ========== */
+.confirm-dialog.success .dialog-header {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  border-bottom: 1px solid rgba(72, 187, 120, 0.2);
+}
+
+.confirm-dialog.success .dialog-header h3 {
+  color: white;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== 错误类型对话框头部样式 ========== */
+.confirm-dialog.error .dialog-header {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  border-bottom: 1px solid rgba(245, 101, 101, 0.2);
+}
+
+.confirm-dialog.error .dialog-header h3 {
+  color: white;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== 对话框内容 ========== */
+.confirm-dialog .dialog-content {
+  padding: 25px;
+}
+
+.confirm-dialog .dialog-content p {
+  margin: 0;
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* ========== 对话框操作按钮区域 ========== */
+.confirm-dialog .dialog-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  padding: 0 25px 25px;
+}
+
+/* ========== 对话框按钮样式 ========== */
+.confirm-dialog .btn-confirm,
+.confirm-dialog .btn-cancel {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 80px;
+}
+
+/* 确认按钮默认样式 */
+.confirm-dialog .btn-confirm {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.confirm-dialog .btn-confirm:hover {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+/* 取消按钮样式 */
+.confirm-dialog .btn-cancel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+  color: #4a5568;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-dialog .btn-cancel:hover {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 1) 0%, rgba(237, 242, 247, 1) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ========== 不同类型对话框的按钮主题 ========== */
+
+/* 危险/错误类型 */
+.confirm-dialog.danger .btn-confirm,
+.confirm-dialog.error .btn-confirm,
+.confirm-dialog .btn-confirm.btn-danger,
+.confirm-dialog .btn-confirm.btn-error {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+}
+
+.confirm-dialog.danger .btn-confirm:hover,
+.confirm-dialog.error .btn-confirm:hover,
+.confirm-dialog .btn-confirm.btn-danger:hover,
+.confirm-dialog .btn-confirm.btn-error:hover {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.5);
+}
+
+/* 警告类型 */
+.confirm-dialog.warning .btn-confirm,
+.confirm-dialog .btn-confirm.btn-warning {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
+}
+
+.confirm-dialog.warning .btn-confirm:hover,
+.confirm-dialog .btn-confirm.btn-warning:hover {
+  background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(237, 137, 54, 0.5);
+}
+
+/* 成功类型 */
+.confirm-dialog.success .btn-confirm,
+.confirm-dialog .btn-confirm.btn-success {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+}
+
+.confirm-dialog.success .btn-confirm:hover,
+.confirm-dialog .btn-confirm.btn-success:hover {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.5);
+}
+
+/* 信息类型 */
+.confirm-dialog.info .btn-confirm,
+.confirm-dialog .btn-confirm.btn-info {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+}
+
+.confirm-dialog.info .btn-confirm:hover,
+.confirm-dialog .btn-confirm.btn-info:hover {
+  background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.5);
+}
+
+/* ========== 深色主题样式 ========== */
+.theme-dark .confirm-dialog-overlay {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+}
+
+.theme-dark .confirm-dialog {
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(25px) saturate(1.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .confirm-dialog .dialog-header {
+  background: linear-gradient(135deg, rgba(229, 62, 62, 0.2) 0%, rgba(197, 48, 48, 0.2) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .confirm-dialog .dialog-header h3 {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-dark .confirm-dialog .dialog-content p {
+  color: var(--text-secondary);
+}
+
+.theme-dark .confirm-dialog .btn-cancel {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .confirm-dialog .btn-cancel:hover {
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 深色主题下的按钮类型保持原有颜色，但增加阴影 */
+.theme-dark .confirm-dialog .btn-confirm {
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
+}
+
+.theme-dark .confirm-dialog .btn-confirm:hover {
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+}
+
+.theme-dark .confirm-dialog.danger .btn-confirm,
+.theme-dark .confirm-dialog.error .btn-confirm,
+.theme-dark .confirm-dialog .btn-confirm.btn-danger,
+.theme-dark .confirm-dialog .btn-confirm.btn-error {
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+.theme-dark .confirm-dialog.danger .btn-confirm:hover,
+.theme-dark .confirm-dialog.error .btn-confirm:hover,
+.theme-dark .confirm-dialog .btn-confirm.btn-danger:hover,
+.theme-dark .confirm-dialog .btn-confirm.btn-error:hover {
+  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+}
+
+/* ========== 响应式样式 ========== */
+
+/* 平板设备适配 */
+@media (max-width: 768px) {
+  .confirm-dialog {
+    width: 95%;
+    max-width: 400px;
+    margin: 15px;
+  }
+  
+  .confirm-dialog .dialog-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .confirm-dialog .dialog-content p {
+    font-size: 0.95rem;
+  }
+}
+
+/* 手机设备适配 */
+@media (max-width: 480px) {
+  .confirm-dialog-overlay {
+    padding: 10px; /* 确保遮罩层有内边距 */
+  }
+  
+  .confirm-dialog {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 12px;
+    max-height: calc(100vh - 20px);
+  }
+  
+  .confirm-dialog .dialog-header {
+    padding: 18px 18px 12px;
+  }
+  
+  .confirm-dialog .dialog-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .confirm-dialog .dialog-content {
+    padding: 18px;
+  }
+  
+  .confirm-dialog .dialog-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .confirm-dialog .dialog-actions {
+    padding: 0 18px 18px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .confirm-dialog .btn-confirm,
+  .confirm-dialog .btn-cancel {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 360px) {
+  .confirm-dialog .dialog-header {
+    padding: 15px 15px 10px;
+  }
+  
+  .confirm-dialog .dialog-content {
+    padding: 15px;
+  }
+  
+  .confirm-dialog .dialog-actions {
+    padding: 0 15px 15px;
+    gap: 10px;
+  }
+  
+  .confirm-dialog .btn-confirm,
+  .confirm-dialog .btn-cancel {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+}

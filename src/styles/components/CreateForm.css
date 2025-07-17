@@ -1,0 +1,210 @@
+/* ========== CreateForm 组件样式 ========== */
+
+/* 表单样式 */
+.create-form,
+.edit-form {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 0; /* 添加上下padding为焦点效果预留空间 */
+  position: relative; /* 确保层级正确 */
+  z-index: 10; /* 提高层级避免被遮盖 */
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 8px;
+  position: relative; /* 为子元素定位提供参考 */
+}
+
+.input-group input {
+  flex: 1;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #2d3748;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative; /* 确保定位正确 */
+  z-index: 2; /* 提高层级 */
+}
+
+.input-group input::placeholder {
+  color: #a0aec0;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  border-color: #4c51bf;
+  transform: translateY(-2px);
+  z-index: 5; /* 焦点时进一步提高层级 */
+}
+
+.input-group input.input-error {
+  background: rgba(254, 235, 235, 0.95);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.input-group input.input-error:focus {
+  border-color: #ef4444;
+}
+
+.input-group button {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(76, 81, 191, 0.2);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.input-group button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(76, 81, 191, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-group button:disabled {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+  color: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+
+.button-group button[type="submit"] {
+  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(76, 81, 191, 0.2);
+}
+
+.button-group button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(76, 81, 191, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.button-group button[type="button"] {
+  background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(113, 128, 150, 0.2);
+}
+
+.button-group button[type="button"]:hover {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(74, 85, 104, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* ========== CreateForm 深色主题样式 ========== */
+
+/* 输入框深色样式 */
+.theme-dark .input-group input {
+  background: rgba(58, 58, 58, 0.95);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.theme-dark .input-group input:focus {
+  background: rgba(70, 70, 70, 1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  z-index: 5; /* 确保焦点时层级最高 */
+}
+
+/* 错误状态深色样式 */
+.theme-dark .input-group input.input-error {
+  background: rgba(80, 45, 45, 0.95);
+  box-shadow: 0 8px 32px rgba(229, 62, 62, 0.3);
+  border-color: rgba(229, 62, 62, 0.5);
+}
+
+/* 按钮深色样式 */
+.theme-dark .input-group button {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #553c9a 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(128, 90, 213, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .input-group button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(128, 90, 213, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .input-group button:disabled {
+  background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 按钮组深色样式 */
+.theme-dark .button-group button[type="button"] {
+  background: linear-gradient(135deg, #4a5568 0%, #5a6c7d 100%);
+  box-shadow: 0 8px 32px rgba(74, 85, 104, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .button-group button[type="button"]:hover {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  box-shadow: 0 12px 40px rgba(45, 55, 72, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 错误消息深色样式 */
+.theme-dark .error-message {
+  color: #fc8181;
+}

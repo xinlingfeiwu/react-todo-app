@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# 网站地图
+Sitemap: https://todo.yourdomain.com/sitemap.xml
+
+# 禁止访问的路径（如果有）
+# Disallow: /api/
+# Disallow: /admin/
+
+# 爬取延迟（秒）
+Crawl-delay: 1
+
+# 针对搜索引擎的说明
+# 这是一个待办清单应用，欢迎索引主页面

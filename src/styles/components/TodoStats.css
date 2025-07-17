@@ -1,0 +1,206 @@
+/* ========== TodoStats 组件样式 ========== */
+
+/* 统计信息样式 */
+.todo-stats {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(25px) saturate(1.4);
+  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  border-radius: 24px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-info {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.stats-item {
+  font-size: 14px;
+  color: #4c51bf;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.stats-item:hover {
+  transform: translateY(-1px);
+  color: #553c9a;
+}
+
+.stats-item strong {
+  font-size: 28px;
+  color: #2d3748;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(76, 81, 191, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stats-item:hover strong {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #553c9a 0%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stats-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-toggle-all,
+.btn-clear-completed {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.btn-toggle-all {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.btn-toggle-all:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.btn-clear-completed {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.btn-clear-completed:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+/* 动态效果 */
+.todo-stats::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.03), transparent);
+  z-index: -1;
+  border-radius: inherit;
+  transition: all 0.3s ease;
+}
+
+.todo-stats:hover::before {
+  background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+}
+
+.todo-stats:hover {
+  transform: translateY(-1px);
+  border-color: rgba(102, 126, 234, 0.15);
+}
+
+/* ========== TodoStats 深色主题样式 ========== */
+
+/* 主容器深色样式 */
+.theme-dark .todo-stats {
+  background: rgba(45, 45, 45, 0.85);
+  backdrop-filter: blur(25px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 统计项文字颜色 */
+.theme-dark .stats-item {
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+}
+
+.theme-dark .stats-item:hover {
+  color: var(--primary-color);
+}
+
+/* 统计数字样式 */
+.theme-dark .stats-item strong {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #805ad5 0%, #9f7aea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(128, 90, 213, 0.2);
+}
+
+.theme-dark .stats-item:hover strong {
+  background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 按钮深色样式 */
+.theme-dark .btn-toggle-all {
+  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 81, 191, 0.3);
+}
+
+.theme-dark .btn-toggle-all:hover {
+  box-shadow: 0 8px 25px rgba(76, 81, 191, 0.4);
+}
+
+.theme-dark .btn-clear-completed {
+  background: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+}
+
+.theme-dark .btn-clear-completed:hover {
+  box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
+}
+
+/* todo-stats 深色主题动态效果 */
+.theme-dark .todo-stats::before {
+  background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.03), transparent);
+}
+
+.theme-dark .todo-stats:hover::before {
+  background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.05), transparent);
+}
+
+.theme-dark .todo-stats:hover {
+  border-color: rgba(128, 90, 213, 0.2);
+}

@@ -1,0 +1,32 @@
+/* ========== 深色主题基础样式 ========== */
+
+/* 深色主题基础样式 */
+.theme-dark body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.theme-dark .todo-app-container {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.theme-dark .todo-wrapper {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+.theme-dark .todo-header {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+.theme-dark h1 {
+  color: var(--text-primary);
+}
+
+/* 深色主题下的毛玻璃效果增强 */
+.theme-dark .privacy-settings-modal {
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(25px) saturate(1.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}

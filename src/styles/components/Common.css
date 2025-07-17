@@ -1,0 +1,1277 @@
+/* ========== 通用UI组件样式 ========== */
+
+/* 通用动画定义 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 100;
+}
+
+/* 当主题切换按钮在 header-actions 容器内时的样式 */
+.header-actions .theme-toggle {
+  position: static;
+  top: auto;
+  right: auto;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 当主题切换按钮在 header-actions 容器内时的 hover 样式 */
+.header-actions .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Cookie 同意横幅 */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cookie-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cookie-text {
+  flex: 1;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.cookie-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cookie-btn.accept {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+}
+
+.cookie-btn.decline {
+  background: #f7fafc;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+
+.cookie-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 加载动画 */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* 工具提示 */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1001;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 通知消息 */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 400px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1002;
+  animation: slideInRight 0.3s ease;
+}
+
+.notification.success {
+  border-left: 4px solid #48bb78;
+}
+
+.notification.error {
+  border-left: 4px solid #e53e3e;
+}
+
+.notification.warning {
+  border-left: 4px solid #ed8936;
+}
+
+.notification.info {
+  border-left: 4px solid #4299e1;
+}
+
+/* ========== 通用组件深色主题样式 ========== */
+
+/* 主题切换按钮深色样式 */
+.theme-dark .theme-toggle {
+  background: rgba(45, 45, 45, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .theme-toggle:hover {
+  background: rgba(58, 58, 58, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 深色主题下 header-actions 内的主题切换按钮 */
+.theme-dark .header-actions .theme-toggle {
+  background: rgba(45, 45, 45, 0.2);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-dark .header-actions .theme-toggle:hover {
+  background: rgba(58, 58, 58, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Cookie横幅深色主题 */
+.theme-dark .cookie-banner {
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(25px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .cookie-text {
+  color: var(--text-secondary);
+}
+
+.theme-dark .cookie-btn.decline {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .cookie-btn.decline:hover {
+  background: var(--bg-tertiary);
+}
+
+/* 通知消息深色主题 */
+.theme-dark .notification {
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(25px);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* 工具提示深色主题 */
+.theme-dark .tooltip .tooltip-text {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+
+/* ========== Cookie 同意组件样式 ========== */
+
+/* Cookie 同意遮罩 */
+.cookie-consent-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.cookie-consent-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Cookie 同意弹窗 */
+.cookie-consent {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  max-width: 500px;
+  width: calc(100% - 40px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.cookie-consent.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cookie-consent-content {
+  padding: 24px;
+}
+
+.cookie-consent-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cookie-icon {
+  font-size: 28px;
+  margin-right: 12px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-8px);
+  }
+  70% {
+    transform: translateY(-4px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
+.cookie-consent-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cookie-consent-message {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.cookie-consent-message p {
+  margin: 0 0 12px 0;
+}
+
+.cookie-consent-message strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.cookie-consent-message ul {
+  margin: 8px 0 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.cookie-consent-message li {
+  margin-bottom: 6px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.cookie-consent-message li::before {
+  content: '';
+  margin-right: 8px;
+}
+
+.cookie-consent-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cookie-consent-actions button {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-decline {
+  background: rgba(108, 117, 125, 0.1);
+  color: var(--text-secondary);
+  border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+.btn-decline:hover {
+  background: rgba(108, 117, 125, 0.15);
+  border-color: rgba(108, 117, 125, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-accept {
+  background: #22c55e !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.btn-accept:hover {
+  background: #16a34a !important;
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+  transform: translateY(-1px);
+}
+
+.cookie-consent-footer {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 12px;
+}
+
+.privacy-link {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.privacy-link:hover {
+  color: var(--text-primary);
+}
+
+/* ========== Cookie 同意组件深色主题 ========== */
+
+.theme-dark .cookie-consent-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.theme-dark .cookie-consent {
+  background: rgba(35, 35, 35, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .cookie-consent-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .btn-decline {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .btn-decline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== 隐私政策组件样式 ========== */
+
+.privacy-policy-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.privacy-policy-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.privacy-policy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.privacy-policy-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.privacy-policy-header .close-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.privacy-policy-header .close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #4a5568;
+  transform: scale(1.1);
+}
+
+.privacy-policy-header .close-btn-icon {
+  display: inline-block;
+  transform-origin: center center;
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform: rotate(0deg);
+}
+
+.privacy-policy-header .close-btn:hover .close-btn-icon {
+  transform: rotate(360deg);
+}
+
+.privacy-policy-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.privacy-policy-body h3 {
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.privacy-policy-body p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.privacy-policy-body ul {
+  margin: 8px 0 16px 20px;
+  padding: 0;
+}
+
+.privacy-policy-body li {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.privacy-summary {
+  background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 20px;
+  color: white !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.privacy-summary strong {
+  font-weight: 600;
+  color: white !important;
+}
+
+/* ========== 深色主题下的隐私政策组件 ========== */
+
+.theme-dark .privacy-policy-modal {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.theme-dark .privacy-policy-content {
+  background: rgba(35, 35, 35, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.theme-dark .privacy-policy-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .privacy-policy-header .close-btn {
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .privacy-policy-header .close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  transform: scale(1.1);
+}
+
+.theme-dark .privacy-policy-header .close-btn:hover .close-btn-icon {
+  transform: rotate(360deg);
+}
+
+.theme-dark .privacy-policy-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 隐私设置组件样式 ========== */
+
+.privacy-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.privacy-settings-modal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.privacy-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.privacy-settings-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.privacy-settings-header .close-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.privacy-settings-header .close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #4a5568;
+  transform: scale(1.1);
+}
+
+.privacy-settings-header .close-btn-icon {
+  display: inline-block;
+  transform-origin: center center;
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform: rotate(0deg);
+}
+
+.privacy-settings-header .close-btn:hover .close-btn-icon {
+  transform: rotate(360deg);
+}
+
+.privacy-settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.privacy-section {
+  margin-bottom: 24px;
+}
+
+.privacy-section h3 {
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.privacy-status {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.status-item:last-child {
+  margin-bottom: 0;
+}
+
+.status-label {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.status-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-value.accepted {
+  color: #22c55e;
+}
+
+.status-value.declined {
+  color: #ef4444;
+}
+
+.privacy-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.privacy-btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.privacy-btn.export {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.privacy-btn.export:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-1px);
+}
+
+.privacy-btn.clear {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.privacy-btn.clear:hover {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  transform: translateY(-1px);
+}
+
+.privacy-btn.reset {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.privacy-btn.reset:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-1px);
+}
+
+.privacy-note {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin: 8px 0 0 0;
+  font-style: italic;
+}
+
+.privacy-info {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.privacy-info p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ========== 隐私设置组件深色主题 ========== */
+
+.theme-dark .privacy-settings-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.theme-dark .privacy-settings-modal {
+  background: rgba(35, 35, 35, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.theme-dark .privacy-settings-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .privacy-settings-header .close-btn {
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .privacy-settings-header .close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  transform: scale(1.1);
+}
+
+.theme-dark .privacy-settings-header .close-btn:hover .close-btn-icon {
+  transform: rotate(360deg);
+}
+
+.theme-dark .privacy-status {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .privacy-info {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ========== 隐私设置成功对话框wrapper样式 ========== */
+
+/* 隐私设置成功对话框wrapper - 确保显示在隐私设置窗口之上 */
+.privacy-success-dialog-wrapper .confirm-dialog-overlay {
+  z-index: 10001 !important; /* 比隐私设置的10000更高 */
+}
+
+/* 确保隐私设置中的成功对话框样式正确应用 */
+.privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+  border-bottom: 1px solid rgba(72, 187, 120, 0.2) !important;
+}
+
+.privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header h3 {
+  color: white !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%) !important;
+  border-bottom: 1px solid rgba(245, 101, 101, 0.2) !important;
+}
+
+.privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header h3 {
+  color: white !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 深色主题下的隐私设置成功/错误对话框 */
+.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%) !important;
+}
+
+.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%) !important;
+}
+
+.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header h3,
+.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header h3 {
+  color: white !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========== 响应式样式 ========== */
+
+@media (max-width: 768px) {
+  /* 移动端主题切换按钮在 header 中的样式 */
+  .header-actions .theme-toggle {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+  
+  .cookie-consent {
+    bottom: 10px;
+    width: calc(100% - 20px);
+    max-width: none;
+  }
+  
+  .cookie-consent-content {
+    padding: 20px;
+  }
+  
+  .cookie-consent-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .privacy-policy-modal,
+  .privacy-settings-overlay {
+    padding: 10px;
+  }
+  
+  .privacy-policy-content,
+  .privacy-settings-modal {
+    max-height: 95vh;
+  }
+  
+  .privacy-policy-header,
+  .privacy-settings-header {
+    padding: 16px 20px;
+  }
+  
+  .privacy-policy-body,
+  .privacy-settings-content {
+    padding: 20px;
+  }
+  
+  /* 移动端隐私政策内容字体优化 */
+  .privacy-policy-content h4 {
+    font-size: 15px;
+  }
+  
+  .privacy-policy-content .privacy-info p,
+  .privacy-policy-content li {
+    font-size: 15px;
+  }
+  
+  .privacy-summary p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookie-consent {
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .cookie-consent.show {
+    transform: translateY(0);
+  }
+  
+  .privacy-policy-content,
+  .privacy-settings-modal {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .privacy-policy-body,
+  .privacy-settings-content {
+    padding: 16px;
+  }
+}
+
+/* 深色主题下的标题 tooltip */
+.theme-dark .header-content .tooltip .tooltip-text {
+  background: rgba(35, 35, 35, 0.95);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 移动端激活状态的深色主题支持 */
+.theme-dark .header-content .tooltip.active .tooltip-text {
+  background: rgba(35, 35, 35, 0.98) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ========== 隐私政策内容样式 ========== */
+.privacy-settings-content .privacy-policy-content {
+  margin: 0;
+  max-height: none; /* 让内容能够全部显示，由外层容器控制滚动 */
+  position: relative; /* 为绝对定位的 last-updated 提供定位上下文 */
+  padding-top: 50px; /* 为顶部的 last-updated 留出空间 */
+}
+
+/* 隐私政策中的节区间距优化 */
+.privacy-policy-content .privacy-section {
+  margin-bottom: 12px; /* 进一步减少从16px到12px，让政策条目间距更紧凑 */
+}
+
+.privacy-policy-content .privacy-section:last-child {
+  margin-bottom: 0; /* 最后一个section没有底部边距 */
+}
+
+.privacy-policy-content .last-updated {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--text-muted, #718096);
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+  font-style: italic;
+  z-index: 1;
+}
+
+.privacy-policy-content h4 {
+  margin: 12px 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color, #3b82f6);
+}
+
+/* 优化隐私政策中的内容间距 */
+.privacy-policy-content .privacy-info {
+  padding: 12px 16px; /* 减少上下padding从16px到12px，保持左右16px */
+}
+
+.privacy-policy-content .privacy-info h4 {
+  margin: 8px 0 6px 0; /* 减少h4的上边距，让内容更紧凑 */
+}
+
+.privacy-policy-content .privacy-info h4:first-child {
+  margin-top: 0; /* 第一个h4没有上边距 */
+}
+
+.privacy-policy-content ul {
+  margin: 6px 0 12px 20px; /* 减少列表的上下边距，从8px 0 16px到6px 0 12px */
+  padding: 0;
+}
+
+.privacy-policy-content li {
+  margin-bottom: 6px;
+  color: var(--text-secondary, #4a5568);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.privacy-policy-content strong {
+  color: var(--text-primary, #2d3748);
+  font-weight: 600;
+}
+
+/* 隐私政策中的段落文字 */
+.privacy-policy-content .privacy-info p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px; /* 减少段落间距，从12px到10px */
+}
+
+.privacy-policy-content .privacy-info p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-summary {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.privacy-summary p {
+  margin: 0;
+  color: white !important;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.privacy-summary strong {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* ========== 深色主题下的隐私政策内容 ========== */
+.theme-dark .privacy-policy-content .last-updated {
+  color: var(--text-muted, #a0aec0);
+}
+
+.theme-dark .privacy-policy-content h4 {
+  color: var(--primary-color, #60a5fa);
+}
+
+.theme-dark .privacy-policy-content li {
+  color: var(--text-secondary, #cbd5e0);
+}
+
+.theme-dark .privacy-policy-content strong {
+  color: var(--text-primary, #e2e8f0);
+}
+
+.theme-dark .privacy-summary {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+}
+
+/* ========== 隐私政策中的标题间距优化 */
+.privacy-policy-content .privacy-section h3 {
+  margin: 0 0 8px 0; /* 减少h3标题的底边距，从12px到8px */
+}
+
+/* 隐私政策中的内容框间距优化 */
+.privacy-policy-content .privacy-section {
+  margin-bottom: 12px; /* 进一步减少从16px到12px，让政策条目间距更紧凑 */
+}
+
+.privacy-policy-content .privacy-section:last-child {
+  margin-bottom: 0; /* 最后一个section没有底部边距 */
+}
+
+.privacy-policy-content .last-updated {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--text-muted, #718096);
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+  font-style: italic;
+  z-index: 1;
+}
+
+.privacy-policy-content h4 {
+  margin: 12px 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color, #3b82f6);
+}
+
+/* 优化隐私政策中的内容间距 */
+.privacy-policy-content .privacy-info {
+  padding: 12px 16px; /* 减少上下padding从16px到12px，保持左右16px */
+}
+
+.privacy-policy-content .privacy-info h4 {
+  margin: 8px 0 6px 0; /* 减少h4的上边距，让内容更紧凑 */
+}
+
+.privacy-policy-content .privacy-info h4:first-child {
+  margin-top: 0; /* 第一个h4没有上边距 */
+}
+
+.privacy-policy-content ul {
+  margin: 6px 0 12px 20px; /* 减少列表的上下边距，从8px 0 16px到6px 0 12px */
+  padding: 0;
+}
+
+.privacy-policy-content li {
+  margin-bottom: 6px;
+  color: var(--text-secondary, #4a5568);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.privacy-policy-content strong {
+  color: var(--text-primary, #2d3748);
+  font-weight: 600;
+}
+
+/* 隐私政策中的段落文字 */
+.privacy-policy-content .privacy-info p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px; /* 减少段落间距，从12px到10px */
+}
+
+.privacy-policy-content .privacy-info p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-summary {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.privacy-summary p {
+  margin: 0;
+  color: white !important;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.privacy-summary strong {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* ========== 深色主题下的隐私政策内容 ========== */
+.theme-dark .privacy-policy-content .last-updated {
+  color: var(--text-muted, #a0aec0);
+}
+
+.theme-dark .privacy-policy-content h4 {
+  color: var(--primary-color, #60a5fa);
+}
+
+.theme-dark .privacy-policy-content li {
+  color: var(--text-secondary, #cbd5e0);
+}
+
+.theme-dark .privacy-policy-content strong {
+  color: var(--text-primary, #e2e8f0);
+}
+
+.theme-dark .privacy-summary {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+}

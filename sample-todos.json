@@ -1,0 +1,29 @@
+{
+  "appName": "React Todo App",
+  "version": "1.0",
+  "exportDate": "2025-01-15T10:30:00.000Z",
+  "totalItems": 3,
+  "todos": [
+    {
+      "id": 1737033000123,
+      "content": "学习 React Hooks",
+      "isCompleted": false,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.123Z"
+    },
+    {
+      "id": 1737033000456,
+      "content": "完成 Todo 应用",
+      "isCompleted": true,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:31:00.456Z"
+    },
+    {
+      "id": 1737033000789,
+      "content": "添加持久化存储",
+      "isCompleted": false,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:32:00.789Z"
+    }
+  ]
+}

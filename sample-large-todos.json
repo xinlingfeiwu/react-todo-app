@@ -1,0 +1,43 @@
+{
+  "appName": "React Todo App - Large Test Dataset",
+  "version": "1.0",
+  "exportDate": "2025-01-15T11:00:00.000Z",
+  "totalItems": 15000,
+  "todos": [
+    {
+      "id": 1737033000001,
+      "content": "完成项目文档",
+      "isCompleted": true,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.001Z"
+    },
+    {
+      "id": 1737033000002,
+      "content": "代码审查",
+      "isCompleted": true,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.002Z"
+    },
+    {
+      "id": 1737033000003,
+      "content": "单元测试",
+      "isCompleted": false,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.003Z"
+    },
+    {
+      "id": 1737033000004,
+      "content": "性能优化",
+      "isCompleted": false,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.004Z"
+    },
+    {
+      "id": 1737033000005,
+      "content": "Bug修复",
+      "isCompleted": true,
+      "isEditing": false,
+      "createdAt": "2025-01-15T10:30:00.005Z"
+    }
+  ]
+}

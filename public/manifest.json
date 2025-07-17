@@ -1,0 +1,55 @@
+{
+  "name": "我的待办清单 - 简洁高效的任务管理工具",
+  "short_name": "待办清单",
+  "description": "简洁高效的待办事项管理工具，支持任务创建、编辑、删除和数据管理",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-CN",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon-16.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/todo-icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/share-image.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/share-image.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "label": "应用主界面展示"
+    }
+  ],
+  "features": [
+    "创建和管理待办事项",
+    "数据导入导出",
+    "深色浅色主题",
+    "本地数据存储",
+    "离线使用"
+  ],
+  "prefer_related_applications": false
+}
