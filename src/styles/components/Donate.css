@@ -1,0 +1,589 @@
+/* ============================================================
+   DONATE COMPONENT STYLES
+   ========================================================== */
+
+/* ========== 捐赠遮罩层 ========== */
+.donate-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ========== 捐赠侧边栏 ========== */
+.donate-sidebar {
+  position: fixed;
+  top: 0;
+  left: -450px; /* 初始位置在屏幕外 */
+  width: 450px; /* 增加宽度为收款码提供更多空间 */
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.donate-sidebar.open {
+  left: 0; /* 滑入到可见位置 */
+}
+
+/* ========== 侧边栏头部 ========== */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary, #2d3748);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-header .header-icon {
+  font-size: 1.4rem;
+  opacity: 0.8;
+}
+
+.close-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #4a5568;
+  transform: scale(1.1);
+}
+
+.close-btn-icon {
+  display: inline-block;
+  transform-origin: center center;
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* 更长时间和更顺滑的缓动 */
+  transform: rotate(0deg); /* 明确初始状态 */
+}
+
+.close-btn:hover .close-btn-icon {
+  transform: rotate(360deg); /* 恢复360度旋转 */
+}
+
+/* 确保初始状态不触发动画 */
+
+/* ========== 侧边栏内容 ========== */
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.donate-content {
+  padding: 25px;
+}
+
+/* ========== 捐赠消息 ========== */
+.donate-message {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.donate-message h4 {
+  color: var(--text-primary);
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.donate-message p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ========== 收款码区域 ========== */
+.qr-code-section {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.qr-code-section h4 {
+  color: #2d3748;
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.qr-codes-container {
+  display: flex;
+  flex-direction: row; /* 改为水平排列 */
+  gap: 20px; /* 调整间距以适应侧边栏宽度 */
+  align-items: center; /* 确保对齐 */
+  justify-content: center; /* 居中对齐 */
+  flex-wrap: nowrap; /* 在桌面端不换行 */
+  width: 100%; /* 确保容器占满可用宽度 */
+}
+
+.qr-code-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto; /* 确保项目不会收缩或扩展 */
+  width: auto; /* 自动宽度 */
+  max-width: 200px; /* 调整最大宽度以匹配图片 */
+}
+
+.qr-code-item h5 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.qr-code-item .qr-code-container {
+  margin-bottom: 0;
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* 调整单个收款码的尺寸 - 更大尺寸 */
+.qr-codes-container .qr-image {
+  max-width: 180px; /* 调整为适合并排显示的宽度 */
+  max-height: 220px; /* 保持增加的高度 */
+  width: 100%;
+  height: auto;
+  min-width: 160px; /* 调整最小宽度 */
+  min-height: 180px; /* 设置最小高度 */
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.qr-placeholder {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #a0aec0;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.qr-placeholder:hover {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef5e7 100%);
+  color: #d69e2e;
+}
+
+.qr-placeholder p {
+  margin: 8px 0 0 0;
+  font-weight: 600;
+}
+
+.qr-placeholder small {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ========== 其他捐赠方式 ========== */
+.donate-options {
+  margin-bottom: 30px;
+}
+
+.donate-options h4 {
+  color: #2d3748;
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(255, 193, 7, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 193, 7, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.option-item.clickable:hover {
+  background: rgba(255, 193, 7, 0.12);
+  border-color: rgba(255, 193, 7, 0.25);
+  transform: translateX(3px);
+}
+
+.option-icon {
+  font-size: 16px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-item span:last-child {
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ========== 感谢榜 ========== */
+.thank-you-section {
+  margin-bottom: 20px;
+}
+
+.thank-you-section h4 {
+  color: #2d3748;
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.thank-note {
+  color: #718096;
+  font-size: 13px;
+  margin: 0 0 15px 0;
+  text-align: center;
+  font-style: italic;
+}
+
+.supporters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.supporter {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(72, 187, 120, 0.3);
+  transition: all 0.3s ease;
+}
+
+.supporter:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+}
+
+/* ========== 深色主题样式 ========== */
+.theme-dark .donate-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.theme-dark .donate-sidebar {
+  background: rgba(45, 45, 45, 0.95);
+  border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .sidebar-header {
+  background: var(--bg-secondary);
+  border-bottom-color: var(--border-color);
+}
+
+.theme-dark .sidebar-header h3 {
+  color: var(--text-primary);
+}
+
+.theme-dark .close-btn {
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+}
+
+.theme-dark .close-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+
+
+.theme-dark .qr-code-section h4 {
+  color: var(--text-primary);
+}
+
+.theme-dark .qr-code-item h5 {
+  color: var(--text-primary);
+}
+
+.theme-dark .donate-options h4 {
+  color: var(--text-primary);
+}
+
+.theme-dark .qr-placeholder {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.theme-dark .qr-placeholder:hover {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #3a3a2a 0%, #4a4a2a 100%);
+}
+
+.theme-dark .qr-placeholder p {
+  color: var(--text-secondary);
+}
+
+.theme-dark .qr-placeholder small {
+  color: var(--text-muted);
+}
+
+.theme-dark .option-item {
+  background: rgba(255, 193, 7, 0.15);
+  border-color: rgba(255, 193, 7, 0.25);
+  color: var(--text-primary);
+}
+
+.theme-dark .option-item.clickable:hover {
+  background: rgba(255, 193, 7, 0.2);
+}
+
+.theme-dark .option-item span:last-child {
+  color: var(--text-primary); /* 改为主要文字颜色，更清晰 */
+}
+
+.theme-dark .option-icon {
+  color: var(--text-secondary);
+}
+
+/* 深色主题 - Donate 组件内的所有文字元素 */
+.theme-dark .donate-content h4,
+.theme-dark .donate-content h5 {
+  color: var(--text-primary);
+}
+
+.theme-dark .donate-content p {
+  color: var(--text-secondary);
+}
+
+.theme-dark .thank-you-section h4 {
+  color: var(--text-primary);
+}
+
+.theme-dark .thank-note {
+  color: var(--text-secondary);
+}
+
+/* 深色主题 - 其他遗漏样式 */
+.theme-dark .thank-message {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  color: var(--text-secondary);
+}
+
+.theme-dark .qr-container {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .qr-platform {
+  color: var(--text-primary);
+}
+
+.theme-dark .qr-description {
+  color: var(--text-muted);
+}
+
+.theme-dark .donate-disclaimer {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.theme-dark .thank-you-section {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .thank-you-title {
+  color: var(--text-primary);
+}
+
+.theme-dark .thank-you-empty {
+  color: var(--text-muted);
+}
+
+.theme-dark .action-buttons .btn {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.theme-dark .action-buttons .btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-dark .action-buttons .btn.primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.theme-dark .action-buttons .btn.primary:hover {
+  background: #553c9a;
+}
+
+.theme-dark .option-item .option-text h5 {
+  color: var(--text-primary);
+}
+
+.theme-dark .option-item .option-text p {
+  color: var(--text-secondary);
+}
+
+/* ========== 响应式样式 ========== */
+/* 桌面端确保并排显示 */
+@media (min-width: 769px) {
+  .qr-codes-container {
+    flex-direction: row !important; /* 强制并排显示 */
+    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  
+  .qr-code-item {
+    flex: 0 0 auto;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .donate-sidebar {
+    width: 100%;
+    left: -100%;
+  }
+  
+  .donate-content {
+    padding: 20px;
+  }
+  
+  .sidebar-header {
+    padding: 16px 20px;
+  }
+  
+  .qr-codes-container {
+    flex-direction: column; /* 在移动端恢复垂直排列 */
+    gap: 20px;
+    flex-wrap: wrap; /* 在移动端允许换行 */
+    align-items: center; /* 确保垂直排列时居中 */
+    justify-content: center; /* 确保内容居中 */
+    width: 100%; /* 占满可用宽度 */
+  }
+  
+  .qr-code-item {
+    align-items: center; /* 确保每个项目内容居中 */
+    text-align: center; /* 文字居中 */
+    width: 100%; /* 占满可用宽度 */
+    max-width: 200px; /* 限制最大宽度 */
+    margin: 0 auto; /* 水平居中 */
+  }
+  
+  .qr-codes-container .qr-image {
+    max-width: 180px;
+    min-width: 160px;
+    min-height: 180px; /* 在移动端适当调整高度 */
+  }
+}
+
+@media (max-width: 480px) {
+  .donate-content {
+    padding: 16px;
+  }
+  
+  .sidebar-header {
+    padding: 12px 16px;
+  }
+  
+  .sidebar-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .qr-codes-container {
+    align-items: center; /* 小屏幕也确保居中 */
+    justify-content: center;
+  }
+  
+  .qr-code-item {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 180px; /* 小屏幕调整最大宽度 */
+    margin: 0 auto;
+  }
+  
+  .qr-codes-container .qr-image {
+    max-width: 160px;
+    min-width: 140px;
+    min-height: 160px; /* 在小屏幕上也保持合适的高度 */
+  }
+  
+  .option-item {
+    padding: 10px 12px;
+  }
+  
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}

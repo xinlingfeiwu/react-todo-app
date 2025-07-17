@@ -1,0 +1,184 @@
+/* ========== DataManager 组件样式 ========== */
+
+/* 数据管理按钮 */
+.data-manager-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.data-manager-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px) saturate(1.8);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 捐赠按钮样式 */
+.donate-toggle {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 193, 7, 0.15);
+  backdrop-filter: blur(25px) saturate(1.5);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ffc107;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 4px 15px rgba(255, 193, 7, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.donate-toggle:hover {
+  background: rgba(255, 193, 7, 0.25);
+  backdrop-filter: blur(30px) saturate(1.8);
+  transform: translateY(-50%) scale(1.05);
+  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: 
+    0 8px 25px rgba(255, 193, 7, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 数据管理侧边栏样式 */
+.data-manager-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+.data-manager-sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px; /* 初始位置在屏幕外 */
+  width: 400px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.data-manager-sidebar.open {
+  right: 0; /* 滑入到可见位置 */
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(248, 250, 252, 0.8);
+  flex-shrink: 0;
+}
+
+.sidebar-header h3 {
+  color: #2d3748;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #718096;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(226, 232, 240, 0.5);
+  color: #2d3748;
+  transform: scale(1.1);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 25px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .data-manager-sidebar {
+    width: 100%;
+    right: -100%;
+  }
+}
+
+/* ========== DataManager 深色主题样式 ========== */
+
+.theme-dark .data-manager-sidebar {
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(25px) saturate(1.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark .sidebar-header {
+  background: rgba(45, 45, 45, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .sidebar-header h3 {
+  color: var(--text-primary);
+}
+
+.theme-dark .close-btn {
+  color: var(--text-secondary);
+}
+
+.theme-dark .close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
