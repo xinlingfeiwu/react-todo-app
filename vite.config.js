@@ -22,6 +22,8 @@ export default defineConfig({
   build: {
     // 生产环境优化
     minify: 'terser',
+    // 目标环境 - 确保与 Node.js 16 兼容
+    target: 'es2020',
     // 代码分割优化
     rollupOptions: {
       output: {
@@ -35,10 +37,10 @@ export default defineConfig({
     outDir: 'dist',
     // 资源内联阈值 (4KB)
     assetsInlineLimit: 4096,
-    // 移除 console.log
+    // 移除 console.log - 但保留错误信息用于调试
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: false, // 暂时保留 console.log 用于调试
         drop_debugger: true
       }
     }
