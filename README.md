@@ -29,7 +29,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/react-todo-app.git
+git clone https://github.com/xinlingfeiwu/react-todo-app.git
 cd react-todo-app
 
 # 安装依赖
@@ -183,8 +183,8 @@ npm run analyze     # 构建分析
 
 ## 💬 反馈与支持
 
-- 🐛 [报告Bug](https://github.com/yourusername/react-todo-app/issues)
-- 💡 [功能建议](https://github.com/yourusername/react-todo-app/issues)
+- 🐛 [报告Bug](https://github.com/xinlingfeiwu/react-todo-app/issues)
+- 💡 [功能建议](https://github.com/xinlingfeiwu/react-todo-app/issues)
 - 📧 邮箱：lovexinlingfeiwu@foxmail.com
 
 ## 🙏 致谢

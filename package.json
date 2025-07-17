@@ -19,12 +19,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/react-todo-app.git"
+    "url": "https://github.com/xinlingfeiwu/react-todo-app.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/react-todo-app/issues"
+    "url": "https://github.com/xinlingfeiwu/react-todo-app/issues"
   },
-  "homepage": "https://github.com/yourusername/react-todo-app#readme",
+  "homepage": "https://github.com/xinlingfeiwu/react-todo-app#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
