@@ -4,26 +4,11 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  define: {
-    // 为 Node.js 16 环境添加全局变量定义
-    global: 'globalThis',
-    // 确保 process.env 可用
-    'process.env': '{}',
-  },
-  resolve: {
-    alias: {
-      // 为 Node.js 16 添加 crypto polyfill
-      crypto: 'crypto-browserify',
-    },
-  },
-  optimizeDeps: {
-    include: ['crypto-browserify'],
-  },
   build: {
     // 生产环境优化
     minify: 'terser',
-    // 目标环境 - 确保与 Node.js 16 兼容
-    target: 'es2020',
+    // 目标环境 - AlmaLinux 9.5 + Node.js 18 支持现代特性
+    target: 'es2022',
     // 代码分割优化
     rollupOptions: {
       output: {
@@ -37,10 +22,10 @@ export default defineConfig({
     outDir: 'dist',
     // 资源内联阈值 (4KB)
     assetsInlineLimit: 4096,
-    // 移除 console.log - 但保留错误信息用于调试
+    // 压缩优化
     terserOptions: {
       compress: {
-        drop_console: false, // 暂时保留 console.log 用于调试
+        drop_console: true,
         drop_debugger: true
       }
     }
