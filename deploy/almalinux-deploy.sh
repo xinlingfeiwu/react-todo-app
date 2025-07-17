@@ -389,10 +389,10 @@ EOF
 
     # 创建 HTTPS 配置的函数
     create_https_nginx_config() {
-        print_info "创建完整的 HTTPS Nginx 配置文件..."
+        print_info "创建完整的 HTTPS Nginx 配置文件（iOS Safari 兼容）..."
         
         sudo tee "$NGINX_CONFIG" > /dev/null << EOF
-# $APP_NAME Nginx 配置
+# $APP_NAME Nginx 配置 (iOS Safari 兼容版本)
 # 域名: $DOMAIN_NAME
 
 # HTTP 重定向到 HTTPS
@@ -413,7 +413,7 @@ server {
     }
 }
 
-# HTTPS 配置
+# HTTPS 配置 - iOS Safari 优化
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
@@ -423,67 +423,133 @@ server {
     ssl_certificate /etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem;
     
-    # 现代 SSL 配置
+    # iOS Safari 兼容的 SSL 配置
     ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    # 添加 iOS Safari 支持的加密套件
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
     ssl_prefer_server_ciphers off;
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
     
-    # OCSP Stapling (如果证书支持)
-    # ssl_stapling on;
-    # ssl_stapling_verify on;
-    # ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN_NAME/chain.pem;
+    # 启用 OCSP Stapling (提高 iOS Safari 兼容性)
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    ssl_trusted_certificate /etc/letsencrypt/live/$DOMAIN_NAME/chain.pem;
+    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver_timeout 5s;
     
-    # 安全头
-    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+    # iOS Safari 兼容的安全头配置
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    # iOS Safari 特定的安全策略
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; child-src 'self';" always;
     
     # 网站根目录
     root $WEB_DIR;
     index index.html;
     
-    # SPA 路由支持
-    location / {
-        try_files \$uri \$uri/ /index.html;
-    }
-    
-    # 静态资源缓存优化
-    location /assets/ {
+    # iOS Safari 特定的 MIME 类型配置
+    location ~* \\.js\$ {
+        add_header Content-Type "application/javascript; charset=utf-8";
         expires 1y;
         add_header Cache-Control "public, immutable";
         add_header Vary "Accept-Encoding";
         access_log off;
     }
     
-    # 其他静态文件
-    location ~* \.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)\$ {
-        expires 1M;
-        add_header Cache-Control "public";
+    location ~* \\.css\$ {
+        add_header Content-Type "text/css; charset=utf-8";
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary "Accept-Encoding";
         access_log off;
     }
     
-    # HTML 文件
-    location ~* \.(html)\$ {
-        expires 1h;
-        add_header Cache-Control "public, no-cache, must-revalidate";
+    # SPA 路由支持 (iOS Safari 优化)
+    location / {
+        # iOS Safari 需要正确的 MIME 类型
+        location ~* \\.html\$ {
+            add_header Content-Type "text/html; charset=utf-8";
+            add_header Cache-Control "no-cache, no-store, must-revalidate";
+            add_header Pragma "no-cache";
+            add_header Expires "0";
+        }
+        
+        try_files \$uri \$uri/ /index.html;
+    }
+    
+    # 静态资源缓存优化 (iOS Safari 兼容)
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary "Accept-Encoding";
+        access_log off;
+        
+        # 为不同文件类型设置正确的 MIME 类型
+        location ~* \\.woff2?\$ {
+            add_header Content-Type "font/woff2";
+            add_header Access-Control-Allow-Origin "*";
+        }
+        
+        location ~* \\.ttf\$ {
+            add_header Content-Type "font/ttf";
+            add_header Access-Control-Allow-Origin "*";
+        }
+    }
+    
+    # 其他静态文件 (iOS Safari 优化的 MIME 类型)
+    location ~* \.(ico|png|jpg|jpeg|gif|svg)\$ {
+        expires 1M;
+        add_header Cache-Control "public";
+        access_log off;
+        
+        # SVG 特殊处理 (iOS Safari 需要正确的 Content-Type)
+        location ~* \\.svg\$ {
+            add_header Content-Type "image/svg+xml";
+            add_header Vary "Accept-Encoding";
+        }
+    }
+    
+    # 字体文件 (iOS Safari 需要 CORS 头)
+    location ~* \.(woff|woff2|ttf|eot)\$ {
+        expires 1M;
+        add_header Cache-Control "public";
+        add_header Access-Control-Allow-Origin "*";
+        access_log off;
+    }
+    
+    # HTML 文件 (iOS Safari 缓存策略)
+    location ~* \\.html\$ {
+        add_header Content-Type "text/html; charset=utf-8";
+        expires -1;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
         add_header Vary "Accept-Encoding";
     }
     
-    # JSON 和其他文件
-    location ~* \.(json|xml|txt)\$ {
+    # JSON 和其他文件 (iOS Safari MIME 类型)
+    location ~* \\.json\$ {
+        add_header Content-Type "application/json; charset=utf-8";
         expires 1d;
         add_header Cache-Control "public";
         add_header Vary "Accept-Encoding";
     }
     
-    # Gzip 压缩配置
+    location ~* \.(xml|txt)\$ {
+        expires 1d;
+        add_header Cache-Control "public";
+        add_header Vary "Accept-Encoding";
+    }
+    
+    # iOS Safari 兼容的 Gzip 压缩配置
     gzip on;
     gzip_vary on;
     gzip_min_length 1024;
+    gzip_comp_level 6;
     gzip_types
         text/plain
         text/css
@@ -493,7 +559,9 @@ server {
         application/json
         application/xml+rss
         application/atom+xml
-        image/svg+xml;
+        image/svg+xml
+        font/woff
+        font/woff2;
     
     # 安全配置
     location ~ /\. {
@@ -758,7 +826,257 @@ else
     ls -la "$WEB_DIR/"
 fi
 
-# 10. 完成信息
+# 10. iOS Safari 兼容性诊断和修复
+print_step "iOS Safari 兼容性诊断..."
+
+# 诊断函数
+diagnose_ios_safari() {
+    print_info "🔍 正在诊断 iOS Safari 兼容性问题..."
+    
+    # 检查 SSL 证书链
+    if [ -f "/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem" ]; then
+        print_info "检查 SSL 证书链完整性..."
+        if sudo openssl verify -CAfile /etc/letsencrypt/live/$DOMAIN_NAME/chain.pem /etc/letsencrypt/live/$DOMAIN_NAME/cert.pem &>/dev/null; then
+            print_success "SSL 证书链完整"
+        else
+            print_warning "SSL 证书链可能有问题，这会影响 iOS Safari"
+        fi
+        
+        # 检查证书算法
+        CERT_ALGORITHM=$(sudo openssl x509 -in /etc/letsencrypt/live/$DOMAIN_NAME/cert.pem -text -noout | grep "Signature Algorithm" | head -1)
+        print_info "证书签名算法: $CERT_ALGORITHM"
+        
+        if [[ "$CERT_ALGORITHM" == *"sha256"* ]]; then
+            print_success "证书使用 SHA-256，iOS Safari 兼容"
+        else
+            print_warning "证书算法可能与 iOS Safari 不兼容"
+        fi
+    fi
+    
+    # 检查 HTTP/2 支持
+    print_info "检查 HTTP/2 配置..."
+    if grep -q "http2" "$NGINX_CONFIG"; then
+        print_success "HTTP/2 已启用，有助于 iOS Safari 性能"
+    else
+        print_warning "HTTP/2 未启用，建议启用以提高 iOS 兼容性"
+    fi
+    
+    # 检查 MIME 类型配置
+    print_info "检查 MIME 类型配置..."
+    if [ -f "/etc/nginx/mime.types" ]; then
+        # 检查关键的 MIME 类型
+        if grep -q "application/javascript" /etc/nginx/mime.types; then
+            print_success "JavaScript MIME 类型配置正确"
+        else
+            print_warning "JavaScript MIME 类型可能配置不当"
+        fi
+        
+        if grep -q "font/woff2" /etc/nginx/mime.types; then
+            print_success "字体 MIME 类型配置正确"
+        else
+            print_warning "字体 MIME 类型需要更新"
+        fi
+    fi
+    
+    # 检查内容安全策略
+    print_info "检查内容安全策略..."
+    if grep -q "Content-Security-Policy" "$NGINX_CONFIG"; then
+        print_success "CSP 已配置，有助于 iOS Safari 安全"
+    else
+        print_warning "建议配置 CSP 以提高 iOS Safari 兼容性"
+    fi
+}
+
+# 运行诊断
+diagnose_ios_safari
+
+# iOS Safari 修复建议
+print_step "iOS Safari 修复建议..."
+
+print_info "📱 如果 iOS Safari 仍然无法访问，请尝试以下步骤："
+echo ""
+echo "1. 🔧 客户端诊断："
+echo "   - 在 iOS Safari 中清除缓存和 Cookie"
+echo "   - 尝试在 iOS Safari 的私人浏览模式下访问"
+echo "   - 检查 iOS 设备的日期和时间是否正确"
+echo "   - 尝试重启 iOS 设备的网络连接"
+echo ""
+echo "2. 🌐 DNS 和网络检查："
+echo "   - 确认域名 $DOMAIN_NAME 的 DNS 解析正确"
+echo "   - 检查是否存在 CDN 或代理服务干扰"
+echo "   - 验证防火墙设置允许 HTTPS 流量"
+echo ""
+echo "3. 📱 iOS 特定问题："
+echo "   - iOS Safari 对自签名证书很敏感，确保使用 Let's Encrypt"
+echo "   - 检查证书是否包含完整的证书链"
+echo "   - 验证 SNI (Server Name Indication) 配置"
+echo ""
+echo "4. 🔍 高级诊断命令："
+echo "   # 在服务器上运行以下命令进行诊断："
+echo "   sudo openssl s_client -connect $DOMAIN_NAME:443 -servername $DOMAIN_NAME"
+echo "   sudo nginx -T | grep -A 20 -B 5 '$DOMAIN_NAME'"
+echo "   sudo tail -f /var/log/nginx/$APP_NAME-error.log"
+echo ""
+
+# 添加 iOS Safari 特定的测试脚本
+create_ios_safari_test() {
+    print_info "创建 iOS Safari 兼容性测试页面..."
+    
+    sudo tee "$WEB_DIR/ios-test.html" > /dev/null << 'EOF'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Safari 兼容性测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .test-item {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .success { background: rgba(76, 175, 80, 0.3); }
+        .error { background: rgba(244, 67, 54, 0.3); }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍎 iOS Safari 兼容性测试</h1>
+        
+        <div class="info">
+            <h3>设备信息</h3>
+            <p id="userAgent"></p>
+            <p id="deviceInfo"></p>
+        </div>
+        
+        <div class="test-item" id="httpsTest">
+            <h3>🔒 HTTPS 连接测试</h3>
+            <p id="httpsStatus">检测中...</p>
+        </div>
+        
+        <div class="test-item" id="jsTest">
+            <h3>📜 JavaScript 执行测试</h3>
+            <p>如果您能看到这个页面，JavaScript 正常工作！</p>
+        </div>
+        
+        <div class="test-item" id="fetchTest">
+            <h3>🌐 网络请求测试</h3>
+            <p id="fetchStatus">准备测试...</p>
+            <button onclick="testFetch()">测试 API 连接</button>
+        </div>
+        
+        <div class="test-item" id="fontTest">
+            <h3>🔤 字体渲染测试</h3>
+            <p style="font-family: 'Custom Font', sans-serif;">自定义字体渲染测试</p>
+        </div>
+        
+        <div class="test-item">
+            <h3>📋 诊断信息</h3>
+            <p>时间: <span id="timestamp"></span></p>
+            <p>协议: <span id="protocol"></span></p>
+            <p>主机: <span id="hostname"></span></p>
+        </div>
+        
+        <button onclick="location.href='/'">返回主页</button>
+    </div>
+
+    <script>
+        // 设备信息检测
+        document.getElementById('userAgent').textContent = 'User Agent: ' + navigator.userAgent;
+        
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        
+        document.getElementById('deviceInfo').innerHTML = 
+            '设备类型: ' + (isIOS ? 'iOS 设备' : '其他设备') + 
+            ' | 浏览器: ' + (isSafari ? 'Safari' : '其他浏览器');
+        
+        // HTTPS 检测
+        const isHTTPS = location.protocol === 'https:';
+        const httpsTest = document.getElementById('httpsTest');
+        if (isHTTPS) {
+            httpsTest.classList.add('success');
+            document.getElementById('httpsStatus').textContent = '✅ HTTPS 连接正常';
+        } else {
+            httpsTest.classList.add('error');
+            document.getElementById('httpsStatus').textContent = '❌ 使用 HTTP 连接，建议使用 HTTPS';
+        }
+        
+        // 网络请求测试
+        async function testFetch() {
+            const status = document.getElementById('fetchStatus');
+            const testDiv = document.getElementById('fetchTest');
+            
+            try {
+                status.textContent = '测试中...';
+                const response = await fetch('/health');
+                
+                if (response.ok) {
+                    status.textContent = '✅ 网络请求正常';
+                    testDiv.classList.add('success');
+                } else {
+                    status.textContent = '⚠️ 网络请求异常: ' + response.status;
+                    testDiv.classList.add('error');
+                }
+            } catch (error) {
+                status.textContent = '❌ 网络请求失败: ' + error.message;
+                testDiv.classList.add('error');
+            }
+        }
+        
+        // 基本信息
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        document.getElementById('protocol').textContent = location.protocol;
+        document.getElementById('hostname').textContent = location.hostname;
+        
+        // 自动运行网络测试
+        setTimeout(testFetch, 1000);
+    </script>
+</body>
+</html>
+EOF
+    
+    sudo chown $WEB_USER:$WEB_USER "$WEB_DIR/ios-test.html"
+    sudo chmod 644 "$WEB_DIR/ios-test.html"
+    
+    print_success "iOS Safari 测试页面已创建: https://$DOMAIN_NAME/ios-test.html"
+}
+
+# 创建测试页面
+create_ios_safari_test
+
+# 11. 完成信息
 print_step "部署完成！"
 
 print_success "🎉 部署成功完成！"
