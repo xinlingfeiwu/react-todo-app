@@ -1,3 +1,5 @@
+// 首先导入 polyfills 以确保兼容性
+import './polyfills.js'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'

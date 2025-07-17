@@ -25,6 +25,8 @@
 - Node.js 16.0+
 - npm 或 yarn
 
+> **CentOS 7 兼容性说明**：项目已针对 CentOS 7 + Node.js 16 环境进行优化，添加了必要的 polyfill 以解决 `crypto.getRandomValues` 兼容性问题。
+
 ### 本地开发
 
 ```bash

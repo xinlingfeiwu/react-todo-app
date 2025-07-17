@@ -4,6 +4,21 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // 为 Node.js 16 环境添加全局变量定义
+    global: 'globalThis',
+    // 确保 process.env 可用
+    'process.env': '{}',
+  },
+  resolve: {
+    alias: {
+      // 为 Node.js 16 添加 crypto polyfill
+      crypto: 'crypto-browserify',
+    },
+  },
+  optimizeDeps: {
+    include: ['crypto-browserify'],
+  },
   build: {
     // 生产环境优化
     minify: 'terser',
