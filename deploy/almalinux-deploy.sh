@@ -104,24 +104,171 @@ NGINX_CONFIG="/etc/nginx/conf.d/$APP_NAME.conf"
 
 print_step "开始部署 $APP_NAME 到 AlmaLinux 9.5 ($DOMAIN_NAME)..."
 
-# 1. 系统信息检查
+# 1. 系统信息检查和基础软件安装
 print_info "检查系统信息..."
+
+# 检测操作系统类型
+SYSTEM_TYPE=""
 if [ -f /etc/os-release ]; then
     . /etc/os-release
     print_info "操作系统: $NAME $VERSION"
     
-    # 验证是否为 AlmaLinux 9.x
-    if [[ "$ID" == "almalinux" && "$VERSION_ID" =~ ^9\. ]]; then
-        print_success "确认运行在 AlmaLinux 9.x 上"
+    # 检测系统类型
+    if [[ "$ID" == "almalinux" || "$ID" == "rhel" || "$ID" == "centos" || "$ID" == "rocky" ]]; then
+        SYSTEM_TYPE="rhel"
+        if [[ "$VERSION_ID" =~ ^9\. ]]; then
+            print_success "确认运行在兼容的 RHEL 9.x 系发行版上"
+        elif [[ "$VERSION_ID" =~ ^8\. ]]; then
+            print_success "检测到 RHEL 8.x 系发行版，部分兼容"
+        else
+            print_warning "检测到旧版本 RHEL 系发行版: $VERSION_ID"
+        fi
+    elif [[ "$ID" == "ubuntu" || "$ID" == "debian" ]]; then
+        SYSTEM_TYPE="debian"
+        print_info "检测到 Debian 系发行版: $NAME $VERSION"
+    elif [[ "$ID" == "fedora" ]]; then
+        SYSTEM_TYPE="fedora"
+        print_info "检测到 Fedora: $VERSION"
     else
-        print_warning "此脚本专为 AlmaLinux 9.x 优化，当前系统: $NAME $VERSION"
+        SYSTEM_TYPE="unknown"
+        print_warning "未知的操作系统: $NAME $VERSION，脚本可能需要调整"
     fi
 else
     print_warning "无法检测系统版本"
+    SYSTEM_TYPE="unknown"
 fi
 
-# 2. Node.js 版本检查
-print_info "检查 Node.js 版本..."
+# 安装基础软件包
+print_step "安装基础软件包..."
+
+case $SYSTEM_TYPE in
+    "rhel")
+        print_info "使用 DNF/YUM 包管理器安装基础软件..."
+        
+        # 更新包索引
+        sudo dnf update -y || sudo yum update -y
+        
+        # 安装基础工具
+        sudo dnf install -y curl wget git bind-utils || sudo yum install -y curl wget git bind-utils
+        
+        # 安装 Nginx
+        if ! command -v nginx &> /dev/null; then
+            print_info "安装 Nginx Web 服务器..."
+            sudo dnf install -y nginx || sudo yum install -y nginx
+            
+            # 启动并启用 Nginx
+            sudo systemctl start nginx
+            sudo systemctl enable nginx
+            
+            # 创建 Nginx 配置目录
+            sudo mkdir -p /etc/nginx/conf.d
+            sudo mkdir -p /var/log/nginx
+            
+            print_success "✅ Nginx 安装完成"
+        else
+            print_info "Nginx 已安装"
+        fi
+        ;;
+        
+    "debian")
+        print_info "使用 APT 包管理器安装基础软件..."
+        
+        # 更新包索引
+        sudo apt update
+        
+        # 安装基础工具
+        sudo apt install -y curl wget git dnsutils
+        
+        # 安装 Nginx
+        if ! command -v nginx &> /dev/null; then
+            print_info "安装 Nginx Web 服务器..."
+            sudo apt install -y nginx
+            
+            # 启动并启用 Nginx
+            sudo systemctl start nginx
+            sudo systemctl enable nginx
+            
+            # 创建配置目录
+            sudo mkdir -p /etc/nginx/sites-available
+            sudo mkdir -p /etc/nginx/sites-enabled
+            sudo mkdir -p /var/log/nginx
+            
+            print_success "✅ Nginx 安装完成"
+        else
+            print_info "Nginx 已安装"
+        fi
+        ;;
+        
+    "fedora")
+        print_info "使用 DNF 包管理器安装基础软件..."
+        
+        # 更新包索引
+        sudo dnf update -y
+        
+        # 安装基础工具和 Nginx
+        sudo dnf install -y curl wget git bind-utils nginx
+        
+        # 启动并启用 Nginx
+        sudo systemctl start nginx
+        sudo systemctl enable nginx
+        
+        # 创建配置目录
+        sudo mkdir -p /etc/nginx/conf.d
+        sudo mkdir -p /var/log/nginx
+        
+        print_success "✅ Nginx 安装完成"
+        ;;
+        
+    *)
+        print_warning "未知系统类型，请手动安装 Nginx 和基础工具"
+        if ! command -v nginx &> /dev/null; then
+            error_exit "Nginx 未安装，请手动安装后重新运行脚本"
+        fi
+        ;;
+esac
+
+# 验证 Nginx 安装和运行状态
+print_info "验证 Nginx 状态..."
+if command -v nginx &> /dev/null; then
+    NGINX_VERSION=$(nginx -v 2>&1 | cut -d'/' -f2)
+    print_success "Nginx 版本: $NGINX_VERSION"
+    
+    # 检查 Nginx 是否运行
+    if sudo systemctl is-active nginx &> /dev/null; then
+        print_success "Nginx 服务正在运行"
+    else
+        print_info "启动 Nginx 服务..."
+        sudo systemctl start nginx
+        sudo systemctl enable nginx
+    fi
+    
+    # 测试 Nginx 配置
+    if sudo nginx -t &> /dev/null; then
+        print_success "Nginx 配置文件语法正确"
+    else
+        print_error "Nginx 配置文件有语法错误"
+        sudo nginx -t
+    fi
+else
+    error_exit "Nginx 安装失败或不在 PATH 中"
+fi
+
+# 创建必要的目录
+print_info "创建必要的系统目录..."
+sudo mkdir -p /var/www/html
+sudo mkdir -p /var/log/nginx
+sudo mkdir -p /etc/nginx/conf.d
+
+# 设置 Web 服务器用户
+WEB_USER="nginx"
+if [ "$SYSTEM_TYPE" = "debian" ]; then
+    WEB_USER="www-data"
+fi
+
+print_info "Web 服务器用户: $WEB_USER"
+
+# 2. Node.js 版本检查和安装
+print_step "检查 Node.js 环境..."
 if command -v node &> /dev/null; then
     NODE_VERSION=$(node --version)
     MAJOR_VERSION=$(echo $NODE_VERSION | cut -d'.' -f1 | sed 's/v//')
@@ -131,27 +278,59 @@ if command -v node &> /dev/null; then
         print_success "Node.js 版本满足要求 (>=18)"
     else
         print_error "需要 Node.js 18+，当前版本: $NODE_VERSION"
-        print_info "在 AlmaLinux 9.5 上安装 Node.js 18..."
+        print_info "安装 Node.js 18..."
         
-        # 使用 dnf 安装 Node.js 18
-        if command -v dnf &> /dev/null; then
-            print_info "使用 DNF 包管理器安装 Node.js 18..."
-            sudo dnf update -y
-            sudo dnf install -y nodejs npm
-            
-            # 验证安装
-            if command -v node &> /dev/null; then
-                NODE_VERSION=$(node --version)
-                print_success "Node.js 安装成功: $NODE_VERSION"
-            else
-                error_exit "Node.js 安装失败"
-            fi
+        case $SYSTEM_TYPE in
+            "rhel"|"fedora")
+                # 使用 dnf 安装 Node.js 18
+                print_info "使用 DNF 安装 Node.js 18..."
+                sudo dnf install -y nodejs npm
+                ;;
+            "debian")
+                # 使用 NodeSource 仓库安装最新版本
+                print_info "使用 NodeSource 仓库安装 Node.js 18..."
+                curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                sudo apt-get install -y nodejs
+                ;;
+            *)
+                print_warning "未知系统类型，请手动安装 Node.js 18+"
+                error_exit "请手动安装 Node.js 18+ 后重新运行脚本"
+                ;;
+        esac
+        
+        # 验证安装
+        if command -v node &> /dev/null; then
+            NODE_VERSION=$(node --version)
+            print_success "Node.js 安装成功: $NODE_VERSION"
         else
-            error_exit "DNF 包管理器不可用"
+            error_exit "Node.js 安装失败"
         fi
     fi
 else
-    error_exit "Node.js 未安装"
+    print_info "Node.js 未安装，开始安装..."
+    
+    case $SYSTEM_TYPE in
+        "rhel"|"fedora")
+            print_info "使用 DNF 安装 Node.js..."
+            sudo dnf install -y nodejs npm
+            ;;
+        "debian")
+            print_info "使用 NodeSource 仓库安装 Node.js 18..."
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            ;;
+        *)
+            error_exit "未知系统类型，请手动安装 Node.js 18+"
+            ;;
+    esac
+    
+    # 验证安装
+    if command -v node &> /dev/null; then
+        NODE_VERSION=$(node --version)
+        print_success "Node.js 安装成功: $NODE_VERSION"
+    else
+        error_exit "Node.js 安装失败"
+    fi
 fi
 
 # 3. npm 版本检查
@@ -159,8 +338,15 @@ print_info "检查 npm 版本..."
 if command -v npm &> /dev/null; then
     NPM_VERSION=$(npm --version)
     print_info "npm 版本: $NPM_VERSION"
+    
+    # 更新 npm 到最新版本
+    print_info "更新 npm 到最新版本..."
+    sudo npm install -g npm@latest
+    
+    NEW_NPM_VERSION=$(npm --version)
+    print_success "npm 更新完成: $NEW_NPM_VERSION"
 else
-    error_exit "npm 未安装"
+    error_exit "npm 未安装或不在 PATH 中"
 fi
 
 # 4. 安装依赖
@@ -198,6 +384,27 @@ fi
 
 # 6. Nginx 配置（二级域名支持）
 print_step "配置 Web 服务器 ($DOMAIN_NAME)..."
+
+# 确保 Nginx 配置目录存在
+print_info "确保 Nginx 配置目录存在..."
+sudo mkdir -p /etc/nginx/conf.d
+sudo mkdir -p /var/log/nginx
+sudo mkdir -p /var/www/html
+
+# 检测 Nginx 配置目录结构
+NGINX_CONF_DIR="/etc/nginx/conf.d"
+if [ "$SYSTEM_TYPE" = "debian" ]; then
+    # Debian 系统可能使用 sites-available/sites-enabled 结构
+    if [ -d "/etc/nginx/sites-available" ]; then
+        NGINX_CONF_DIR="/etc/nginx/sites-available"
+        sudo mkdir -p /etc/nginx/sites-enabled
+        print_info "使用 Debian 风格的 Nginx 配置结构"
+    fi
+fi
+
+NGINX_CONFIG="$NGINX_CONF_DIR/$APP_NAME.conf"
+print_info "Nginx 配置文件路径: $NGINX_CONFIG"
+
 if command -v nginx &> /dev/null; then
     print_info "检测到 Nginx"
     
@@ -320,14 +527,37 @@ EOF
         
         print_success "Nginx 配置文件已创建: $NGINX_CONFIG"
         
+        # 对于 Debian 系统，创建 sites-enabled 符号链接
+        if [ "$SYSTEM_TYPE" = "debian" ] && [ "$NGINX_CONF_DIR" = "/etc/nginx/sites-available" ]; then
+            print_info "创建 sites-enabled 符号链接..."
+            sudo ln -sf "$NGINX_CONFIG" "/etc/nginx/sites-enabled/$APP_NAME.conf"
+            
+            # 禁用默认站点
+            if [ -f "/etc/nginx/sites-enabled/default" ]; then
+                sudo rm -f /etc/nginx/sites-enabled/default
+                print_info "已禁用默认 Nginx 站点"
+            fi
+        fi
+        
         # 测试配置
+        print_info "测试 Nginx 配置..."
         if sudo nginx -t; then
             print_success "Nginx 配置测试通过"
             print_info "重启 Nginx..."
             sudo systemctl restart nginx
             sudo systemctl enable nginx
+            
+            # 验证 Nginx 运行状态
+            if sudo systemctl is-active nginx &> /dev/null; then
+                print_success "✅ Nginx 服务运行正常"
+            else
+                print_error "❌ Nginx 服务启动失败"
+                sudo systemctl status nginx
+            fi
         else
-            print_error "Nginx 配置测试失败"
+            print_error "❌ Nginx 配置测试失败"
+            sudo nginx -t
+            print_warning "请检查配置文件语法错误"
         fi
     else
         print_info "Nginx 配置文件已存在: $NGINX_CONFIG"
@@ -340,7 +570,28 @@ EOF
     # 检查 certbot 是否已安装
     if ! command -v certbot &> /dev/null; then
         print_info "安装 certbot..."
-        sudo dnf install -y certbot python3-certbot-nginx
+        
+        case $SYSTEM_TYPE in
+            "rhel"|"fedora")
+                sudo dnf install -y certbot python3-certbot-nginx
+                ;;
+            "debian")
+                sudo apt install -y certbot python3-certbot-nginx
+                ;;
+            *)
+                print_warning "未知系统类型，请手动安装 certbot"
+                print_info "安装命令示例："
+                print_info "  RHEL/AlmaLinux: sudo dnf install -y certbot python3-certbot-nginx"
+                print_info "  Debian/Ubuntu: sudo apt install -y certbot python3-certbot-nginx"
+                ;;
+        esac
+        
+        # 验证安装
+        if command -v certbot &> /dev/null; then
+            print_success "✅ certbot 安装成功"
+        else
+            print_warning "certbot 安装失败，将跳过自动 SSL 配置"
+        fi
     fi
     
     # 检查证书是否已存在
@@ -400,8 +651,22 @@ EOF
                 sudo systemctl reload nginx
                 
                 # 创建 webroot 目录
+                print_info "创建 Let's Encrypt webroot 目录..."
                 sudo mkdir -p /var/www/html/.well-known/acme-challenge
-                sudo chown -R nginx:nginx /var/www/html
+                
+                # 设置正确的权限
+                case $SYSTEM_TYPE in
+                    "rhel"|"fedora")
+                        sudo chown -R nginx:nginx /var/www/html
+                        ;;
+                    "debian")
+                        sudo chown -R www-data:www-data /var/www/html
+                        ;;
+                    *)
+                        sudo chown -R $WEB_USER:$WEB_USER /var/www/html
+                        ;;
+                esac
+                sudo chmod -R 755 /var/www/html
                 
                 # 获取证书
                 if sudo certbot certonly --webroot -w /var/www/html -d $DOMAIN_NAME --non-interactive --agree-tos --email "$ssl_email"; then
@@ -595,63 +860,135 @@ fi
 # 7. 部署到 Web 目录
 print_step "部署到 Web 目录 ($WEB_DIR)..."
 
-if [ -d "$WEB_DIR" ]; then
-    print_info "备份现有部署..."
-    sudo cp -r "$WEB_DIR" "$WEB_DIR.backup.$(date +%Y%m%d_%H%M%S)"
+# 检查构建文件是否存在
+if [ ! -d "dist" ]; then
+    error_exit "构建目录 'dist' 不存在，请先运行构建命令"
 fi
 
+# 备份现有部署
+if [ -d "$WEB_DIR" ]; then
+    BACKUP_DIR="$WEB_DIR.backup.$(date +%Y%m%d_%H%M%S)"
+    print_info "备份现有部署到: $BACKUP_DIR"
+    sudo cp -r "$WEB_DIR" "$BACKUP_DIR"
+fi
+
+# 创建 Web 目录
 print_info "创建 Web 目录..."
 sudo mkdir -p "$WEB_DIR"
+
+# 确保父目录权限正确
+sudo mkdir -p /var/www
+sudo chmod 755 /var/www
 
 print_info "复制构建文件..."
 sudo cp -r dist/* "$WEB_DIR/"
 
+# 创建健康检查文件
+print_info "创建健康检查文件..."
+echo "healthy" | sudo tee "$WEB_DIR/health" > /dev/null
+
 print_info "设置文件权限..."
-sudo chown -R nginx:nginx "$WEB_DIR" 2>/dev/null || sudo chown -R apache:apache "$WEB_DIR" 2>/dev/null || sudo chown -R www-data:www-data "$WEB_DIR" 2>/dev/null
+# 设置正确的所有者
+case $SYSTEM_TYPE in
+    "rhel"|"fedora")
+        sudo chown -R nginx:nginx "$WEB_DIR"
+        ;;
+    "debian")
+        sudo chown -R www-data:www-data "$WEB_DIR"
+        ;;
+    *)
+        # 尝试多种可能的用户
+        sudo chown -R nginx:nginx "$WEB_DIR" 2>/dev/null || \
+        sudo chown -R www-data:www-data "$WEB_DIR" 2>/dev/null || \
+        sudo chown -R apache:apache "$WEB_DIR" 2>/dev/null || \
+        sudo chown -R $USER:$USER "$WEB_DIR"
+        ;;
+esac
+
+# 设置目录权限
 sudo chmod -R 755 "$WEB_DIR"
+
+# 设置 SELinux 上下文（如果需要）
+if command -v getenforce &> /dev/null && [ "$(getenforce)" = "Enforcing" ]; then
+    print_info "设置 SELinux 上下文..."
+    sudo setsebool -P httpd_can_network_connect on
+    sudo semanage fcontext -a -t httpd_exec_t "$WEB_DIR(/.*)?" 2>/dev/null || true
+    sudo restorecon -Rv "$WEB_DIR"
+fi
 
 print_success "应用部署完成: $WEB_DIR"
 
+# 验证部署
+print_info "验证部署文件..."
+if [ -f "$WEB_DIR/index.html" ]; then
+    print_success "✅ index.html 存在"
+else
+    print_error "❌ index.html 不存在"
+fi
+
+if [ -d "$WEB_DIR/assets" ]; then
+    ASSET_COUNT=$(find "$WEB_DIR/assets" -type f | wc -l)
+    print_success "✅ assets 目录存在，包含 $ASSET_COUNT 个文件"
+else
+    print_warning "⚠️  assets 目录不存在"
+fi
+
 # 8. 防火墙配置
 print_step "配置防火墙..."
-if command -v firewall-cmd &> /dev/null; then
-    if sudo firewall-cmd --state &> /dev/null; then
-        print_info "配置 firewalld 防火墙..."
+
+case $SYSTEM_TYPE in
+    "rhel"|"fedora")
+        if command -v firewall-cmd &> /dev/null; then
+            print_info "配置 firewalld 防火墙..."
+            
+            # 确保防火墙服务启动
+            if ! sudo systemctl is-active firewalld &> /dev/null; then
+                print_info "启动 firewalld 服务..."
+                sudo systemctl start firewalld
+                sudo systemctl enable firewalld
+            fi
+            
+            # 开放必要端口
+            sudo firewall-cmd --permanent --add-service=http
+            sudo firewall-cmd --permanent --add-service=https
+            sudo firewall-cmd --permanent --add-service=ssh
+            
+            # 重载防火墙配置
+            sudo firewall-cmd --reload
+            
+            print_success "✅ firewalld 配置完成"
+            
+            # 显示当前防火墙状态
+            print_info "当前开放的服务:"
+            sudo firewall-cmd --list-services
+        else
+            print_warning "firewalld 未安装，请手动配置防火墙"
+        fi
+        ;;
         
-        # 确保防火墙服务启动
-        sudo systemctl start firewalld
-        sudo systemctl enable firewalld
+    "debian")
+        if command -v ufw &> /dev/null; then
+            print_info "配置 UFW 防火墙..."
+            sudo ufw --force enable
+            sudo ufw allow ssh
+            sudo ufw allow http
+            sudo ufw allow https
+            print_success "✅ UFW 防火墙配置完成"
+            
+            # 显示防火墙状态
+            print_info "UFW 状态:"
+            sudo ufw status
+        else
+            print_warning "UFW 未安装，请手动配置防火墙"
+            print_info "安装 UFW: sudo apt install -y ufw"
+        fi
+        ;;
         
-        # 开放必要端口
-        sudo firewall-cmd --permanent --add-service=http
-        sudo firewall-cmd --permanent --add-service=https
-        sudo firewall-cmd --permanent --add-service=ssh
-        
-        # 重载防火墙配置
-        sudo firewall-cmd --reload
-        
-        print_success "✅ 防火墙配置完成"
-        
-        # 显示当前防火墙状态
-        print_info "当前开放的服务:"
-        sudo firewall-cmd --list-services
-    else
-        print_info "防火墙未运行，启动中..."
-        sudo systemctl start firewalld
-        sudo systemctl enable firewalld
-        # 递归调用防火墙配置
-        print_info "重新配置防火墙..."
-    fi
-elif command -v ufw &> /dev/null; then
-    print_info "配置 UFW 防火墙..."
-    sudo ufw --force enable
-    sudo ufw allow ssh
-    sudo ufw allow http
-    sudo ufw allow https
-    print_success "✅ UFW 防火墙配置完成"
-else
-    print_warning "未检测到防火墙管理工具，请手动配置防火墙"
-fi
+    *)
+        print_warning "未知系统类型，请手动配置防火墙"
+        print_info "需要开放的端口: 22 (SSH), 80 (HTTP), 443 (HTTPS)"
+        ;;
+esac
 
 # 9. SELinux 配置（如果启用）
 print_step "检查 SELinux 配置..."
