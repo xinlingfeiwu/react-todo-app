@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DONATION_RECORDS_KEY } from '../constants/storageKeys';
 import { getDonationRecords, addDonationRecord } from '../utils/donationManager';
 
 /**
@@ -46,7 +47,7 @@ function ThankYouList({ showAddDemo = false }) {
 
   // 清空记录（仅用于测试）
   const clearRecords = () => {
-    localStorage.removeItem('donation_records');
+    localStorage.removeItem(DONATION_RECORDS_KEY);
     setDonations([]);
   };
 

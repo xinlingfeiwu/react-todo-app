@@ -647,11 +647,44 @@ if [ -f "package.json" ]; then
     print_info "安装依赖..."
     npm install
     
+    print_info "生成版本信息..."
+    # 生成版本信息文件供应用更新检测使用
+    if [ -f "scripts/generate-version.sh" ]; then
+        chmod +x scripts/generate-version.sh
+        ./scripts/generate-version.sh
+    else
+        print_warning "版本生成脚本未找到，将使用默认版本信息"
+        # 创建基本的版本信息文件
+        mkdir -p public
+        VERSION=$(grep '"version"' package.json | cut -d'"' -f4 || echo "1.0.0")
+        BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
+        BUILD_HASH=$(echo "${BUILD_TIME}${VERSION}" | shasum -a 256 | cut -c1-12)
+        
+        cat > public/version.json << EOF
+{
+  "version": "$VERSION",
+  "buildTime": "$BUILD_TIME",
+  "buildHash": "$BUILD_HASH",
+  "timestamp": $(date +%s)
+}
+EOF
+        print_info "已生成基本版本信息文件"
+    fi
+    
     print_info "构建应用..."
     npm run build
     
     if [ -d "dist" ]; then
         print_success "构建完成"
+        
+        # 验证version.json是否存在于构建输出中
+        if [ ! -f "dist/version.json" ]; then
+            print_warning "构建输出中未找到version.json，尝试复制..."
+            if [ -f "public/version.json" ]; then
+                cp public/version.json dist/
+                print_info "已复制version.json到构建输出"
+            fi
+        fi
         
         # 创建 Web 目录
         print_info "创建 Web 目录: $WEB_DIR"
@@ -660,6 +693,16 @@ if [ -f "package.json" ]; then
         # 复制构建文件
         print_info "复制构建文件到 $WEB_DIR"
         sudo cp -r dist/* "$WEB_DIR/"
+        
+        # 确保version.json文件存在且可访问
+        if [ -f "$WEB_DIR/version.json" ]; then
+            print_success "✅ 版本信息文件已部署: $WEB_DIR/version.json"
+            # 显示版本信息
+            VERSION_INFO=$(cat "$WEB_DIR/version.json" | grep '"version"' | cut -d'"' -f4)
+            print_info "部署版本: $VERSION_INFO"
+        else
+            print_warning "⚠️ 版本信息文件未找到，应用更新检测可能无法正常工作"
+        fi
         
         # 设置权限
         sudo chown -R $WEB_USER:$WEB_USER "$WEB_DIR"

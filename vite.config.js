@@ -12,10 +12,28 @@ export default defineConfig({
     // 代码分割优化
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          icons: ['react-icons']
-        }
+        manualChunks: (id) => {
+          // React 相关
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor';
+          }
+          // 图标库
+          if (id.includes('node_modules/react-icons')) {
+            return 'icons';
+          }
+          // 大型组件分离
+          if (id.includes('DataManager.jsx') || 
+              id.includes('AppSettings.jsx') || 
+              id.includes('FeedbackManager.jsx') || 
+              id.includes('PrivacyPolicy.jsx') || 
+              id.includes('Donate.jsx')) {
+            return 'components';
+          }
+        },
+        // 文件名优化
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
     },
     // 输出目录
@@ -26,9 +44,23 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        // 删除未使用的代码
+        pure_funcs: ['console.log', 'console.info'],
+        // 优化常量
+        evaluate: true,
+        // 删除死代码
+        dead_code: true
+      },
+      mangle: {
+        // 混淆变量名
+        safari10: true
       }
-    }
+    },
+    // Gzip 压缩大小报告
+    reportCompressedSize: true,
+    // chunk 大小警告限制
+    chunkSizeWarningLimit: 500
   },
   // 预览服务器配置
   preview: {
@@ -38,6 +70,19 @@ export default defineConfig({
   // 开发服务器配置
   server: {
     port: 5174,
-    host: true
+    host: true,
+    // 修复WebSocket连接问题
+    hmr: {
+      port: 5174,
+      host: 'localhost'
+    },
+    // 处理CORS
+    cors: true
+  },
+  // 依赖预构建优化
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-icons'],
+    // 排除不需要预构建的依赖
+    exclude: []
   }
 })

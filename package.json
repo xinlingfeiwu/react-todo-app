@@ -27,14 +27,16 @@
   "homepage": "https://github.com/xinlingfeiwu/react-todo-app#readme",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:prod": "NODE_ENV=production vite build",
+    "build": "npm run generate-version && vite build",
+    "build:prod": "npm run generate-version && NODE_ENV=production vite build",
+    "generate-version": "chmod +x scripts/generate-version.sh && ./scripts/generate-version.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "analyze": "vite build --mode analyze",
     "serve": "vite preview --port 4173",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "update-check": "echo '检查应用更新功能已集成到应用中，启动应用即可体验'"
   },
   "dependencies": {
     "react": "^19.1.0",

@@ -8,6 +8,7 @@ export { default as CreateForm } from './CreateForm';
 export { default as EditForm } from './EditForm';
 export { default as DataManager } from './DataManager';
 export { default as AppSettings } from './AppSettings';
+export { default as AppUpdateNotification } from './AppUpdateNotification';
 export { default as ThemeToggle } from './ThemeToggle';
 export { default as ThankYouList } from './ThankYouList';
 export { default as CookieConsent } from './CookieConsent';
