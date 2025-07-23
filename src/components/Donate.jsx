@@ -182,7 +182,7 @@ ${shareData.text}
                   <h5>微信支付</h5>
                   <div className="qr-code-container">
                     <img
-                      src={`${import.meta.env.BASE_URL}images/wechat-qr`}
+                      src={`${import.meta.env.BASE_URL}images/wechat-qr.jpg`}
                       alt="微信收款码"
                       className="qr-image"
                     />
