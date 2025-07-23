@@ -154,6 +154,102 @@ function generateChangelog() {
 const args = process.argv.slice(2);
 const skipGithubRelease = args.includes('--skip-github-release') || args.includes('--skip-release');
 
+// 网络重试函数
+function executeWithRetry(command, options = {}, maxRetries = 3) {
+  const { stdio = 'pipe', timeout = 30000 } = options;
+
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      console.log(`🔄 执行: ${command} ${i > 0 ? `(第${i + 1}次尝试)` : ''}`);
+      return execSync(command, { stdio, timeout, encoding: 'utf8' });
+    } catch (error) {
+      console.log(`⚠️  执行失败: ${error.message}`);
+
+      if (i === maxRetries - 1) {
+        throw error;
+      }
+
+      // 如果是HTTP2错误，尝试禁用HTTP2
+      if (error.message.includes('HTTP2') || error.message.includes('framing layer')) {
+        console.log('🔧 检测到HTTP2错误，尝试降级到HTTP/1.1...');
+        try {
+          execSync('git config --global http.version HTTP/1.1', { stdio: 'ignore' });
+        } catch (_configError) {
+          console.log('⚠️  无法设置HTTP版本，继续重试...');
+        }
+      }
+
+      // 等待后重试
+      const waitTime = (i + 1) * 2000; // 2秒, 4秒, 6秒
+      console.log(`⏳ 等待 ${waitTime/1000} 秒后重试...`);
+      execSync(`sleep ${waitTime/1000}`, { stdio: 'ignore' });
+    }
+  }
+}
+
+// 推送到远程的函数
+function pushToRemote(currentVersion) {
+  console.log('🚀 开始推送到远程仓库...');
+
+  try {
+    // 首先尝试推送main分支
+    executeWithRetry('git push origin main');
+    console.log('✅ 推送主分支成功');
+
+    // 然后推送标签
+    executeWithRetry(`git push origin v${currentVersion}`);
+    console.log('✅ 推送标签成功');
+
+  } catch (_error) {
+    console.log('❌ 推送失败，尝试其他解决方案...');
+
+    // 尝试不同的推送方式
+    const solutions = [
+      {
+        name: '切换到SSH协议',
+        commands: [
+          'git remote set-url origin git@github.com:xinlingfeiwu/react-todo-app.git',
+          'git push origin main',
+          `git push origin v${currentVersion}`
+        ]
+      },
+      {
+        name: '强制使用HTTP/1.1',
+        commands: [
+          'git config --global http.version HTTP/1.1',
+          'git config --global http.postBuffer 524288000',
+          'git push origin main',
+          `git push origin v${currentVersion}`
+        ]
+      },
+      {
+        name: '分别推送',
+        commands: [
+          'git push origin main --no-verify',
+          `git push origin v${currentVersion} --no-verify`
+        ]
+      }
+    ];
+
+    for (const solution of solutions) {
+      try {
+        console.log(`🔧 尝试解决方案: ${solution.name}`);
+        for (const cmd of solution.commands) {
+          executeWithRetry(cmd, {}, 2);
+        }
+        console.log(`✅ ${solution.name} 成功`);
+        return;
+      } catch (solutionError) {
+        console.log(`❌ ${solution.name} 失败: ${solutionError.message}`);
+        continue;
+      }
+    }
+
+    // 所有方案都失败了
+    throw new Error(`推送失败。请手动执行以下命令:\n  git push origin main\n  git push origin v${currentVersion}\n\n可能的解决方案:\n1. 检查网络连接\n2. 切换到SSH: git remote set-url origin git@github.com:xinlingfeiwu/react-todo-app.git\n3. 禁用HTTP2: git config --global http.version HTTP/1.1`);
+  }
+}
+
 async function release() {
   try {
     console.log(`🚀 准备发布版本 v${currentVersion}...`);
@@ -187,10 +283,8 @@ async function release() {
     execSync(`git tag -a v${currentVersion} -m "v${currentVersion}\n\n${changelog}"`);
     console.log('✅ 创建版本标签');
 
-    // 推送到远程
-    execSync('git push origin main');
-    execSync(`git push origin v${currentVersion}`);
-    console.log('✅ 推送到 GitHub');
+    // 推送到远程 - 使用改进的推送函数
+    pushToRemote(currentVersion);
 
     if (skipGithubRelease) {
       console.log('⏭️  跳过 GitHub Release 创建');
@@ -273,8 +367,8 @@ npm run build:prod
     console.log(`📦 标签: v${currentVersion}`);
     console.log(`🌐 GitHub: https://github.com/xinlingfeiwu/react-todo-app/releases/tag/v${currentVersion}`);
 
-  } catch (error) {
-    console.error('❌ 发布失败:', error.message);
+  } catch (_error) {
+    console.error('❌ 发布失败:', _error.message);
     process.exit(1);
   }
 }
