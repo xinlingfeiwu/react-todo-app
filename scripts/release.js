@@ -131,13 +131,19 @@ function generateChangelog() {
       const contributorLines = contributors.split('\n').filter(line => line.trim());
       if (contributorLines.length > 0) {
         changelog += '\n\n#### ❤️ Thank You\n感谢以下贡献者的辛勤付出：\n';
+
+        // 去重并获取贡献者姓名
+        const uniqueContributors = new Set();
         contributorLines.forEach(line => {
-          const [name, email] = line.split('|');
-          if (name && email) {
-            // 从邮箱提取 GitHub 用户名（简单处理）
-            const githubUser = email.replace(/@.*/, '');
-            changelog += `• [@${githubUser}](https://github.com/${githubUser})\n`;
+          const [name] = line.split('|');
+          if (name && name.trim()) {
+            uniqueContributors.add(name.trim());
           }
+        });
+
+        // 按字母顺序排序并添加到changelog
+        Array.from(uniqueContributors).sort().forEach(name => {
+          changelog += `• ${name}\n`;
         });
       }
     }
@@ -367,8 +373,8 @@ npm run build:prod
     console.log(`📦 标签: v${currentVersion}`);
     console.log(`🌐 GitHub: https://github.com/xinlingfeiwu/react-todo-app/releases/tag/v${currentVersion}`);
 
-  } catch (_error) {
-    console.error('❌ 发布失败:', _error.message);
+  } catch (error) {
+    console.error('❌ 发布失败:', error.message);
     process.exit(1);
   }
 }
