@@ -1,29 +1,29 @@
 // 应用版本信息常量 (自动生成，请勿手动修改)
-// 生成时间: 2025-07-23T05:04:20.3NZ
+// 生成时间: 2025-07-23T05:17:57.3NZ
 
-export const APP_VERSION = '1.13.0';
-export const BUILD_TIME = '2025-07-23T05:04:20.3NZ';
-export const BUILD_HASH = '8e22429ebc01';
-export const BUILD_TIMESTAMP = 1753247060;
+export const APP_VERSION = '1.14.0';
+export const BUILD_TIME = '2025-07-23T05:17:57.3NZ';
+export const BUILD_HASH = 'eb2e041a388d';
+export const BUILD_TIMESTAMP = 1753247877;
 
 export const GIT_INFO = {
-  hash: '233d118',
+  hash: '3ec3bdf',
   branch: 'main',
-  tag: ''
+  tag: 'v1.13.0'
 };
 
 export const VERSION_INFO = {
   name: 'react-todo-app',
-  version: '1.13.0',
-  buildTime: '2025-07-23T05:04:20.3NZ',
-  buildHash: '8e22429ebc01',
-  buildTimestamp: 1753247060,
+  version: '1.14.0',
+  buildTime: '2025-07-23T05:17:57.3NZ',
+  buildHash: 'eb2e041a388d',
+  buildTimestamp: 1753247877,
   git: GIT_INFO
 };
 
 // 设置全局变量供应用使用
 if (typeof window !== 'undefined') {
-  window.__APP_VERSION__ = '1.13.0';
-  window.__BUILD_HASH__ = '8e22429ebc01';
-  window.__BUILD_TIME__ = '2025-07-23T05:04:20.3NZ';
+  window.__APP_VERSION__ = '1.14.0';
+  window.__BUILD_HASH__ = 'eb2e041a388d';
+  window.__BUILD_TIME__ = '2025-07-23T05:17:57.3NZ';
 }
