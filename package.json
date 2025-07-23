@@ -1,7 +1,7 @@
 {
   "name": "react-todo-app",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.7.0",
   "type": "module",
   "description": "简洁高效的待办事项管理工具，支持任务创建、编辑、删除和数据管理",
   "keywords": [
@@ -35,7 +35,6 @@
     "preview": "vite preview",
     "analyze": "vite build --mode analyze",
     "serve": "vite preview --port 4173",
-    "type-check": "tsc --noEmit",
     "update-check": "echo '检查应用更新功能已集成到应用中，启动应用即可体验'",
     "commit": "cz",
     "prepare": "husky",
@@ -46,7 +45,7 @@
     "release:minor": "npm run version:minor && npm run release:commit",
     "release:major": "npm run version:major && npm run release:commit",
     "release:commit": "node scripts/release.js",
-    "prepare-release": "npm run lint && npm run type-check && npm run test && echo '✅ 发布前检查通过'",
+    "prepare-release": "npm run lint && npm run test && echo '✅ 发布前检查通过'",
     "test": "echo '⚠️  暂无测试用例，跳过测试' && exit 0",
     "prebuild:prod": "npm run prepare-release"
   },

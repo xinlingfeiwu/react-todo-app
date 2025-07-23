@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// ES模块中获取 __dirname 的方法
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 读取当前版本号
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -116,7 +121,7 @@ function generateChangelog() {
 
     return changelog || '• 版本更新和优化';
 
-  } catch (error) {
+  } catch (_error) {
     console.log('生成变更日志时出错，使用默认内容');
     return '• 功能优化和问题修复';
   }
