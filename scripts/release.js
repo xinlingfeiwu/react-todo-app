@@ -128,6 +128,10 @@ npm run build:prod
     const tempFile = `release-notes-${currentVersion}.md`;
     fs.writeFileSync(tempFile, releaseNotes);
 
+    // ✅ 自动构建生产版本
+    console.log('🛠️ 正在执行构建...');
+    execSync('npm run build:prod', { stdio: 'inherit' });
+
     // ✅ 打包 dist 为 zip
     const zipName = 'react-todo-app-dist.zip';
     const distPath = path.join(__dirname, 'dist');
@@ -136,19 +140,25 @@ npm run build:prod
       console.log('📦 正在打包 dist 文件夹...');
       execSync(`zip -r ${zipName} dist`, { stdio: 'inherit' });
       console.log(`✅ 生成压缩包: ${zipName}`);
+    } else {
+      console.log('⚠️ 未找到 dist 文件夹，跳过打包。');
     }
 
     try {
-      execSync(`gh release create v${currentVersion} ${zipName} --title "v${currentVersion}" --notes-file "${tempFile}" --verify-tag`, {
-        stdio: 'inherit', timeout: 30000
-      });
-      console.log('✅ 创建 GitHub Release');
-
-      fs.unlinkSync(tempFile);
       if (fs.existsSync(zipPath)) {
+        execSync(`gh release create v${currentVersion} ${zipName} --title "v${currentVersion}" --notes-file "${tempFile}" --verify-tag`, {
+          stdio: 'inherit', timeout: 30000
+        });
         fs.unlinkSync(zipPath);
         console.log(`🧹 已删除本地压缩文件: ${zipName}`);
+      } else {
+        execSync(`gh release create v${currentVersion} --title "v${currentVersion}" --notes-file "${tempFile}" --verify-tag`, {
+          stdio: 'inherit', timeout: 30000
+        });
+        console.log('⚠️ 未找到压缩文件，未上传 dist.zip');
       }
+      fs.unlinkSync(tempFile);
+      console.log('✅ 创建 GitHub Release');
     } catch (_error) {
       if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
       if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
