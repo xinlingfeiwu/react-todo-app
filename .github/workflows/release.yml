@@ -1,0 +1,225 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📋 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Lint
+        run: npm run lint
+
+      - name: 🏗️ Build
+        run: npm run build:prod
+
+      - name: 📝 Generate Release Notes
+        id: release_notes
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+          # 获取上一个标签
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          # 获取提交记录
+          if [ -z "$PREV_TAG" ]; then
+            COMMITS=$(git log --oneline --no-merges)
+          else
+            COMMITS=$(git log $PREV_TAG..HEAD --oneline --no-merges)
+          fi
+          
+          # 获取贡献者信息
+          if [ -z "$PREV_TAG" ]; then
+            CONTRIBUTORS=$(git log --format='%an|%ae' | sort | uniq)
+          else
+            CONTRIBUTORS=$(git log $PREV_TAG..HEAD --format='%an|%ae' | sort | uniq)
+          fi
+          
+          # 初始化各类别变更
+          FEATURES=""
+          FIXES=""
+          DOCS=""
+          REFACTORS=""
+          PERFORMANCES=""
+          TESTS=""
+          CHORES=""
+          OTHERS=""
+          
+          # 解析提交信息并分类
+          while IFS= read -r line; do
+            if [ -n "$line" ]; then
+              # 提取提交信息（去掉哈希）
+              MSG=$(echo "$line" | sed 's/^[a-f0-9]* //')
+          
+              case "$MSG" in
+                feat:*|feature:*)
+                  FEATURES="$FEATURES\n• ${MSG#*: }"
+                  ;;
+                fix:*|bugfix:*)
+                  FIXES="$FIXES\n• ${MSG#*: }"
+                  ;;
+                doc:*|docs:*)
+                  DOCS="$DOCS\n• ${MSG#*: }"
+                  ;;
+                style:*)
+                  PERFORMANCES="$PERFORMANCES\n• ${MSG#*: }"
+                  ;;
+                refactor:*)
+                  REFACTORS="$REFACTORS\n• ${MSG#*: }"
+                  ;;
+                perf:*|performance:*)
+                  PERFORMANCES="$PERFORMANCES\n• ${MSG#*: }"
+                  ;;
+                test:*|tests:*)
+                  TESTS="$TESTS\n• ${MSG#*: }"
+                  ;;
+                chore:*|build:*|ci:*)
+                  CHORES="$CHORES\n• ${MSG#*: }"
+                  ;;
+                *)
+                  OTHERS="$OTHERS\n• $MSG"
+                  ;;
+              esac
+            fi
+          done <<< "$COMMITS"
+          
+          # 构建分类的更新内容
+          CHANGELOG=""
+          
+          if [ -n "$FEATURES" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### ✨ 新功能$FEATURES"
+          fi
+          
+          if [ -n "$FIXES" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### 🐛 问题修复$FIXES"
+          fi
+          
+          if [ -n "$PERFORMANCES" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### ⚡ 性能优化与样式更新$PERFORMANCES"
+          fi
+          
+          if [ -n "$REFACTORS" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### ♻️ 代码重构$REFACTORS"
+          fi
+          
+          if [ -n "$DOCS" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### 📚 文档更新$DOCS"
+          fi
+          
+          if [ -n "$TESTS" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### 🧪 测试相关$TESTS"
+          fi
+          
+          if [ -n "$CHORES" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### 🔧 构建/工具$CHORES"
+          fi
+          
+          if [ -n "$OTHERS" ]; then
+            CHANGELOG="$CHANGELOG\n\n#### 📝 其他更新$OTHERS"
+          fi
+          
+          # 如果没有分类内容，使用默认信息
+          if [ -z "$CHANGELOG" ]; then
+            CHANGELOG="\n• 版本更新和优化"
+          fi
+          
+          # 构建贡献者信息
+          CONTRIBUTORS_SECTION=""
+          if [ -n "$CONTRIBUTORS" ]; then
+            CONTRIBUTORS_SECTION="\n\n#### ❤️ Thank You\n感谢以下贡献者的辛勤付出：\n"
+            while IFS='|' read -r name email; do
+              if [ -n "$name" ] && [ -n "$email" ]; then
+                # 从邮箱提取 GitHub 用户名（简单处理，实际可能需要更复杂的逻辑）
+                github_user=$(echo "$email" | sed 's/@.*//')
+                CONTRIBUTORS_SECTION="$CONTRIBUTORS_SECTION\n• [@$github_user](https://github.com/$github_user)"
+              fi
+            done <<< "$CONTRIBUTORS"
+          fi
+          
+          # 构建发布说明
+          cat > release_notes.md << EOF
+          ## 🎉 版本 $VERSION
+          
+          ### 📝 本次更新$CHANGELOG$CONTRIBUTORS_SECTION
+          
+          ### 📦 使用方式
+          \`\`\`bash
+          # 克隆项目
+          git clone https://github.com/xinlingfeiwu/react-todo-app.git
+          cd react-todo-app
+          
+          # 安装依赖
+          npm install
+          
+          # 启动开发服务器
+          npm run dev
+          
+          # 构建生产版本
+          npm run build:prod
+          \`\`\`
+          
+          ### 🌐 在线体验
+          访问 [GitHub Pages](https://xinlingfeiwu.github.io/react-todo-app/) 立即体验
+          
+          ### 📊 项目信息
+          • **版本**: $VERSION
+          • **构建时间**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          • **提交哈希**: $(git rev-parse --short HEAD)
+          • **下载**: [源码包](https://github.com/xinlingfeiwu/react-todo-app/archive/refs/tags/$VERSION.tar.gz)
+          EOF
+
+      - name: 🚀 Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.release_notes.outputs.version }}
+          release_name: ${{ steps.release_notes.outputs.version }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+
+      - name: 🌐 Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
+      - name: 📤 Upload Build Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy-pages:
+    needs: release
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 🌐 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
