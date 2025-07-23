@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
+// eslint-disable-next-line no-undef
+const base = process.env.BUILD_BASE || '/';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base,
   build: {
     // 生产环境优化
     minify: 'terser',
@@ -22,10 +24,10 @@ export default defineConfig({
             return 'icons';
           }
           // 大型组件分离
-          if (id.includes('DataManager.jsx') || 
-              id.includes('AppSettings.jsx') || 
-              id.includes('FeedbackManager.jsx') || 
-              id.includes('PrivacyPolicy.jsx') || 
+          if (id.includes('DataManager.jsx') ||
+              id.includes('AppSettings.jsx') ||
+              id.includes('FeedbackManager.jsx') ||
+              id.includes('PrivacyPolicy.jsx') ||
               id.includes('Donate.jsx')) {
             return 'components';
           }

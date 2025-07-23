@@ -1,7 +1,7 @@
 {
   "name": "react-todo-app",
   "private": false,
-  "version": "1.19.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "简洁高效的待办事项管理工具，支持任务创建、编辑、删除和数据管理",
   "keywords": [
@@ -24,11 +24,13 @@
   "bugs": {
     "url": "https://github.com/xinlingfeiwu/react-todo-app/issues"
   },
-  "homepage": "https://github.com/xinlingfeiwu/react-todo-app#readme",
+  "homepage": "https://xinlingfeiwu.github.com/react-todo-app",
   "scripts": {
     "dev": "vite",
     "build": "npm run generate-version && vite build",
     "build:prod": "npm run generate-version && NODE_ENV=production vite build",
+    "build:gh": "BUILD_BASE=/react-todo-app/ npm run build:prod",
+    "deploy": "gh-pages -d dist",
     "generate-version": "chmod +x scripts/generate-version.sh && ./scripts/generate-version.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -38,9 +40,9 @@
     "update-check": "echo '检查应用更新功能已集成到应用中，启动应用即可体验'",
     "commit": "cz",
     "prepare": "husky",
-    "version:patch": "npm version patch --no-git-tag-version && npm run build:prod",
-    "version:minor": "npm version minor --no-git-tag-version && npm run build:prod",
-    "version:major": "npm version major --no-git-tag-version && npm run build:prod",
+    "version:patch": "npm version patch --no-git-tag-version && npm run build:gh",
+    "version:minor": "npm version minor --no-git-tag-version && npm run build:gh",
+    "version:major": "npm version major --no-git-tag-version && npm run build:gh",
     "release:patch": "npm run version:patch && npm run release:commit",
     "release:minor": "npm run version:minor && npm run release:commit",
     "release:major": "npm run version:major && npm run release:commit",
@@ -55,17 +57,18 @@
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@eslint/js": "^9.30.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "husky": "^9.1.6",
     "terser": "^5.43.1",

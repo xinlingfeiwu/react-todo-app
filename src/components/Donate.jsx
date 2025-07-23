@@ -170,7 +170,7 @@ ${shareData.text}
                   <h5>支付宝</h5>
                   <div className="qr-code-container">
                     <img
-                      src="/images/alipay-qr.jpg"
+                      src={`${import.meta.env.BASE_URL}images/alipay-qr.jpg`}
                       alt="支付宝收款码"
                       className="qr-image"
                     />
@@ -182,7 +182,7 @@ ${shareData.text}
                   <h5>微信支付</h5>
                   <div className="qr-code-container">
                     <img
-                      src="/images/wechat-qr.jpg"
+                      src={`${import.meta.env.BASE_URL}images/wechat-qr`}
                       alt="微信收款码"
                       className="qr-image"
                     />

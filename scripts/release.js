@@ -318,7 +318,7 @@ npm install
 npm run dev
 
 # 构建生产版本
-npm run build:prod
+npm run build:gh
 \`\`\`
 
 ### 🌐 在线体验
@@ -380,3 +380,5 @@ npm run build:prod
 
 // 执行发布
 release();
+console.log('🚀 正在发布到 GitHub Pages...');
+execSync('npm run deploy', { stdio: 'inherit' });
