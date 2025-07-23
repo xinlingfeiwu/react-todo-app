@@ -43,28 +43,51 @@ function generateChangelog() {
     };
 
     commitLines.forEach(line => {
-      const message = line.replace(/^[a-f0-9]+\s/, '');
+      const message = line.replace(/^[a-f0-9]+\s/, '').trim();
       const lowerMsg = message.toLowerCase();
 
-      if (lowerMsg.startsWith('feat:') || lowerMsg.startsWith('feature:')) {
-        categories.features.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('fix:') || lowerMsg.startsWith('bugfix:')) {
-        categories.fixes.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('doc:') || lowerMsg.startsWith('docs:')) {
-        categories.docs.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('style:')) {
-        // 样式更新合并到性能优化部分
-        categories.performances.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('refactor:')) {
-        categories.refactors.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('perf:') || lowerMsg.startsWith('performance:')) {
-        categories.performances.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('test:') || lowerMsg.startsWith('tests:')) {
-        categories.tests.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else if (lowerMsg.startsWith('chore:') || lowerMsg.startsWith('build:') || lowerMsg.startsWith('ci:')) {
-        categories.chores.push(`${message.substring(message.indexOf(':') + 1).trim()}`);
-      } else {
-        categories.others.push(`${message}`);
+      // 跳过release相关的提交
+      if (lowerMsg.includes('release v') && lowerMsg.startsWith('chore:')) {
+        return;
+      }
+
+      // 清理和格式化提交信息
+      let cleanMessage = message;
+      if (message.includes(':')) {
+        const colonIndex = message.indexOf(':');
+        const prefix = message.substring(0, colonIndex).toLowerCase();
+        const content = message.substring(colonIndex + 1).trim();
+
+        if (['feat', 'feature'].includes(prefix)) {
+          categories.features.push(content);
+          return;
+        } else if (['fix', 'bugfix'].includes(prefix)) {
+          categories.fixes.push(content);
+          return;
+        } else if (['doc', 'docs'].includes(prefix)) {
+          categories.docs.push(content);
+          return;
+        } else if (prefix === 'style') {
+          categories.performances.push(content);
+          return;
+        } else if (prefix === 'refactor') {
+          categories.refactors.push(content);
+          return;
+        } else if (['perf', 'performance'].includes(prefix)) {
+          categories.performances.push(content);
+          return;
+        } else if (['test', 'tests'].includes(prefix)) {
+          categories.tests.push(content);
+          return;
+        } else if (['chore', 'build', 'ci'].includes(prefix)) {
+          categories.chores.push(content);
+          return;
+        }
+      }
+
+      // 处理没有明确前缀的提交
+      if (!lowerMsg.startsWith('initial commit') && !lowerMsg.includes('merge')) {
+        categories.others.push(cleanMessage);
       }
     });
 
@@ -127,6 +150,10 @@ function generateChangelog() {
   }
 }
 
+// 检查命令行参数
+const args = process.argv.slice(2);
+const skipGithubRelease = args.includes('--skip-github-release') || args.includes('--skip-release');
+
 async function release() {
   try {
     console.log(`🚀 准备发布版本 v${currentVersion}...`);
@@ -165,6 +192,14 @@ async function release() {
     execSync(`git push origin v${currentVersion}`);
     console.log('✅ 推送到 GitHub');
 
+    if (skipGithubRelease) {
+      console.log('⏭️  跳过 GitHub Release 创建');
+      console.log(`\n🎉 版本 v${currentVersion} 发布成功！`);
+      console.log(`📦 标签: v${currentVersion}`);
+      console.log(`🌐 手动创建 Release: https://github.com/xinlingfeiwu/react-todo-app/releases/new?tag=v${currentVersion}`);
+      return;
+    }
+
     // 创建 GitHub Release
     const releaseNotes = `## 🎉 版本 ${currentVersion}
 
@@ -195,14 +230,42 @@ npm run build:prod
 • **提交哈希**: ${execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim()}
 • **下载**: [源码包](https://github.com/xinlingfeiwu/react-todo-app/archive/refs/tags/v${currentVersion}.tar.gz)`;
 
+    // 将Release notes写入临时文件，避免命令行参数过长和转义问题
+    const tempFile = `release-notes-${currentVersion}.md`;
+    fs.writeFileSync(tempFile, releaseNotes);
+
     try {
       // 使用 GitHub CLI 创建 release（如果已安装）
-      execSync(`gh release create v${currentVersion} --title "v${currentVersion}" --notes "${releaseNotes}"`, { stdio: 'inherit' });
+      console.log('📝 正在创建 GitHub Release...');
+      execSync(`gh release create v${currentVersion} --title "v${currentVersion}" --notes-file "${tempFile}" --verify-tag`, {
+        stdio: 'inherit',
+        timeout: 30000 // 30秒超时
+      });
       console.log('✅ 创建 GitHub Release');
-    } catch {
-      console.log('⚠️  未检测到 GitHub CLI，请手动创建 Release：');
-      console.log(`   标题: v${currentVersion}`);
-      console.log('   内容:');
+
+      // 清理临时文件
+      fs.unlinkSync(tempFile);
+    } catch (_error) {
+      // 清理临时文件
+      if (fs.existsSync(tempFile)) {
+        fs.unlinkSync(tempFile);
+      }
+
+      console.log('⚠️  GitHub CLI 创建 Release 失败，可能的原因：');
+      console.log('   1. 未安装 GitHub CLI (gh)');
+      console.log('   2. 未登录 GitHub CLI');
+      console.log('   3. 网络连接问题');
+      console.log('   4. 仓库权限问题');
+      console.log('');
+      console.log('🔧 解决方案：');
+      console.log('   1. 安装 GitHub CLI: https://cli.github.com/');
+      console.log('   2. 登录: gh auth login');
+      console.log('   3. 或手动创建 Release：');
+      console.log(`      - 访问: https://github.com/xinlingfeiwu/react-todo-app/releases/new`);
+      console.log(`      - 标签: v${currentVersion}`);
+      console.log(`      - 标题: v${currentVersion}`);
+      console.log('      - 将以下内容复制到描述框：');
+      console.log('');
       console.log(releaseNotes);
     }
 
