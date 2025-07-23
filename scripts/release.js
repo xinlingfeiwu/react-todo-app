@@ -73,6 +73,22 @@ function generateChangelog() {
   }
 }
 
+function waitForDist(timeout = 3000) {
+  const distPath = path.join(__dirname, 'dist');
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const interval = setInterval(() => {
+      if (fs.existsSync(distPath)) {
+        clearInterval(interval);
+        resolve(true);
+      } else if (Date.now() - start > timeout) {
+        clearInterval(interval);
+        resolve(false);
+      }
+    }, 300);
+  });
+}
+
 async function release() {
   try {
     console.log(`🚀 准备发布版本 v${currentVersion}...`);
@@ -128,20 +144,19 @@ npm run build:prod
     const tempFile = `release-notes-${currentVersion}.md`;
     fs.writeFileSync(tempFile, releaseNotes);
 
-    // ✅ 自动构建生产版本
+    const zipName = 'react-todo-app-dist.zip';
+    const zipPath = path.join(__dirname, zipName);
+
     console.log('🛠️ 正在执行构建...');
     execSync('npm run build:prod', { stdio: 'inherit' });
 
-    // ✅ 打包 dist 为 zip
-    const zipName = 'react-todo-app-dist.zip';
-    const distPath = path.join(__dirname, 'dist');
-    const zipPath = path.join(__dirname, zipName);
-    if (fs.existsSync(distPath)) {
+    const distReady = await waitForDist();
+    if (distReady) {
       console.log('📦 正在打包 dist 文件夹...');
       execSync(`zip -r ${zipName} dist`, { stdio: 'inherit' });
       console.log(`✅ 生成压缩包: ${zipName}`);
     } else {
-      console.log('⚠️ 未找到 dist 文件夹，跳过打包。');
+      console.log('⚠️ 构建完成后未检测到 dist 文件夹，跳过打包');
     }
 
     try {
