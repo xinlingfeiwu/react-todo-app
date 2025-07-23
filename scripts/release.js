@@ -138,7 +138,6 @@ npm run build:prod
 ### 📊 项目信息
 • **版本**: ${currentVersion}
 • **构建时间**: ${new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, ' UTC')}
-// • **提交哈希**: ${execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim()}
 • **下载**: [源码包](https://github.com/xinlingfeiwu/react-todo-app/archive/refs/tags/v${currentVersion}.tar.gz)`;
 
     const tempFile = `release-notes-${currentVersion}.md`;
