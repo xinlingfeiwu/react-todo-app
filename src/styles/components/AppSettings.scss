@@ -141,12 +141,12 @@
 }
 
 .current-theme-value.theme-light {
-  background: var(--primary-color);
+  background: var(--primary-color, #4c51bf);
   color: white;
 }
 
 .current-theme-value.theme-dark {
-  background: var(--primary-color);
+  background: var(--primary-color, #805ad5);
   color: white;
 }
 

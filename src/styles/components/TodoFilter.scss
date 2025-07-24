@@ -137,6 +137,10 @@
   color: white;
 }
 
+.theme-dark .filter-btn.active .filter-label {
+  color: #f0e6ff; /* 在深色主题下，active按钮内的标签使用更柔和的浅紫色 */
+}
+
 /* ========== 移动端响应式优化 ========== */
 
 /* 移动端主要适配 */

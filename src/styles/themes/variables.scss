@@ -1,0 +1,69 @@
+/* ========== 主题变量系统 ========== */
+
+// 浅色主题变量
+$bg-primary-light: #ffffff !default;
+$bg-secondary-light: #f8f9fa !default;
+$bg-tertiary-light: #e9ecef !default;
+$text-primary-light: #2d3748 !default;
+$text-secondary-light: #4a5568 !default;
+$text-muted-light: #718096 !default;
+$border-color-light: #e2e8f0 !default;
+$shadow-color-light: rgba(0, 0, 0, 0.1) !default;
+$glass-bg-light: rgba(255, 255, 255, 0.8) !default;
+$glass-border-light: rgba(255, 255, 255, 0.3) !default;
+$primary-color-light: #4c51bf !default;
+
+// 深色主题变量
+$bg-primary-dark: #1a1a1a !default;
+$bg-secondary-dark: #2d2d2d !default;
+$bg-tertiary-dark: #3a3a3a !default;
+$text-primary-dark: #ffffff !default;
+$text-secondary-dark: #b3b3b3 !default;
+$text-muted-dark: #8a8a8a !default;
+$border-color-dark: #4a4a4a !default;
+$shadow-color-dark: rgba(0, 0, 0, 0.3) !default;
+$glass-bg-dark: rgba(45, 45, 45, 0.8) !default;
+$glass-border-dark: rgba(255, 255, 255, 0.1) !default;
+$primary-color-dark: #805ad5 !default;
+
+/* 根元素主题变量 */
+:root {
+  /* 浅色主题 */
+  --bg-primary: #{$bg-primary-light};
+  --bg-secondary: #{$bg-secondary-light};
+  --bg-tertiary: #{$bg-tertiary-light};
+  --text-primary: #{$text-primary-light};
+  --text-secondary: #{$text-secondary-light};
+  --text-muted: #{$text-muted-light};
+  --border-color: #{$border-color-light};
+  --shadow-color: #{$shadow-color-light};
+  --glass-bg: #{$glass-bg-light};
+  --glass-border: #{$glass-border-light};
+  --primary-color: #{$primary-color-light};
+}
+
+/* 深色主题 */
+.theme-dark {
+  --bg-primary: #{$bg-primary-dark};
+  --bg-secondary: #{$bg-secondary-dark};
+  --bg-tertiary: #{$bg-tertiary-dark};
+  --text-primary: #{$text-primary-dark};
+  --text-secondary: #{$text-secondary-dark};
+  --text-muted: #{$text-muted-dark};
+  --border-color: #{$border-color-dark};
+  --shadow-color: #{$shadow-color-dark};
+  --glass-bg: #{$glass-bg-dark};
+  --glass-border: #{$glass-border-dark};
+  --primary-color: #{$primary-color-dark};
+}
+
+/* 主题过渡动画 */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 禁用某些元素的过渡以避免闪烁 */
+.theme-toggle,
+.theme-toggle-icon {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppUpdate } from '../hooks/useAppUpdate';
-import '../styles/components/AppUpdateNotification.css';
+import '../styles/components/AppUpdateNotification.scss';
 
 /**
  * 应用更新模态对话框组件

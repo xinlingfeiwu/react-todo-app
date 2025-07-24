@@ -1,5 +1,5 @@
-import './App.css'
-import './styles/main.css'
+import './App.scss'
+import './styles/main.scss'
 import { TodoWrapper, AppUpdateNotification } from './components'
 import CustomSelectDemo from './components/CustomSelectDemo'
 import FeedbackTest from './components/FeedbackTest'
