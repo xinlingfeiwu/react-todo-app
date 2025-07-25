@@ -159,6 +159,7 @@ function generateChangelog() {
 // 检查命令行参数
 const args = process.argv.slice(2);
 const skipGithubRelease = args.includes('--skip-github-release') || args.includes('--skip-release');
+const skipPush = args.includes('--skip-push') || process.env.SKIP_PUSH === 'true';
 
 // 网络重试函数
 function executeWithRetry(command, options = {}, maxRetries = 3) {
@@ -290,7 +291,12 @@ async function release() {
     console.log('✅ 创建版本标签');
 
     // 推送到远程 - 使用改进的推送函数
-    pushToRemote(currentVersion);
+    if (skipPush) {
+      console.log('⏭️  跳过推送到远程仓库');
+      console.log(`📝 请手动推送: git push origin main && git push origin v${currentVersion}`);
+    } else {
+      pushToRemote(currentVersion);
+    }
 
     if (skipGithubRelease) {
       console.log('⏭️  跳过 GitHub Release 创建');

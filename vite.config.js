@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-// eslint-disable-next-line no-undef
+
 const base = process.env.BUILD_BASE || '/';
 
 // https://vite.dev/config/

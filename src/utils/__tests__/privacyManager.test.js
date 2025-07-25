@@ -7,8 +7,7 @@ import {
   safeGetLocalStorage,
   clearAppData,
   exportUserData,
-  getPrivacySummary,
-  resetPrivacySettings
+  getPrivacySummary
 } from '../privacyManager'
 import { STORAGE_KEYS, COOKIE_CONSENT_VALUES } from '../../constants/storageKeys'
 
