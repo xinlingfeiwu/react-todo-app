@@ -90,9 +90,10 @@ export function useAppUpdate() {
       setCurrentVersion(currentVer);
       setLatestVersion(serverInfo.version);
 
-      // 检查版本是否不同
-      const hasNewVersion = serverInfo.version !== currentVer || 
-                           serverInfo.buildHash !== window.__BUILD_HASH__;
+      // 检查版本是否不同 - 优先比较版本号，buildHash作为辅助
+      const hasNewVersion = serverInfo.version !== currentVer ||
+                           (serverInfo.buildHash && window.__BUILD_HASH__ &&
+                            serverInfo.buildHash !== window.__BUILD_HASH__);
 
       if (hasNewVersion) {
         // 检查是否刚刚应用过更新（5分钟内）
@@ -102,12 +103,12 @@ export function useAppUpdate() {
             const appliedInfo = JSON.parse(appliedUpdate);
             const timeSinceApplied = now - appliedInfo.appliedAt;
             
-            // 如果5分钟内刚应用过更新，则不再显示提醒
-            if (timeSinceApplied < 5 * 60 * 1000) {
+            // 如果15分钟内刚应用过更新，则不再显示提醒
+            if (timeSinceApplied < 15 * 60 * 1000) {
               console.log('🔄 刚刚应用过更新，跳过提醒:', appliedInfo);
               return false;
             } else {
-              // 超过5分钟，清除应用记录
+              // 超过15分钟，清除应用记录
               localStorage.removeItem(APP_UPDATE_APPLIED_KEY);
             }
           } catch {
@@ -217,6 +218,9 @@ export function useAppUpdate() {
    * 应用更新（刷新页面）
    */
   const applyUpdate = () => {
+    // 立即停止所有检查，防止在刷新前继续检查
+    stopAutoCheck();
+
     // 立即清除更新状态，防止重复弹出
     setHasUpdate(false);
 
@@ -303,17 +307,17 @@ export function useAppUpdate() {
         const appliedInfo = JSON.parse(appliedUpdate);
         const timeSinceApplied = Date.now() - appliedInfo.appliedAt;
         
-        // 如果5分钟内刚应用过更新，则清除所有更新相关记录
-        if (timeSinceApplied < 5 * 60 * 1000) {
+        // 如果15分钟内刚应用过更新，则清除所有更新相关记录
+        if (timeSinceApplied < 15 * 60 * 1000) {
           localStorage.removeItem(APP_UPDATE_AVAILABLE_KEY);
           localStorage.removeItem(APP_UPDATE_DISMISSED_KEY);
           console.log('🔄 检测到刚应用过更新，清除更新记录');
-          
-          // 启动自动检查但不立即显示更新
-          setTimeout(() => startAutoCheck(), 30000); // 延迟30秒开始检查
+
+          // 启动自动检查但延迟更长时间
+          setTimeout(() => startAutoCheck(), 5 * 60 * 1000); // 延迟5分钟开始检查
           return;
         } else {
-          // 超过5分钟，清除应用记录
+          // 超过15分钟，清除应用记录
           localStorage.removeItem(APP_UPDATE_APPLIED_KEY);
         }
       } catch {
