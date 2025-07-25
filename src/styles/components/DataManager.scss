@@ -158,27 +158,27 @@
 
 /* ========== DataManager 深色主题样式 ========== */
 
-.theme-dark .data-manager-sidebar {
+[data-theme="dark"] .data-manager-sidebar {
   background: rgba(35, 35, 35, 0.95);
   backdrop-filter: blur(25px) saturate(1.4);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.theme-dark .sidebar-header {
+[data-theme="dark"] .sidebar-header {
   background: rgba(45, 45, 45, 0.8);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .sidebar-header h3 {
+[data-theme="dark"] .sidebar-header h3 {
   color: var(--text-primary);
 }
 
-.theme-dark .close-btn {
+[data-theme="dark"] .close-btn {
   color: var(--text-secondary);
 }
 
-.theme-dark .close-btn:hover {
+[data-theme="dark"] .close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
 }

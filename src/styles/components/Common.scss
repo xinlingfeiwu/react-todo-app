@@ -218,50 +218,50 @@
 /* ========== 通用组件深色主题样式 ========== */
 
 /* 主题切换按钮深色样式 */
-.theme-dark .theme-toggle {
+[data-theme="dark"] .theme-toggle {
   background: rgba(45, 45, 45, 0.3);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .theme-toggle:hover {
+[data-theme="dark"] .theme-toggle:hover {
   background: rgba(58, 58, 58, 0.4);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* 深色主题下 header-actions 内的主题切换按钮 */
-.theme-dark .header-actions .theme-toggle {
+[data-theme="dark"] .header-actions .theme-toggle {
   background: rgba(45, 45, 45, 0.2);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-.theme-dark .header-actions .theme-toggle:hover {
+[data-theme="dark"] .header-actions .theme-toggle:hover {
   background: rgba(58, 58, 58, 0.3);
   border-color: rgba(255, 255, 255, 0.25);
 }
 
 /* Cookie横幅深色主题 */
-.theme-dark .cookie-banner {
+[data-theme="dark"] .cookie-banner {
   background: rgba(35, 35, 35, 0.95);
   backdrop-filter: blur(25px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .cookie-text {
+[data-theme="dark"] .cookie-text {
   color: var(--text-secondary);
 }
 
-.theme-dark .cookie-btn.decline {
+[data-theme="dark"] .cookie-btn.decline {
   background: var(--bg-secondary);
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
-.theme-dark .cookie-btn.decline:hover {
+[data-theme="dark"] .cookie-btn.decline:hover {
   background: var(--bg-tertiary);
 }
 
 /* 通知消息深色主题 */
-.theme-dark .notification {
+[data-theme="dark"] .notification {
   background: rgba(35, 35, 35, 0.95);
   backdrop-filter: blur(25px);
   border-color: rgba(255, 255, 255, 0.1);
@@ -269,7 +269,7 @@
 }
 
 /* 工具提示深色主题 */
-.theme-dark .tooltip .tooltip-text {
+[data-theme="dark"] .tooltip .tooltip-text {
   background-color: rgba(0, 0, 0, 0.9);
   color: #fff;
 }
@@ -456,27 +456,27 @@
 
 /* ========== Cookie 同意组件深色主题 ========== */
 
-.theme-dark .cookie-consent-overlay {
+[data-theme="dark"] .cookie-consent-overlay {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.theme-dark .cookie-consent {
+[data-theme="dark"] .cookie-consent {
   background: rgba(35, 35, 35, 0.95);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.theme-dark .cookie-consent-footer {
+[data-theme="dark"] .cookie-consent-footer {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .btn-decline {
+[data-theme="dark"] .btn-decline {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text-secondary);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .btn-decline:hover {
+[data-theme="dark"] .btn-decline:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
 }
@@ -611,36 +611,36 @@
 
 /* ========== 深色主题下的隐私政策组件 ========== */
 
-.theme-dark .privacy-policy-modal {
+[data-theme="dark"] .privacy-policy-modal {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.theme-dark .privacy-policy-content {
+[data-theme="dark"] .privacy-policy-content {
   background: rgba(35, 35, 35, 0.95);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.theme-dark .privacy-policy-header {
+[data-theme="dark"] .privacy-policy-header {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .privacy-policy-header .close-btn {
+[data-theme="dark"] .privacy-policy-header .close-btn {
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .privacy-policy-header .close-btn:hover {
+[data-theme="dark"] .privacy-policy-header .close-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   color: var(--text-secondary);
   transform: scale(1.1);
 }
 
-.theme-dark .privacy-policy-header .close-btn:hover .close-btn-icon {
+[data-theme="dark"] .privacy-policy-header .close-btn:hover .close-btn-icon {
   transform: rotate(360deg);
 }
 
-.theme-dark .privacy-policy-footer {
+[data-theme="dark"] .privacy-policy-footer {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -850,41 +850,41 @@
 
 /* ========== 隐私设置组件深色主题 ========== */
 
-.theme-dark .privacy-settings-overlay {
+[data-theme="dark"] .privacy-settings-overlay {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.theme-dark .privacy-settings-modal {
+[data-theme="dark"] .privacy-settings-modal {
   background: rgba(35, 35, 35, 0.95);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.theme-dark .privacy-settings-header {
+[data-theme="dark"] .privacy-settings-header {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .privacy-settings-header .close-btn {
+[data-theme="dark"] .privacy-settings-header .close-btn {
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .privacy-settings-header .close-btn:hover {
+[data-theme="dark"] .privacy-settings-header .close-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   color: var(--text-secondary);
   transform: scale(1.1);
 }
 
-.theme-dark .privacy-settings-header .close-btn:hover .close-btn-icon {
+[data-theme="dark"] .privacy-settings-header .close-btn:hover .close-btn-icon {
   transform: rotate(360deg);
 }
 
-.theme-dark .privacy-status {
+[data-theme="dark"] .privacy-status {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .privacy-info {
+[data-theme="dark"] .privacy-info {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
 }
@@ -926,16 +926,16 @@
 }
 
 /* 深色主题下的隐私设置成功/错误对话框 */
-.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header {
+[data-theme="dark"] .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header {
   background: linear-gradient(135deg, #38a169 0%, #2f855a 100%) !important;
 }
 
-.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header {
+[data-theme="dark"] .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header {
   background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%) !important;
 }
 
-.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header h3,
-.theme-dark .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header h3 {
+[data-theme="dark"] .privacy-success-dialog-wrapper .confirm-dialog.success .dialog-header h3,
+[data-theme="dark"] .privacy-success-dialog-wrapper .confirm-dialog.error .dialog-header h3 {
   color: white !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
@@ -1028,14 +1028,14 @@
 }
 
 /* 深色主题下的标题 tooltip */
-.theme-dark .header-content .tooltip .tooltip-text {
+[data-theme="dark"] .header-content .tooltip .tooltip-text {
   background: rgba(35, 35, 35, 0.95);
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 移动端激活状态的深色主题支持 */
-.theme-dark .header-content .tooltip.active .tooltip-text {
+[data-theme="dark"] .header-content .tooltip.active .tooltip-text {
   background: rgba(35, 35, 35, 0.98) !important;
   color: var(--text-primary) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -1140,23 +1140,23 @@
 }
 
 /* ========== 深色主题下的隐私政策内容 ========== */
-.theme-dark .privacy-policy-content .last-updated {
+[data-theme="dark"] .privacy-policy-content .last-updated {
   color: var(--text-muted, #a0aec0);
 }
 
-.theme-dark .privacy-policy-content h4 {
+[data-theme="dark"] .privacy-policy-content h4 {
   color: var(--primary-color, #60a5fa);
 }
 
-.theme-dark .privacy-policy-content li {
+[data-theme="dark"] .privacy-policy-content li {
   color: var(--text-secondary, #cbd5e0);
 }
 
-.theme-dark .privacy-policy-content strong {
+[data-theme="dark"] .privacy-policy-content strong {
   color: var(--text-primary, #e2e8f0);
 }
 
-.theme-dark .privacy-summary {
+[data-theme="dark"] .privacy-summary {
   background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
 }
 
@@ -1256,22 +1256,22 @@
 }
 
 /* ========== 深色主题下的隐私政策内容 ========== */
-.theme-dark .privacy-policy-content .last-updated {
+[data-theme="dark"] .privacy-policy-content .last-updated {
   color: var(--text-muted, #a0aec0);
 }
 
-.theme-dark .privacy-policy-content h4 {
+[data-theme="dark"] .privacy-policy-content h4 {
   color: var(--primary-color, #60a5fa);
 }
 
-.theme-dark .privacy-policy-content li {
+[data-theme="dark"] .privacy-policy-content li {
   color: var(--text-secondary, #cbd5e0);
 }
 
-.theme-dark .privacy-policy-content strong {
+[data-theme="dark"] .privacy-policy-content strong {
   color: var(--text-primary, #e2e8f0);
 }
 
-.theme-dark .privacy-summary {
+[data-theme="dark"] .privacy-summary {
   background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
 }

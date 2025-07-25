@@ -223,12 +223,12 @@
 }
 
 /* ========== 深色主题样式 ========== */
-.theme-dark .confirm-dialog-overlay {
+[data-theme="dark"] .confirm-dialog-overlay {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(12px);
 }
 
-.theme-dark .confirm-dialog {
+[data-theme="dark"] .confirm-dialog {
   background: rgba(35, 35, 35, 0.95);
   backdrop-filter: blur(25px) saturate(1.4);
   border-color: rgba(255, 255, 255, 0.1);
@@ -238,12 +238,12 @@
     0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.theme-dark .confirm-dialog .dialog-header {
+[data-theme="dark"] .confirm-dialog .dialog-header {
   background: linear-gradient(135deg, rgba(229, 62, 62, 0.2) 0%, rgba(197, 48, 48, 0.2) 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .confirm-dialog .dialog-header h3 {
+[data-theme="dark"] .confirm-dialog .dialog-header h3 {
   color: var(--text-primary);
   background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
   -webkit-background-clip: text;
@@ -251,18 +251,18 @@
   background-clip: text;
 }
 
-.theme-dark .confirm-dialog .dialog-content p {
+[data-theme="dark"] .confirm-dialog .dialog-content p {
   color: var(--text-secondary);
 }
 
-.theme-dark .confirm-dialog .btn-cancel {
+[data-theme="dark"] .confirm-dialog .btn-cancel {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   color: var(--text-primary);
   border-color: var(--border-color);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.theme-dark .confirm-dialog .btn-cancel:hover {
+[data-theme="dark"] .confirm-dialog .btn-cancel:hover {
   background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.2);
@@ -270,25 +270,25 @@
 }
 
 /* 深色主题下的按钮类型保持原有颜色，但增加阴影 */
-.theme-dark .confirm-dialog .btn-confirm {
+[data-theme="dark"] .confirm-dialog .btn-confirm {
   box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
 }
 
-.theme-dark .confirm-dialog .btn-confirm:hover {
+[data-theme="dark"] .confirm-dialog .btn-confirm:hover {
   box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
 }
 
-.theme-dark .confirm-dialog.danger .btn-confirm,
-.theme-dark .confirm-dialog.error .btn-confirm,
-.theme-dark .confirm-dialog .btn-confirm.btn-danger,
-.theme-dark .confirm-dialog .btn-confirm.btn-error {
+[data-theme="dark"] .confirm-dialog.danger .btn-confirm,
+[data-theme="dark"] .confirm-dialog.error .btn-confirm,
+[data-theme="dark"] .confirm-dialog .btn-confirm.btn-danger,
+[data-theme="dark"] .confirm-dialog .btn-confirm.btn-error {
   box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
 }
 
-.theme-dark .confirm-dialog.danger .btn-confirm:hover,
-.theme-dark .confirm-dialog.error .btn-confirm:hover,
-.theme-dark .confirm-dialog .btn-confirm.btn-danger:hover,
-.theme-dark .confirm-dialog .btn-confirm.btn-error:hover {
+[data-theme="dark"] .confirm-dialog.danger .btn-confirm:hover,
+[data-theme="dark"] .confirm-dialog.error .btn-confirm:hover,
+[data-theme="dark"] .confirm-dialog .btn-confirm.btn-danger:hover,
+[data-theme="dark"] .confirm-dialog .btn-confirm.btn-error:hover {
   box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
 }
 

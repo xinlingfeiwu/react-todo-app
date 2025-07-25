@@ -126,18 +126,18 @@
 
 /* ========== TodoFilter 深色主题样式 ========== */
 
-.theme-dark .filter-btn {
+[data-theme="dark"] .filter-btn {
   background: var(--bg-secondary);
   color: var(--text-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .filter-btn.active {
+[data-theme="dark"] .filter-btn.active {
   background: var(--primary-color);
   color: white;
 }
 
-.theme-dark .filter-btn.active .filter-label {
+[data-theme="dark"] .filter-btn.active .filter-label {
   color: #f0e6ff; /* 在深色主题下，active按钮内的标签使用更柔和的浅紫色 */
 }
 

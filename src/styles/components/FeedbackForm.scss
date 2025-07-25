@@ -441,7 +441,7 @@
 /* ========== 反馈表单深色主题样式 ========== */
 
 /* 反馈表单模态框深色主题 */
-.theme-dark .feedback-modal {
+[data-theme="dark"] .feedback-modal {
   background: rgba(35, 35, 35, 0.95);
   backdrop-filter: blur(25px);
   border-color: rgba(255, 255, 255, 0.1);
@@ -449,151 +449,151 @@
               0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.theme-dark .modal-header {
+[data-theme="dark"] .modal-header {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .modal-header h3 {
+[data-theme="dark"] .modal-header h3 {
   color: var(--text-primary);
 }
 
 /* 表单元素深色主题 */
-.theme-dark .form-group label {
+[data-theme="dark"] .form-group label {
   color: var(--text-primary);
 }
 
-.theme-dark .form-input,
-.theme-dark .form-select,
-.theme-dark .form-textarea {
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
   background: rgba(58, 58, 58, 0.8);
   backdrop-filter: blur(15px);
   border-color: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
 }
 
-.theme-dark .form-input::placeholder,
-.theme-dark .form-textarea::placeholder {
+[data-theme="dark"] .form-input::placeholder,
+[data-theme="dark"] .form-textarea::placeholder {
   color: var(--text-muted);
 }
 
-.theme-dark .form-input:focus,
-.theme-dark .form-select:focus,
-.theme-dark .form-textarea:focus {
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus {
   background: rgba(70, 70, 70, 0.9);
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.2);
 }
 
 /* 下拉框深色主题 */
-.theme-dark .form-select {
+[data-theme="dark"] .form-select {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23b3b3b3' d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
 }
 
-.theme-dark .form-select:focus {
+[data-theme="dark"] .form-select:focus {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23805ad5' d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
 }
 
-.theme-dark .form-select:hover:not(:focus) {
+[data-theme="dark"] .form-select:hover:not(:focus) {
   background: rgba(70, 70, 70, 0.8);
   border-color: rgba(255, 255, 255, 0.2);
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23b3b3b3' d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
 }
 
-.theme-dark .form-select option {
+[data-theme="dark"] .form-select option {
   background: rgba(35, 35, 35, 0.95);
   color: var(--text-primary);
 }
 
 /* 字符计数深色主题 */
-.theme-dark .char-count {
+[data-theme="dark"] .char-count {
   color: var(--text-muted);
 }
 
 /* 通用按钮深色主题 */
-.theme-dark .btn-primary {
+[data-theme="dark"] .btn-primary {
   background: linear-gradient(135deg, var(--primary-color) 0%, #6b46c1 100%);
   box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
 }
 
-.theme-dark .btn-primary:hover:not(:disabled) {
+[data-theme="dark"] .btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #9f7aea 0%, var(--primary-color) 100%);
   box-shadow: 0 8px 25px rgba(128, 90, 213, 0.4);
 }
 
-.theme-dark .btn-secondary {
+[data-theme="dark"] .btn-secondary {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
-.theme-dark .btn-secondary:hover:not(:disabled) {
+[data-theme="dark"] .btn-secondary:hover:not(:disabled) {
   background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 表单按钮深色主题 */
-.theme-dark .btn-submit {
+[data-theme="dark"] .btn-submit {
   background: linear-gradient(135deg, var(--primary-color) 0%, #6b46c1 100%);
   box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
 }
 
-.theme-dark .btn-submit:hover:not(:disabled) {
+[data-theme="dark"] .btn-submit:hover:not(:disabled) {
   background: linear-gradient(135deg, #9f7aea 0%, var(--primary-color) 100%);
   box-shadow: 0 8px 25px rgba(128, 90, 213, 0.4);
 }
 
-.theme-dark .btn-submit:disabled {
+[data-theme="dark"] .btn-submit:disabled {
   background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
   color: var(--text-muted);
 }
 
-.theme-dark .btn-cancel {
+[data-theme="dark"] .btn-cancel {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
-.theme-dark .btn-cancel:hover {
+[data-theme="dark"] .btn-cancel:hover {
   background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 验证状态深色主题 */
-.theme-dark .form-group.error .form-input,
-.theme-dark .form-group.error .form-select,
-.theme-dark .form-group.error .form-textarea {
+[data-theme="dark"] .form-group.error .form-input,
+[data-theme="dark"] .form-group.error .form-select,
+[data-theme="dark"] .form-group.error .form-textarea {
   border-color: #fc8181;
   background: rgba(80, 45, 45, 0.8);
 }
 
-.theme-dark .form-group.success .form-input,
-.theme-dark .form-group.success .form-select,
-.theme-dark .form-group.success .form-textarea {
+[data-theme="dark"] .form-group.success .form-input,
+[data-theme="dark"] .form-group.success .form-select,
+[data-theme="dark"] .form-group.success .form-textarea {
   border-color: #68d391;
   background: rgba(45, 80, 55, 0.8);
 }
 
-.theme-dark .error-text {
+[data-theme="dark"] .error-text {
   color: #fc8181;
 }
 
-.theme-dark .success-text {
+[data-theme="dark"] .success-text {
   color: #68d391;
 }
 
 /* 移动端深色主题适配 */
 @media (max-width: 768px) {
-  .theme-dark .form-actions {
+  [data-theme="dark"] .form-actions {
     background: var(--bg-primary);
     border-top-color: var(--border-color);
   }
 }
 
 @media (max-width: 480px) {
-  .theme-dark .form-actions {
+  [data-theme="dark"] .form-actions {
     background: var(--bg-primary);
     border-top-color: var(--border-color);
   }

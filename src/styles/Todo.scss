@@ -17,7 +17,7 @@
 }
 
 /* 深色主题 */
-.theme-dark {
+[data-theme="dark"] {
   --bg-primary: #1a1a1a;
   --bg-secondary: #2d2d2d;
   --bg-tertiary: #3a3a3a;
@@ -32,53 +32,53 @@
 }
 
 /* 深色主题基础样式 */
-.theme-dark body {
+[data-theme="dark"] body {
   background: var(--bg-primary);
   color: var(--text-primary);
 }
 
-.theme-dark .todo-app-container {
+[data-theme="dark"] .todo-app-container {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
-.theme-dark .todo-wrapper {
+[data-theme="dark"] .todo-wrapper {
   background: var(--glass-bg);
   border-color: var(--glass-border);
 }
 
-.theme-dark .todo-header {
+[data-theme="dark"] .todo-header {
   background: var(--glass-bg);
   border-color: var(--glass-border);
 }
 
-.theme-dark h1 {
+[data-theme="dark"] h1 {
   color: var(--text-primary);
 }
 
-.theme-dark .todo-input {
+[data-theme="dark"] .todo-input {
   background: var(--bg-secondary);
   border-color: var(--border-color);
   color: var(--text-primary);
 }
 
-.theme-dark .todo-item {
+[data-theme="dark"] .todo-item {
   background: var(--glass-bg);
   border-color: var(--glass-border);
   color: var(--text-primary);
 }
 
-.theme-dark .filter-btn {
+[data-theme="dark"] .filter-btn {
   background: var(--bg-secondary);
   color: var(--text-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .filter-btn.active {
+[data-theme="dark"] .filter-btn.active {
   background: var(--primary-color);
   color: white;
 }
 
-.theme-dark .stats-item {
+[data-theme="dark"] .stats-item {
   background: var(--glass-bg);
   border-color: var(--glass-border);
   color: var(--text-secondary);
@@ -87,7 +87,7 @@
 /* ========== TodoStats 深色主题样式 ========== */
 
 /* 主容器深色样式 */
-.theme-dark .todo-stats {
+[data-theme="dark"] .todo-stats {
   background: rgba(45, 45, 45, 0.85);
   backdrop-filter: blur(25px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -98,18 +98,18 @@
 }
 
 /* 统计项文字颜色 */
-.theme-dark .stats-item {
+[data-theme="dark"] .stats-item {
   color: var(--text-secondary);
   background: transparent;
   border: none;
 }
 
-.theme-dark .stats-item:hover {
+[data-theme="dark"] .stats-item:hover {
   color: var(--primary-color);
 }
 
 /* 统计数字样式 */
-.theme-dark .stats-item strong {
+[data-theme="dark"] .stats-item strong {
   color: var(--text-primary);
   background: linear-gradient(135deg, #805ad5 0%, #9f7aea 100%);
   -webkit-background-clip: text;
@@ -118,7 +118,7 @@
   text-shadow: 0 2px 4px rgba(128, 90, 213, 0.2);
 }
 
-.theme-dark .stats-item:hover strong {
+[data-theme="dark"] .stats-item:hover strong {
   background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -126,43 +126,43 @@
 }
 
 /* 按钮深色样式 */
-.theme-dark .btn-toggle-all {
+[data-theme="dark"] .btn-toggle-all {
   background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(76, 81, 191, 0.3);
 }
 
-.theme-dark .btn-toggle-all:hover {
+[data-theme="dark"] .btn-toggle-all:hover {
   box-shadow: 0 8px 25px rgba(76, 81, 191, 0.4);
 }
 
-.theme-dark .btn-clear-completed {
+[data-theme="dark"] .btn-clear-completed {
   background: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
 }
 
-.theme-dark .btn-clear-completed:hover {
+[data-theme="dark"] .btn-clear-completed:hover {
   box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
 }
 
 /* todo-stats 深色主题动态效果 */
-.theme-dark .todo-stats::before {
+[data-theme="dark"] .todo-stats::before {
   background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.03), transparent);
 }
 
-.theme-dark .todo-stats:hover::before {
+[data-theme="dark"] .todo-stats:hover::before {
   background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.05), transparent);
 }
 
-.theme-dark .todo-stats:hover {
+[data-theme="dark"] .todo-stats:hover {
   border-color: rgba(128, 90, 213, 0.2);
 }
 
 /* ========== CreateForm 深色主题样式 ========== */
 
 /* 输入框深色样式 */
-.theme-dark .input-group input {
+[data-theme="dark"] .input-group input {
   background: rgba(58, 58, 58, 0.95);
   backdrop-filter: blur(20px);
   color: var(--text-primary);
@@ -170,11 +170,11 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .input-group input::placeholder {
+[data-theme="dark"] .input-group input::placeholder {
   color: var(--text-muted);
 }
 
-.theme-dark .input-group input:focus {
+[data-theme="dark"] .input-group input:focus {
   background: rgba(70, 70, 70, 1);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   border-color: var(--primary-color);
@@ -182,27 +182,27 @@
 }
 
 /* 错误状态深色样式 */
-.theme-dark .input-group input.input-error {
+[data-theme="dark"] .input-group input.input-error {
   background: rgba(80, 45, 45, 0.95);
   box-shadow: 0 8px 32px rgba(229, 62, 62, 0.3);
   border-color: rgba(229, 62, 62, 0.5);
 }
 
 /* 按钮深色样式 */
-.theme-dark .input-group button {
+[data-theme="dark"] .input-group button {
   background: linear-gradient(135deg, var(--primary-color) 0%, #553c9a 100%);
   color: white;
   box-shadow: 0 8px 32px rgba(128, 90, 213, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .input-group button:hover:not(:disabled) {
+[data-theme="dark"] .input-group button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(128, 90, 213, 0.4);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .input-group button:disabled {
+[data-theme="dark"] .input-group button:disabled {
   background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
   color: var(--text-muted);
   cursor: not-allowed;
@@ -212,27 +212,27 @@
 }
 
 /* 按钮组深色样式 */
-.theme-dark .button-group button[type="button"] {
+[data-theme="dark"] .button-group button[type="button"] {
   background: linear-gradient(135deg, #4a5568 0%, #5a6c7d 100%);
   box-shadow: 0 8px 32px rgba(74, 85, 104, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .button-group button[type="button"]:hover {
+[data-theme="dark"] .button-group button[type="button"]:hover {
   background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
   box-shadow: 0 12px 40px rgba(45, 55, 72, 0.4);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 错误消息深色样式 */
-.theme-dark .error-message {
+[data-theme="dark"] .error-message {
   color: #fc8181;
 }
 
 /* ========== TodoList 深色主题样式 ========== */
 
 /* 空状态深色样式 - 优化美观度 */
-.theme-dark .empty-state {
+[data-theme="dark"] .empty-state {
   background: linear-gradient(135deg, 
     rgba(45, 45, 45, 0.9) 0%, 
     rgba(58, 58, 58, 0.85) 100%);
@@ -247,7 +247,7 @@
 }
 
 /* 添加微妙的动态效果 */
-.theme-dark .empty-state::before {
+[data-theme="dark"] .empty-state::before {
   content: '';
   position: absolute;
   top: 0;
@@ -261,11 +261,11 @@
   transition: left 3s ease-in-out;
 }
 
-.theme-dark .empty-state:hover::before {
+[data-theme="dark"] .empty-state:hover::before {
   left: 100%;
 }
 
-.theme-dark .empty-state p {
+[data-theme="dark"] .empty-state p {
   color: var(--text-primary);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -274,7 +274,7 @@
   opacity: 0.9;
 }
 
-.theme-dark .empty-state:hover p {
+[data-theme="dark"] .empty-state:hover p {
   opacity: 1;
   transform: translateY(-1px);
 }
@@ -282,45 +282,45 @@
 /* ========== Todo 组件深色主题样式 ========== */
 
 /* Todo 项主体深色样式 */
-.theme-dark .todo {
+[data-theme="dark"] .todo {
   background: rgba(58, 58, 58, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.theme-dark .todo:hover {
+[data-theme="dark"] .todo:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   background: rgba(70, 70, 70, 1);
   border-color: rgba(255, 255, 255, 0.18);
 }
 
-.theme-dark .todo.completed {
+[data-theme="dark"] .todo.completed {
   opacity: 0.7;
   background: rgba(45, 45, 45, 0.95);
   transform: none;
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-.theme-dark .todo.completed:hover {
+[data-theme="dark"] .todo.completed:hover {
   transform: translateY(-1px);
   opacity: 0.8;
   background: rgba(55, 55, 55, 1);
 }
 
 /* Todo 文本深色样式 */
-.theme-dark .todo-text {
+[data-theme="dark"] .todo-text {
   color: var(--text-primary);
 }
 
-.theme-dark .todo.completed .todo-text {
+[data-theme="dark"] .todo.completed .todo-text {
   color: var(--text-muted);
   text-decoration: line-through;
 }
 
 /* 完成按钮深色样式 */
-.theme-dark .completion-btn {
+[data-theme="dark"] .completion-btn {
   border: 2px solid rgba(255, 255, 255, 0.3);
   background: rgba(58, 58, 58, 0.8);
   color: var(--text-secondary);
@@ -328,62 +328,62 @@
 }
 
 /* 确保深色主题下完成按钮的 SVG 图标也是大尺寸 */
-.theme-dark .completion-btn svg {
+[data-theme="dark"] .completion-btn svg {
   width: 20px !important;
   height: 20px !important;
 }
 
-.theme-dark .completion-btn:hover {
+[data-theme="dark"] .completion-btn:hover {
   border-color: #48bb78;
   background: rgba(72, 187, 120, 0.15);
   transform: scale(1.1);
   box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
 }
 
-.theme-dark .completion-btn:hover svg {
+[data-theme="dark"] .completion-btn:hover svg {
   transform: scale(1.1);
 }
 
-.theme-dark .completion-btn.completed {
+[data-theme="dark"] .completion-btn.completed {
   background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
   border-color: #48bb78;
   color: white;
   box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
 }
 
-.theme-dark .completion-btn.completed:hover {
+[data-theme="dark"] .completion-btn.completed:hover {
   background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
   transform: scale(1.05);
 }
 
 /* 操作按钮深色样式 */
-.theme-dark .action-btn {
+[data-theme="dark"] .action-btn {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(15px);
 }
 
 /* 确保深色主题下 SVG 图标也是大尺寸 */
-.theme-dark .action-btn svg {
+[data-theme="dark"] .action-btn svg {
   width: 28px !important;
   height: 28px !important;
 }
 
-.theme-dark .edit-btn {
+[data-theme="dark"] .edit-btn {
   background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
   color: white;
 }
 
-.theme-dark .edit-btn:hover:not(:disabled) {
+[data-theme="dark"] .edit-btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 25px rgba(214, 158, 46, 0.4);
 }
 
-.theme-dark .edit-btn:hover:not(:disabled) svg {
+[data-theme="dark"] .edit-btn:hover:not(:disabled) svg {
   transform: scale(1.15);
 }
 
-.theme-dark .edit-btn:disabled {
+[data-theme="dark"] .edit-btn:disabled {
   background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
   color: var(--text-muted);
   cursor: not-allowed;
@@ -391,18 +391,18 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.theme-dark .delete-btn {
+[data-theme="dark"] .delete-btn {
   background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
   color: white;
 }
 
-.theme-dark .delete-btn:hover {
+[data-theme="dark"] .delete-btn:hover {
   background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
 }
 
-.theme-dark .delete-btn:hover svg {
+[data-theme="dark"] .delete-btn:hover svg {
   transform: scale(1.15);
 }
 
@@ -2704,81 +2704,81 @@
 }
 
 /* 深色主题 - Feedback 组件支持 */
-.theme-dark .feedback-overlay {
+[data-theme="dark"] .feedback-overlay {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.theme-dark .feedback-modal {
+[data-theme="dark"] .feedback-modal {
   background: var(--glass-bg);
   border-color: var(--glass-border);
 }
 
-.theme-dark .feedback-manager {
+[data-theme="dark"] .feedback-manager {
   background: var(--glass-bg);
   border-color: var(--glass-border);
 }
 
-.theme-dark .feedback-form {
+[data-theme="dark"] .feedback-form {
   color: var(--text-primary);
 }
 
-.theme-dark .feedback-form h2,
-.theme-dark .feedback-form h3 {
+[data-theme="dark"] .feedback-form h2,
+[data-theme="dark"] .feedback-form h3 {
   color: var(--text-primary);
 }
 
-.theme-dark .feedback-form label {
+[data-theme="dark"] .feedback-form label {
   color: var(--text-secondary);
 }
 
-.theme-dark .feedback-form input,
-.theme-dark .feedback-form textarea,
-.theme-dark .feedback-form select {
+[data-theme="dark"] .feedback-form input,
+[data-theme="dark"] .feedback-form textarea,
+[data-theme="dark"] .feedback-form select {
   background: var(--bg-secondary);
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
-.theme-dark .feedback-form input:focus,
-.theme-dark .feedback-form textarea:focus,
-.theme-dark .feedback-form select:focus {
+[data-theme="dark"] .feedback-form input:focus,
+[data-theme="dark"] .feedback-form textarea:focus,
+[data-theme="dark"] .feedback-form select:focus {
   border-color: var(--primary-color);
   background: var(--bg-primary);
 }
 
-.theme-dark .feedback-custom-select .custom-select-trigger {
+[data-theme="dark"] .feedback-custom-select .custom-select-trigger {
   background: var(--bg-secondary);
   color: var(--text-primary) !important;
   border-color: var(--border-color);
 }
 
-.theme-dark .feedback-custom-select .custom-select-dropdown {
+[data-theme="dark"] .feedback-custom-select .custom-select-dropdown {
   background: var(--bg-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .feedback-custom-select .custom-select-option {
+[data-theme="dark"] .feedback-custom-select .custom-select-option {
   color: var(--text-primary) !important;
   border-color: var(--border-color);
 }
 
-.theme-dark .feedback-custom-select .custom-select-option:hover {
+[data-theme="dark"] .feedback-custom-select .custom-select-option:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option.selected {
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected {
   background: var(--primary-color);
   color: white !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option.selected:hover {
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected:hover {
   background: #553c9a;
   color: white !important;
 }
 
 /* 深色主题 - 通用 custom-select 组件 */
-.theme-dark .custom-select-trigger {
+[data-theme="dark"] .custom-select-trigger {
   background: var(--bg-secondary);
   color: var(--text-primary) !important;
   border-color: var(--border-color);
@@ -2788,22 +2788,22 @@
     inset 0 1px 0 var(--glass-border);
 }
 
-.theme-dark .custom-select-trigger:hover:not(.disabled) {
+[data-theme="dark"] .custom-select-trigger:hover:not(.disabled) {
   background: var(--bg-tertiary);
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select-trigger:focus {
+[data-theme="dark"] .custom-select-trigger:focus {
   background: var(--bg-primary);
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select.open .custom-select-trigger {
+[data-theme="dark"] .custom-select.open .custom-select-trigger {
   background: var(--bg-primary);
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select-dropdown {
+[data-theme="dark"] .custom-select-dropdown {
   background: var(--bg-secondary);
   border-color: var(--border-color);
   box-shadow: 
@@ -2811,63 +2811,63 @@
     0 0 0 1px var(--border-color);
 }
 
-.theme-dark .custom-select-option {
+[data-theme="dark"] .custom-select-option {
   color: var(--text-primary) !important;
   border-color: var(--border-color);
 }
 
-.theme-dark .custom-select-option:hover,
-.theme-dark .custom-select-option.focused {
+[data-theme="dark"] .custom-select-option:hover,
+[data-theme="dark"] .custom-select-option.focused {
   background: var(--bg-tertiary);
   color: var(--text-primary) !important;
 }
 
-.theme-dark .custom-select-option.selected {
+[data-theme="dark"] .custom-select-option.selected {
   background: var(--primary-color);
   color: white !important;
 }
 
-.theme-dark .custom-select-option.selected:hover,
-.theme-dark .custom-select-option.selected.focused {
+[data-theme="dark"] .custom-select-option.selected:hover,
+[data-theme="dark"] .custom-select-option.selected.focused {
   background: #553c9a;
   color: white !important;
 }
 
-.theme-dark .custom-select-arrow {
+[data-theme="dark"] .custom-select-arrow {
   color: var(--text-secondary);
 }
 
-.theme-dark .option-icon {
+[data-theme="dark"] .option-icon {
   color: var(--text-secondary);
 }
 
-.theme-dark .custom-select-option:hover .option-icon,
-.theme-dark .custom-select-option.focused .option-icon {
+[data-theme="dark"] .custom-select-option:hover .option-icon,
+[data-theme="dark"] .custom-select-option.focused .option-icon {
   color: var(--text-primary);
 }
 
-.theme-dark .custom-select-option.selected .option-icon {
+[data-theme="dark"] .custom-select-option.selected .option-icon {
   color: white;
 }
 
 /* 深色主题 - custom-select 内部文字元素 */
-.theme-dark .feedback-custom-select .custom-select-trigger .option-text {
+[data-theme="dark"] .feedback-custom-select .custom-select-trigger .option-text {
   color: var(--text-primary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-trigger .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-trigger .option-icon {
   color: var(--text-secondary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option .option-text {
+[data-theme="dark"] .feedback-custom-select .custom-select-option .option-text {
   color: var(--text-primary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-option .option-icon {
   color: var(--text-secondary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option.selected .option-text,
-.theme-dark .feedback-custom-select .custom-select-option.selected .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected .option-text,
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected .option-icon {
   color: white !important;
 }

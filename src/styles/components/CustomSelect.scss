@@ -374,27 +374,27 @@
 
 /* ========== CustomSelect 深色主题样式 ========== */
 
-.theme-dark .custom-select-trigger {
+[data-theme="dark"] .custom-select-trigger {
   background: linear-gradient(145deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
-.theme-dark .custom-select-trigger:hover:not(.disabled) {
+[data-theme="dark"] .custom-select-trigger:hover:not(.disabled) {
   background: linear-gradient(145deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select-trigger:focus {
+[data-theme="dark"] .custom-select-trigger:focus {
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select.open .custom-select-trigger {
+[data-theme="dark"] .custom-select.open .custom-select-trigger {
   background: var(--bg-primary);
   border-color: var(--primary-color);
 }
 
-.theme-dark .custom-select-dropdown {
+[data-theme="dark"] .custom-select-dropdown {
   background: var(--bg-secondary);
   border-color: var(--border-color);
   box-shadow: 
@@ -402,64 +402,64 @@
     0 0 0 1px var(--border-color);
 }
 
-.theme-dark .custom-select-option {
+[data-theme="dark"] .custom-select-option {
   color: var(--text-primary) !important;
   border-color: var(--border-color);
 }
 
-.theme-dark .custom-select-option:hover,
-.theme-dark .custom-select-option.focused {
+[data-theme="dark"] .custom-select-option:hover,
+[data-theme="dark"] .custom-select-option.focused {
   background: var(--bg-tertiary);
   color: var(--text-primary) !important;
 }
 
-.theme-dark .custom-select-option.selected {
+[data-theme="dark"] .custom-select-option.selected {
   background: var(--primary-color);
   color: white !important;
 }
 
-.theme-dark .custom-select-option.selected:hover,
-.theme-dark .custom-select-option.selected.focused {
+[data-theme="dark"] .custom-select-option.selected:hover,
+[data-theme="dark"] .custom-select-option.selected.focused {
   background: #553c9a;
   color: white !important;
 }
 
-.theme-dark .custom-select-arrow {
+[data-theme="dark"] .custom-select-arrow {
   color: var(--text-secondary);
 }
 
-.theme-dark .option-icon {
+[data-theme="dark"] .option-icon {
   color: var(--text-secondary);
 }
 
-.theme-dark .custom-select-option:hover .option-icon,
-.theme-dark .custom-select-option.focused .option-icon {
+[data-theme="dark"] .custom-select-option:hover .option-icon,
+[data-theme="dark"] .custom-select-option.focused .option-icon {
   color: var(--text-primary);
 }
 
-.theme-dark .custom-select-option.selected .option-icon {
+[data-theme="dark"] .custom-select-option.selected .option-icon {
   color: white;
 }
 
 /* 深色主题 - custom-select 内部文字元素 */
-.theme-dark .feedback-custom-select .custom-select-trigger .option-text {
+[data-theme="dark"] .feedback-custom-select .custom-select-trigger .option-text {
   color: var(--text-primary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-trigger .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-trigger .option-icon {
   color: var(--text-secondary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option .option-text {
+[data-theme="dark"] .feedback-custom-select .custom-select-option .option-text {
   color: var(--text-primary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-option .option-icon {
   color: var(--text-secondary) !important;
 }
 
-.theme-dark .feedback-custom-select .custom-select-option.selected .option-text,
-.theme-dark .feedback-custom-select .custom-select-option.selected .option-icon {
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected .option-text,
+[data-theme="dark"] .feedback-custom-select .custom-select-option.selected .option-icon {
   color: white !important;
 }
 
@@ -478,15 +478,15 @@
 }
 
 /* 深色主题下的绿色图标背景 */
-.theme-dark .app-settings .feedback-custom-select .option-icon {
+[data-theme="dark"] .app-settings .feedback-custom-select .option-icon {
   background: rgba(72, 187, 120, 0.15) !important;
 }
 
-.theme-dark .app-settings .feedback-custom-select .custom-select-option:hover .option-icon,
-.theme-dark .app-settings .feedback-custom-select .custom-select-option.focused .option-icon {
+[data-theme="dark"] .app-settings .feedback-custom-select .custom-select-option:hover .option-icon,
+[data-theme="dark"] .app-settings .feedback-custom-select .custom-select-option.focused .option-icon {
   background: rgba(72, 187, 120, 0.25) !important;
 }
 
-.theme-dark .app-settings .feedback-custom-select .custom-select-option.selected .option-icon {
+[data-theme="dark"] .app-settings .feedback-custom-select .custom-select-option.selected .option-icon {
   background: rgba(72, 187, 120, 0.4) !important;
 }

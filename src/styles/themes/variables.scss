@@ -43,7 +43,7 @@ $primary-color-dark: #805ad5 !default;
 }
 
 /* 深色主题 */
-.theme-dark {
+[data-theme="dark"] {
   --bg-primary: #{$bg-primary-dark};
   --bg-secondary: #{$bg-secondary-dark};
   --bg-tertiary: #{$bg-tertiary-dark};

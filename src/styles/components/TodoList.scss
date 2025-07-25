@@ -40,7 +40,7 @@
 /* ========== TodoList 深色主题样式 ========== */
 
 /* 空状态深色样式 - 优化美观度 */
-.theme-dark .empty-state {
+[data-theme="dark"] .empty-state {
   background: linear-gradient(135deg, 
     rgba(45, 45, 45, 0.9) 0%, 
     rgba(58, 58, 58, 0.85) 100%);
@@ -55,7 +55,7 @@
 }
 
 /* 添加微妙的动态效果 */
-.theme-dark .empty-state::before {
+[data-theme="dark"] .empty-state::before {
   content: '';
   position: absolute;
   top: 0;
@@ -69,11 +69,11 @@
   transition: left 3s ease-in-out;
 }
 
-.theme-dark .empty-state:hover::before {
+[data-theme="dark"] .empty-state:hover::before {
   left: 100%;
 }
 
-.theme-dark .empty-state p {
+[data-theme="dark"] .empty-state p {
   color: var(--text-primary);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -82,7 +82,7 @@
   opacity: 0.9;
 }
 
-.theme-dark .empty-state:hover p {
+[data-theme="dark"] .empty-state:hover p {
   opacity: 1;
   transform: translateY(-1px);
 }

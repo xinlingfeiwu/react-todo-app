@@ -133,7 +133,7 @@
 /* ========== TodoStats 深色主题样式 ========== */
 
 /* 主容器深色样式 */
-.theme-dark .todo-stats {
+[data-theme="dark"] .todo-stats {
   background: rgba(45, 45, 45, 0.85);
   backdrop-filter: blur(25px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -144,18 +144,18 @@
 }
 
 /* 统计项文字颜色 */
-.theme-dark .stats-item {
+[data-theme="dark"] .stats-item {
   color: var(--text-secondary);
   background: transparent;
   border: none;
 }
 
-.theme-dark .stats-item:hover {
+[data-theme="dark"] .stats-item:hover {
   color: var(--primary-color);
 }
 
 /* 统计数字样式 */
-.theme-dark .stats-item strong {
+[data-theme="dark"] .stats-item strong {
   color: var(--text-primary);
   background: linear-gradient(135deg, #805ad5 0%, #9f7aea 100%);
   -webkit-background-clip: text;
@@ -164,7 +164,7 @@
   text-shadow: 0 2px 4px rgba(128, 90, 213, 0.2);
 }
 
-.theme-dark .stats-item:hover strong {
+[data-theme="dark"] .stats-item:hover strong {
   background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -172,35 +172,35 @@
 }
 
 /* 按钮深色样式 */
-.theme-dark .btn-toggle-all {
+[data-theme="dark"] .btn-toggle-all {
   background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(76, 81, 191, 0.3);
 }
 
-.theme-dark .btn-toggle-all:hover {
+[data-theme="dark"] .btn-toggle-all:hover {
   box-shadow: 0 8px 25px rgba(76, 81, 191, 0.4);
 }
 
-.theme-dark .btn-clear-completed {
+[data-theme="dark"] .btn-clear-completed {
   background: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
 }
 
-.theme-dark .btn-clear-completed:hover {
+[data-theme="dark"] .btn-clear-completed:hover {
   box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
 }
 
 /* todo-stats 深色主题动态效果 */
-.theme-dark .todo-stats::before {
+[data-theme="dark"] .todo-stats::before {
   background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.03), transparent);
 }
 
-.theme-dark .todo-stats:hover::before {
+[data-theme="dark"] .todo-stats:hover::before {
   background: linear-gradient(45deg, transparent, rgba(128, 90, 213, 0.05), transparent);
 }
 
-.theme-dark .todo-stats:hover {
+[data-theme="dark"] .todo-stats:hover {
   border-color: rgba(128, 90, 213, 0.2);
 }

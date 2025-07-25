@@ -180,7 +180,7 @@ function TodoWrapper({
         dynamicLeft = titleRect.left + (titleRect.width / 2);
         
         // 设置样式和位置
-        const isDark = document.body.classList.contains('theme-dark');
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         Object.assign(globalTooltip.style, {
           position: 'fixed',
           top: dynamicTop + 'px',

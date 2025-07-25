@@ -214,7 +214,7 @@ $text-dark-muted: #a0aec0;
 
 // ========== Todo 组件深色主题样式 ==========
 
-.theme-dark {
+[data-theme="dark"] {
   // Todo 项主体深色样式
   .todo {
     background: rgba(58, 58, 58, 0.95);

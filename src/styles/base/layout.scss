@@ -441,7 +441,7 @@
 }
 
 /* ========== 深色主题下的Header按钮样式 ========== */
-.theme-dark .donate-toggle {
+[data-theme="dark"] .donate-toggle {
   background: rgba(60, 60, 60, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #e5e5e5;
@@ -450,14 +450,14 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .donate-toggle:hover {
+[data-theme="dark"] .donate-toggle:hover {
   background: rgba(80, 80, 80, 0.9);
   box-shadow: 
     0 12px 40px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .app-settings-toggle {
+[data-theme="dark"] .app-settings-toggle {
   background: rgba(60, 60, 60, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #e5e5e5;
@@ -466,14 +466,14 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .app-settings-toggle:hover {
+[data-theme="dark"] .app-settings-toggle:hover {
   background: rgba(80, 80, 80, 0.9);
   box-shadow: 
     0 12px 40px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .header-actions .theme-toggle {
+[data-theme="dark"] .header-actions .theme-toggle {
   background: rgba(60, 60, 60, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #e5e5e5;
@@ -482,7 +482,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .header-actions .theme-toggle:hover {
+[data-theme="dark"] .header-actions .theme-toggle:hover {
   background: rgba(80, 80, 80, 0.9);
   box-shadow: 
     0 12px 40px rgba(0, 0, 0, 0.4),

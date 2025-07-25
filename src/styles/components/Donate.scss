@@ -327,167 +327,167 @@
 }
 
 /* ========== 深色主题样式 ========== */
-.theme-dark .donate-overlay {
+[data-theme="dark"] .donate-overlay {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.theme-dark .donate-sidebar {
+[data-theme="dark"] .donate-sidebar {
   background: rgba(45, 45, 45, 0.95);
   border-right-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .sidebar-header {
+[data-theme="dark"] .sidebar-header {
   background: var(--bg-secondary);
   border-bottom-color: var(--border-color);
 }
 
-.theme-dark .sidebar-header h3 {
+[data-theme="dark"] .sidebar-header h3 {
   color: var(--text-primary);
 }
 
-.theme-dark .close-btn {
+[data-theme="dark"] .close-btn {
   color: var(--text-muted);
   background: var(--bg-secondary);
 }
 
-.theme-dark .close-btn:hover {
+[data-theme="dark"] .close-btn:hover {
   background: var(--bg-tertiary);
   color: var(--text-secondary);
 }
 
 
 
-.theme-dark .qr-code-section h4 {
+[data-theme="dark"] .qr-code-section h4 {
   color: var(--text-primary);
 }
 
-.theme-dark .qr-code-item h5 {
+[data-theme="dark"] .qr-code-item h5 {
   color: var(--text-primary);
 }
 
-.theme-dark .donate-options h4 {
+[data-theme="dark"] .donate-options h4 {
   color: var(--text-primary);
 }
 
-.theme-dark .qr-placeholder {
+[data-theme="dark"] .qr-placeholder {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   border-color: var(--border-color);
   color: var(--text-secondary);
 }
 
-.theme-dark .qr-placeholder:hover {
+[data-theme="dark"] .qr-placeholder:hover {
   border-color: #ffc107;
   background: linear-gradient(135deg, #3a3a2a 0%, #4a4a2a 100%);
 }
 
-.theme-dark .qr-placeholder p {
+[data-theme="dark"] .qr-placeholder p {
   color: var(--text-secondary);
 }
 
-.theme-dark .qr-placeholder small {
+[data-theme="dark"] .qr-placeholder small {
   color: var(--text-muted);
 }
 
-.theme-dark .option-item {
+[data-theme="dark"] .option-item {
   background: rgba(255, 193, 7, 0.15);
   border-color: rgba(255, 193, 7, 0.25);
   color: var(--text-primary);
 }
 
-.theme-dark .option-item.clickable:hover {
+[data-theme="dark"] .option-item.clickable:hover {
   background: rgba(255, 193, 7, 0.2);
 }
 
-.theme-dark .option-item span:last-child {
+[data-theme="dark"] .option-item span:last-child {
   color: var(--text-primary); /* 改为主要文字颜色，更清晰 */
 }
 
-.theme-dark .option-icon {
+[data-theme="dark"] .option-icon {
   color: var(--text-secondary);
 }
 
 /* 深色主题 - Donate 组件内的所有文字元素 */
-.theme-dark .donate-content h4,
-.theme-dark .donate-content h5 {
+[data-theme="dark"] .donate-content h4,
+[data-theme="dark"] .donate-content h5 {
   color: var(--text-primary);
 }
 
-.theme-dark .donate-content p {
+[data-theme="dark"] .donate-content p {
   color: var(--text-secondary);
 }
 
-.theme-dark .thank-you-section h4 {
+[data-theme="dark"] .thank-you-section h4 {
   color: var(--text-primary);
 }
 
-.theme-dark .thank-note {
+[data-theme="dark"] .thank-note {
   color: var(--text-secondary);
 }
 
 /* 深色主题 - 其他遗漏样式 */
-.theme-dark .thank-message {
+[data-theme="dark"] .thank-message {
   background: var(--glass-bg);
   border-color: var(--glass-border);
   color: var(--text-secondary);
 }
 
-.theme-dark .qr-container {
+[data-theme="dark"] .qr-container {
   background: var(--bg-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .qr-platform {
+[data-theme="dark"] .qr-platform {
   color: var(--text-primary);
 }
 
-.theme-dark .qr-description {
+[data-theme="dark"] .qr-description {
   color: var(--text-muted);
 }
 
-.theme-dark .donate-disclaimer {
+[data-theme="dark"] .donate-disclaimer {
   background: var(--bg-secondary);
   border-color: var(--border-color);
   color: var(--text-secondary);
 }
 
-.theme-dark .thank-you-section {
+[data-theme="dark"] .thank-you-section {
   background: var(--bg-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .thank-you-title {
+[data-theme="dark"] .thank-you-title {
   color: var(--text-primary);
 }
 
-.theme-dark .thank-you-empty {
+[data-theme="dark"] .thank-you-empty {
   color: var(--text-muted);
 }
 
-.theme-dark .action-buttons .btn {
+[data-theme="dark"] .action-buttons .btn {
   background: var(--bg-secondary);
   color: var(--text-secondary);
   border-color: var(--border-color);
 }
 
-.theme-dark .action-buttons .btn:hover {
+[data-theme="dark"] .action-buttons .btn:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
 }
 
-.theme-dark .action-buttons .btn.primary {
+[data-theme="dark"] .action-buttons .btn.primary {
   background: var(--primary-color);
   color: white;
 }
 
-.theme-dark .action-buttons .btn.primary:hover {
+[data-theme="dark"] .action-buttons .btn.primary:hover {
   background: #553c9a;
 }
 
-.theme-dark .option-item .option-text h5 {
+[data-theme="dark"] .option-item .option-text h5 {
   color: var(--text-primary);
 }
 
-.theme-dark .option-item .option-text p {
+[data-theme="dark"] .option-item .option-text p {
   color: var(--text-secondary);
 }
 

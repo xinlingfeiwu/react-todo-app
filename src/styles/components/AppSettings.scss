@@ -603,100 +603,100 @@
 }
 
 /* ========== 深色主题样式 ========== */
-.theme-dark .app-settings-header {
+[data-theme="dark"] .app-settings-header {
   background: var(--bg-secondary);
   border-bottom-color: var(--border-color);
 }
 
-.theme-dark .app-settings-header h2 {
+[data-theme="dark"] .app-settings-header h2 {
   color: var(--text-primary);
 }
 
-.theme-dark .settings-subtitle {
+[data-theme="dark"] .settings-subtitle {
   color: var(--text-secondary);
 }
 
-.theme-dark .message.success {
+[data-theme="dark"] .message.success {
   background-color: rgba(72, 187, 120, 0.2);
   color: #68d391;
 }
 
-.theme-dark .message.error {
+[data-theme="dark"] .message.error {
   background-color: rgba(245, 101, 101, 0.2);
   color: #fc8181;
 }
 
-.theme-dark .message.warning {
+[data-theme="dark"] .message.warning {
   background-color: rgba(237, 137, 54, 0.2);
   color: #f6ad55;
 }
 
-.theme-dark .message.info {
+[data-theme="dark"] .message.info {
   background-color: rgba(66, 153, 225, 0.2);
   color: #63b3ed;
 }
 
-.theme-dark .section-title {
+[data-theme="dark"] .section-title {
   color: var(--text-primary);
 }
 
-.theme-dark .privacy-policy-fullscreen {
+[data-theme="dark"] .privacy-policy-fullscreen {
   background: var(--bg-primary);
 }
 
-.theme-dark .privacy-policy-close {
+[data-theme="dark"] .privacy-policy-close {
   color: var(--text-secondary);
   background: var(--bg-secondary);
 }
 
-.theme-dark .privacy-policy-close:hover {
+[data-theme="dark"] .privacy-policy-close:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
 }
 
-.theme-dark .theme-settings {
+[data-theme="dark"] .theme-settings {
   background: var(--bg-tertiary);
   border-color: var(--border-color);
 }
 
-.theme-dark .current-theme-label {
+[data-theme="dark"] .current-theme-label {
   color: var(--text-secondary);
 }
 
-.theme-dark .theme-option {
+[data-theme="dark"] .theme-option {
   background: var(--bg-secondary);
   color: var(--text-secondary);
 }
 
-.theme-dark .theme-option:hover {
+[data-theme="dark"] .theme-option:hover {
   background: var(--bg-tertiary);
 }
 
-.theme-dark .data-stats,
-.theme-dark .action-group {
+[data-theme="dark"] .data-stats,
+[data-theme="dark"] .action-group {
   background: var(--bg-tertiary);
   border-color: var(--border-color);
 }
 
-.theme-dark .action-group.danger {
+[data-theme="dark"] .action-group.danger {
   background: rgba(245, 101, 101, 0.1);
   border-color: rgba(245, 101, 101, 0.3);
 }
 
-.theme-dark .action-group h4 {
+[data-theme="dark"] .action-group h4 {
   color: var(--text-primary);
 }
 
-.theme-dark .stat-label {
+[data-theme="dark"] .stat-label {
   color: var(--text-secondary);
 }
 
-.theme-dark .stat-value {
+[data-theme="dark"] .stat-value {
   color: var(--primary-color);
 }
 
 /* ========== 深色主题下的 form-group 样式 ========== */
-.theme-dark .app-settings .form-group label {
+[data-theme="dark"] .app-settings .form-group label {
   color: var(--text-primary, #ffffff);
 }
 
@@ -791,6 +791,6 @@
 }
 
 /* 深色主题下的导入模式标题 */
-.theme-dark .action-group .form-group h4 {
+[data-theme="dark"] .action-group .form-group h4 {
   color: var(--text-primary-dark, #e2e8f0);
 }

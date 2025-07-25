@@ -59,13 +59,14 @@ export function setThemeMode(mode) {
  */
 export function applyTheme(mode) {
   const actualTheme = mode === THEME_MODES.SYSTEM ? getSystemTheme() : mode;
-  
-  // 移除所有主题类
+
+  // 设置 data-theme 属性
+  document.documentElement.setAttribute('data-theme', actualTheme);
+
+  // 同时保持类名兼容性
   document.documentElement.classList.remove('theme-light', 'theme-dark');
-  
-  // 添加当前主题类
   document.documentElement.classList.add(`theme-${actualTheme}`);
-  
+
   // 设置 CSS 变量
   updateThemeVariables(actualTheme);
 }

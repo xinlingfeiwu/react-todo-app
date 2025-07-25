@@ -141,7 +141,7 @@
 /* ========== CreateForm 深色主题样式 ========== */
 
 /* 输入框深色样式 */
-.theme-dark .input-group input {
+[data-theme="dark"] .input-group input {
   background: rgba(58, 58, 58, 0.95);
   backdrop-filter: blur(20px);
   color: var(--text-primary);
@@ -149,11 +149,11 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .input-group input::placeholder {
+[data-theme="dark"] .input-group input::placeholder {
   color: var(--text-muted);
 }
 
-.theme-dark .input-group input:focus {
+[data-theme="dark"] .input-group input:focus {
   background: rgba(70, 70, 70, 1);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   border-color: var(--primary-color);
@@ -162,27 +162,27 @@
 }
 
 /* 错误状态深色样式 */
-.theme-dark .input-group input.input-error {
+[data-theme="dark"] .input-group input.input-error {
   background: rgba(80, 45, 45, 0.95);
   box-shadow: 0 8px 32px rgba(229, 62, 62, 0.3);
   border-color: rgba(229, 62, 62, 0.5);
 }
 
 /* 按钮深色样式 */
-.theme-dark .input-group button {
+[data-theme="dark"] .input-group button {
   background: linear-gradient(135deg, var(--primary-color) 0%, #553c9a 100%);
   color: white;
   box-shadow: 0 8px 32px rgba(128, 90, 213, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .input-group button:hover:not(:disabled) {
+[data-theme="dark"] .input-group button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(128, 90, 213, 0.4);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.theme-dark .input-group button:disabled {
+[data-theme="dark"] .input-group button:disabled {
   background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
   color: var(--text-muted);
   cursor: not-allowed;
@@ -192,19 +192,19 @@
 }
 
 /* 按钮组深色样式 */
-.theme-dark .button-group button[type="button"] {
+[data-theme="dark"] .button-group button[type="button"] {
   background: linear-gradient(135deg, #4a5568 0%, #5a6c7d 100%);
   box-shadow: 0 8px 32px rgba(74, 85, 104, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark .button-group button[type="button"]:hover {
+[data-theme="dark"] .button-group button[type="button"]:hover {
   background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
   box-shadow: 0 12px 40px rgba(45, 55, 72, 0.4);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 错误消息深色样式 */
-.theme-dark .error-message {
+[data-theme="dark"] .error-message {
   color: #fc8181;
 }
