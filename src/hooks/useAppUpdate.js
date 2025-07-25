@@ -217,6 +217,9 @@ export function useAppUpdate() {
    * 应用更新（刷新页面）
    */
   const applyUpdate = () => {
+    // 立即清除更新状态，防止重复弹出
+    setHasUpdate(false);
+
     // 设置更新标记，防止刷新后重复弹出
     const updateAppliedInfo = {
       version: latestVersion,
@@ -224,13 +227,13 @@ export function useAppUpdate() {
       currentVersion: getCurrentVersion()
     };
     localStorage.setItem(APP_UPDATE_APPLIED_KEY, JSON.stringify(updateAppliedInfo));
-    
+
     // 清除更新状态
     localStorage.removeItem(APP_UPDATE_AVAILABLE_KEY);
     localStorage.removeItem(APP_UPDATE_DISMISSED_KEY);
     localStorage.removeItem(APP_ETAG_KEY);
     localStorage.removeItem(APP_LAST_MODIFIED_KEY);
-    
+
     // 清除所有缓存
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -240,8 +243,10 @@ export function useAppUpdate() {
       });
     }
 
-    // 强制刷新页面
-    window.location.reload(true);
+    // 延迟刷新页面，给用户一点时间看到更新进度
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 1000);
   };
 
   /**

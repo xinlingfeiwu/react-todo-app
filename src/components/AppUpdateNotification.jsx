@@ -53,15 +53,13 @@ export default function AppUpdateNotification() {
   // 处理立即更新
   const handleUpdate = async () => {
     setIsUpdating(true);
-    
+
     // 立即设置更新状态，防止重复弹出
     setUpdateDismissed(true);
     setIsVisible(false);
-    
-    // 显示更新进度
-    setTimeout(() => {
-      applyUpdate();
-    }, 1000);
+
+    // 立即调用 applyUpdate 来清除 hasUpdate 状态
+    applyUpdate();
   };
 
   // 处理稍后更新

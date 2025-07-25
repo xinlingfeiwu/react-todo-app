@@ -61,8 +61,17 @@ ${shareData.text}
         // 首先尝试不带文件的分享，确保文本信息显示
         try {
           await navigator.share(shareData);
+          // 注意：navigator.share() resolve 不代表用户真正分享了
+          // 只是表示分享对话框被打开了，用户可能取消或完成分享
+          // 我们无法区分用户是否真正完成了分享，所以不显示成功提示
+          console.log("分享对话框已打开");
           return; // 如果成功，直接返回
         } catch (basicShareError) {
+          // 如果用户取消分享或发生错误，不显示错误
+          if (basicShareError.name === 'AbortError') {
+            console.log("用户取消了分享");
+            return;
+          }
           console.log("基础分享失败，尝试带图片分享:", basicShareError);
         }
 
@@ -83,6 +92,8 @@ ${shareData.text}
               ...shareData,
               files: [file],
             });
+            // 分享对话框已打开，但不确定用户是否真正分享
+            console.log("带图片的分享对话框已打开");
           } else {
             // 如果获取分享图片失败，尝试使用 favicon
             const faviconUrl = window.location.origin + "/favicon.svg";
@@ -98,15 +109,26 @@ ${shareData.text}
                 ...shareData,
                 files: [faviconFile],
               });
+              // 分享对话框已打开，但不确定用户是否真正分享
+              console.log("带favicon的分享对话框已打开");
             } else {
               // 如果都获取失败，只分享文本内容
               await navigator.share(shareData);
+              // 分享对话框已打开，但不确定用户是否真正分享
+              console.log("文本分享对话框已打开");
             }
           }
         } catch (fileError) {
+          // 如果用户取消分享，不显示错误
+          if (fileError.name === 'AbortError') {
+            console.log("用户取消了分享");
+            return;
+          }
           // 如果文件分享不支持，降级到普通分享
           console.log("文件分享不支持，使用普通分享:", fileError);
           await navigator.share(shareData);
+          // 分享对话框已打开，但不确定用户是否真正分享
+          console.log("降级文本分享对话框已打开");
         }
       } else {
         // 降级方案：复制完整的分享文本到剪贴板
@@ -219,11 +241,11 @@ ${shareData.text}
         </div>
       </div>
 
-      {/* 分享成功提示对话框 */}
+      {/* 分享内容复制成功提示对话框 */}
       <ConfirmDialog
         isOpen={showSuccessDialog}
-        title="分享内容已准备好 🎉"
-        message="包含应用介绍和特色功能的完整分享文本已复制到剪贴板！快去分享给朋友们吧 ✨"
+        title="分享内容已复制 📋"
+        message="包含应用介绍和特色功能的完整分享文本已复制到剪贴板！您可以粘贴到任何地方分享给朋友们 ✨"
         confirmText="好的"
         cancelText={null}
         onConfirm={handleCloseSuccessDialog}
