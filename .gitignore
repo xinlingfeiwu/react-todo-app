@@ -59,6 +59,10 @@ $RECYCLE.BIN/
 coverage/
 *.lcov
 
+# Test results and reports
+test-results/
+*.html.meta.json.gz
+
 # Test files and temporary data
 test-*.json
 test-*.js
