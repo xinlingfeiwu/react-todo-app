@@ -374,27 +374,29 @@
 }
 
 .btn-cancel {
-  background: var(--update-dialog-bg);
-  border: 2px solid var(--update-dialog-border);
-  color: var(--update-text-secondary);
+  background: var(--btn-secondary-bg);
+  border: 2px solid var(--border-color);
+  color: var(--btn-secondary-text);
 }
 
 .btn-cancel:hover:not(:disabled) {
-  border-color: var(--update-text-secondary);
-  color: var(--update-text-primary);
+  background: var(--btn-secondary-hover);
+  border-color: var(--btn-secondary-hover-text);
+  color: var(--btn-secondary-hover-text);
   transform: translateY(-1px);
 }
 
 .btn-update-now {
-  background: linear-gradient(135deg, var(--update-primary-color), var(--update-primary-hover));
-  border: 2px solid var(--update-primary-color);
+  background: var(--btn-primary-bg);
+  border: 2px solid var(--primary-color);
   color: white;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .btn-update-now:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 20px var(--btn-primary-hover-shadow);
 }
 
 .btn-update-now:disabled {

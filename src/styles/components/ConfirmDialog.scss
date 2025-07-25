@@ -132,26 +132,27 @@
 
 /* 确认按钮默认样式 */
 .confirm-dialog .btn-confirm {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: var(--btn-primary-bg);
   color: white;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 15px var(--btn-primary-shadow);
 }
 
 .confirm-dialog .btn-confirm:hover {
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  background: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 8px 25px var(--btn-primary-hover-shadow);
 }
 
 /* 取消按钮样式 */
 .confirm-dialog .btn-cancel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
-  color: #4a5568;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .confirm-dialog .btn-cancel:hover {
-  background: linear-gradient(135deg, rgba(248, 250, 252, 1) 0%, rgba(237, 242, 247, 1) 100%);
+  background: var(--btn-secondary-hover);
+  color: var(--btn-secondary-hover-text);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
@@ -163,18 +164,18 @@
 .confirm-dialog.error .btn-confirm,
 .confirm-dialog .btn-confirm.btn-danger,
 .confirm-dialog .btn-confirm.btn-error {
-  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  background: var(--btn-danger-bg);
   color: white;
-  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+  box-shadow: 0 4px 15px var(--btn-danger-shadow);
 }
 
 .confirm-dialog.danger .btn-confirm:hover,
 .confirm-dialog.error .btn-confirm:hover,
 .confirm-dialog .btn-confirm.btn-danger:hover,
 .confirm-dialog .btn-confirm.btn-error:hover {
-  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  background: var(--btn-danger-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.5);
+  box-shadow: 0 8px 25px var(--btn-danger-shadow);
 }
 
 /* 警告类型 */

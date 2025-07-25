@@ -13,6 +13,21 @@ $glass-bg-light: rgba(255, 255, 255, 0.8) !default;
 $glass-border-light: rgba(255, 255, 255, 0.3) !default;
 $primary-color-light: #4c51bf !default;
 
+// 浅色主题按钮变量
+$btn-primary-bg-light: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !default;
+$btn-primary-hover-light: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !default;
+$btn-primary-shadow-light: rgba(139, 92, 246, 0.3) !default;
+$btn-primary-hover-shadow-light: rgba(139, 92, 246, 0.4) !default;
+
+$btn-secondary-bg-light: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !default;
+$btn-secondary-hover-light: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !default;
+$btn-secondary-text-light: #4a5568 !default;
+$btn-secondary-hover-text-light: #2d3748 !default;
+
+$btn-danger-bg-light: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !default;
+$btn-danger-hover-light: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !default;
+$btn-danger-shadow-light: rgba(239, 68, 68, 0.3) !default;
+
 // 深色主题变量 - 主流黑色背景
 $bg-primary-dark: #000000 !default;
 $bg-secondary-dark: #111111 !default;
@@ -25,6 +40,21 @@ $shadow-color-dark: rgba(0, 0, 0, 0.5) !default;
 $glass-bg-dark: rgba(17, 17, 17, 0.9) !default;
 $glass-border-dark: rgba(255, 255, 255, 0.1) !default;
 $primary-color-dark: #8b5cf6 !default;
+
+// 深色主题按钮变量
+$btn-primary-bg-dark: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !default;
+$btn-primary-hover-dark: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%) !default;
+$btn-primary-shadow-dark: rgba(139, 92, 246, 0.4) !default;
+$btn-primary-hover-shadow-dark: rgba(139, 92, 246, 0.5) !default;
+
+$btn-secondary-bg-dark: linear-gradient(135deg, #111111 0%, #1a1a1a 100%) !default;
+$btn-secondary-hover-dark: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%) !default;
+$btn-secondary-text-dark: #e5e5e5 !default;
+$btn-secondary-hover-text-dark: #ffffff !default;
+
+$btn-danger-bg-dark: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !default;
+$btn-danger-hover-dark: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !default;
+$btn-danger-shadow-dark: rgba(239, 68, 68, 0.4) !default;
 
 /* 根元素主题变量 */
 :root {
@@ -40,6 +70,19 @@ $primary-color-dark: #8b5cf6 !default;
   --glass-bg: #{$glass-bg-light};
   --glass-border: #{$glass-border-light};
   --primary-color: #{$primary-color-light};
+
+  /* 按钮变量 */
+  --btn-primary-bg: #{$btn-primary-bg-light};
+  --btn-primary-hover: #{$btn-primary-hover-light};
+  --btn-primary-shadow: #{$btn-primary-shadow-light};
+  --btn-primary-hover-shadow: #{$btn-primary-hover-shadow-light};
+  --btn-secondary-bg: #{$btn-secondary-bg-light};
+  --btn-secondary-hover: #{$btn-secondary-hover-light};
+  --btn-secondary-text: #{$btn-secondary-text-light};
+  --btn-secondary-hover-text: #{$btn-secondary-hover-text-light};
+  --btn-danger-bg: #{$btn-danger-bg-light};
+  --btn-danger-hover: #{$btn-danger-hover-light};
+  --btn-danger-shadow: #{$btn-danger-shadow-light};
 }
 
 /* 深色主题 */
@@ -55,6 +98,19 @@ $primary-color-dark: #8b5cf6 !default;
   --glass-bg: #{$glass-bg-dark};
   --glass-border: #{$glass-border-dark};
   --primary-color: #{$primary-color-dark};
+
+  /* 按钮变量 */
+  --btn-primary-bg: #{$btn-primary-bg-dark};
+  --btn-primary-hover: #{$btn-primary-hover-dark};
+  --btn-primary-shadow: #{$btn-primary-shadow-dark};
+  --btn-primary-hover-shadow: #{$btn-primary-hover-shadow-dark};
+  --btn-secondary-bg: #{$btn-secondary-bg-dark};
+  --btn-secondary-hover: #{$btn-secondary-hover-dark};
+  --btn-secondary-text: #{$btn-secondary-text-dark};
+  --btn-secondary-hover-text: #{$btn-secondary-hover-text-dark};
+  --btn-danger-bg: #{$btn-danger-bg-dark};
+  --btn-danger-hover: #{$btn-danger-hover-dark};
+  --btn-danger-shadow: #{$btn-danger-shadow-dark};
 }
 
 /* 主题过渡动画 */

@@ -207,26 +207,26 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--btn-primary-bg);
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px var(--btn-primary-shadow);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  background: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px var(--btn-primary-hover-shadow);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  color: #4a5568;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
-  color: #2d3748;
+  background: var(--btn-secondary-hover);
+  color: var(--btn-secondary-hover-text);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
@@ -265,15 +265,15 @@
 }
 
 .btn-submit {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--btn-primary-bg);
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px var(--btn-primary-shadow);
 }
 
 .btn-submit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  background: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px var(--btn-primary-hover-shadow);
 }
 
 .btn-submit:disabled {
@@ -285,14 +285,14 @@
 }
 
 .btn-cancel {
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  color: #4a5568;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
 .btn-cancel:hover {
-  background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
-  color: #2d3748;
+  background: var(--btn-secondary-hover);
+  color: var(--btn-secondary-hover-text);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
@@ -510,55 +510,10 @@
   color: var(--text-muted);
 }
 
-/* 通用按钮深色主题 */
-[data-theme="dark"] .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #6b46c1 100%);
-  box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
-}
-
-[data-theme="dark"] .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #9f7aea 0%, var(--primary-color) 100%);
-  box-shadow: 0 8px 25px rgba(128, 90, 213, 0.4);
-}
-
-[data-theme="dark"] .btn-secondary {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .btn-secondary:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
-  color: var(--text-primary);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* 表单按钮深色主题 */
-[data-theme="dark"] .btn-submit {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #6b46c1 100%);
-  box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
-}
-
-[data-theme="dark"] .btn-submit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #9f7aea 0%, var(--primary-color) 100%);
-  box-shadow: 0 8px 25px rgba(128, 90, 213, 0.4);
-}
-
+/* 深色主题禁用状态样式 */
 [data-theme="dark"] .btn-submit:disabled {
   background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
   color: var(--text-muted);
-}
-
-[data-theme="dark"] .btn-cancel {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .btn-cancel:hover {
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #4a4a4a 100%);
-  color: var(--text-primary);
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 验证状态深色主题 */
