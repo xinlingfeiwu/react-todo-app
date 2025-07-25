@@ -278,8 +278,12 @@ describe('EditForm Component', () => {
       const inputGroup = document.querySelector('.input-group')
       expect(inputGroup).toBeInTheDocument()
 
-      const buttonGroup = document.querySelector('.button-group')
-      expect(buttonGroup).toBeInTheDocument()
+      // 验证输入框和按钮都在 input-group 中
+      const input = inputGroup.querySelector('input')
+      expect(input).toBeInTheDocument()
+
+      const buttons = inputGroup.querySelectorAll('button')
+      expect(buttons).toHaveLength(2) // 保存按钮和取消按钮
     })
 
     it('按钮应该有正确的类型', () => {
