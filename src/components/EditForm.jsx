@@ -68,14 +68,12 @@ function EditForm({ todo, editTodo, onCancel }) {
           maxLength={TODO_CONFIG.MAX_CONTENT_LENGTH}
           className={error ? 'input-error' : ''}
         />
-        <div className="button-group">
-          <button type="submit" disabled={!newContent.trim()}>
-            {TODO_CONFIG.BUTTON_TEXTS.EDIT}
-          </button>
-          <button type="button" onClick={handleCancel}>
-            取消
-          </button>
-        </div>
+        <button type="submit" disabled={!newContent.trim()}>
+          {TODO_CONFIG.BUTTON_TEXTS.EDIT}
+        </button>
+        <button type="button" onClick={handleCancel}>
+          取消
+        </button>
       </div>
       {error && <div className="error-message">{error}</div>}
     </form>
