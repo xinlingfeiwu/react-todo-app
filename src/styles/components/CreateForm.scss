@@ -24,12 +24,15 @@
   border: none;
   border-radius: 25px;
   font-size: 16px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: var(--glass-strong-bg);
+  backdrop-filter: var(--glass-strong-blur);
+  -webkit-backdrop-filter: var(--glass-strong-blur);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
   color: #2d3748;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-strong-border);
   position: relative; /* 确保定位正确 */
   z-index: 2; /* 提高层级 */
 }
@@ -142,11 +145,14 @@
 
 /* 输入框深色样式 */
 [data-theme="dark"] .input-group input {
-  background: rgba(26, 26, 26, 0.95);
-  backdrop-filter: blur(20px);
+  background: var(--glass-strong-bg);
+  backdrop-filter: var(--glass-strong-blur);
+  -webkit-backdrop-filter: var(--glass-strong-blur);
   color: var(--text-primary);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-strong-border);
 }
 
 [data-theme="dark"] .input-group input::placeholder {

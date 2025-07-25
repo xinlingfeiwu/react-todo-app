@@ -22,11 +22,15 @@
   position: relative; /* 改为相对定位，依赖遮罩层的flex居中 */
   width: 90%;
   max-width: 600px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
+  background: var(--glass-ultra-bg);
+  backdrop-filter: var(--glass-ultra-blur);
+  -webkit-backdrop-filter: var(--glass-ultra-blur);
   border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 
-              0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 1px var(--glass-ultra-border);
+  border: 1px solid var(--glass-ultra-border);
   z-index: 1001;
   opacity: 0;
   transform: scale(0.9); /* 简化transform，去掉translate */
@@ -209,26 +213,74 @@
 .btn-primary {
   background: var(--btn-primary-bg);
   color: white;
-  box-shadow: 0 4px 15px var(--btn-primary-shadow);
+  box-shadow:
+    0 4px 15px var(--btn-primary-shadow),
+    0 0 0 1px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .btn-primary:hover:not(:disabled) {
   background: var(--btn-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--btn-primary-hover-shadow);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 25px var(--btn-primary-hover-shadow),
+    0 0 0 1px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .btn-secondary {
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
-  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: var(--btn-secondary-hover);
   color: var(--btn-secondary-hover-text);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 /* 按钮图标和动画 */
@@ -267,13 +319,37 @@
 .btn-submit {
   background: var(--btn-primary-bg);
   color: white;
-  box-shadow: 0 4px 15px var(--btn-primary-shadow);
+  box-shadow:
+    0 4px 15px var(--btn-primary-shadow),
+    0 0 0 1px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .btn-submit:hover:not(:disabled) {
   background: var(--btn-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--btn-primary-hover-shadow);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 25px var(--btn-primary-hover-shadow),
+    0 0 0 1px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-submit:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .btn-submit:disabled {
@@ -287,14 +363,38 @@
 .btn-cancel {
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
-  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cancel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
 }
 
 .btn-cancel:hover {
   background: var(--btn-secondary-hover);
   color: var(--btn-secondary-hover-text);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-cancel:hover::before {
+  left: 100%;
 }
 
 /* 验证状态 */
@@ -442,11 +542,14 @@
 
 /* 反馈表单模态框深色主题 */
 [data-theme="dark"] .feedback-modal {
-  background: rgba(17, 17, 17, 0.95);
-  backdrop-filter: blur(25px);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-              0 0 0 1px rgba(255, 255, 255, 0.05);
+  background: var(--glass-ultra-bg);
+  backdrop-filter: var(--glass-ultra-blur);
+  -webkit-backdrop-filter: var(--glass-ultra-blur);
+  border-color: var(--glass-ultra-border);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px var(--glass-ultra-border);
 }
 
 [data-theme="dark"] .modal-header {

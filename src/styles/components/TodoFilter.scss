@@ -35,25 +35,25 @@
 }
 
 .filter-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  background: var(--glass-medium-bg);
+  backdrop-filter: var(--glass-medium-blur);
+  -webkit-backdrop-filter: var(--glass-medium-blur);
   color: white;
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--glass-medium-border);
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .filter-btn.active {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(30px) saturate(1.8);
-  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  background: var(--glass-strong-bg);
+  backdrop-filter: var(--glass-strong-blur);
+  -webkit-backdrop-filter: var(--glass-strong-blur);
   color: #4c51bf;
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: var(--glass-strong-border);
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(255, 255, 255, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 0 0 1px rgba(102, 126, 234, 0.1);
@@ -103,25 +103,25 @@
 
 .filter-btn:hover .count {
   background: rgba(102, 126, 234, 0.95);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: var(--glass-medium-blur);
+  -webkit-backdrop-filter: var(--glass-medium-blur);
   transform: scale(1.05);
   border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 
+  box-shadow:
     0 5px 15px rgba(102, 126, 234, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .filter-btn.active .count {
   background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: var(--glass-medium-blur);
+  -webkit-backdrop-filter: var(--glass-medium-blur);
   color: white;
   border-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 4px 15px rgba(76, 81, 191, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* ========== TodoFilter 深色主题样式 ========== */

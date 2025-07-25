@@ -2,17 +2,18 @@
 
 /* 统计信息样式 */
 .todo-stats {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(25px) saturate(1.4);
-  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  background: var(--glass-ultra-bg);
+  backdrop-filter: var(--glass-ultra-blur);
+  -webkit-backdrop-filter: var(--glass-ultra-blur);
   border-radius: 24px;
   padding: 28px;
   margin-bottom: 20px;
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 4px 20px rgba(102, 126, 234, 0.1);
+  border: 1px solid var(--glass-ultra-border);
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -134,13 +135,14 @@
 
 /* 主容器深色样式 */
 [data-theme="dark"] .todo-stats {
-  background: rgba(17, 17, 17, 0.9);
-  backdrop-filter: blur(25px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-ultra-bg);
+  backdrop-filter: var(--glass-ultra-blur);
+  border: 1px solid var(--glass-ultra-border);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 4px 20px rgba(139, 92, 246, 0.15);
 }
 
 /* 统计项文字颜色 */

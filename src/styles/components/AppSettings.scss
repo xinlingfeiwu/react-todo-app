@@ -113,11 +113,15 @@
 
 /* ========== 主题设置样式 ========== */
 .theme-settings {
-  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  background: var(--glass-strong-bg);
+  border: 1px solid var(--glass-strong-border);
   border-radius: 16px;
   padding: 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--glass-strong-blur);
+  -webkit-backdrop-filter: var(--glass-strong-blur);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .current-theme {
@@ -196,14 +200,16 @@
 
 /* ========== 数据管理样式 ========== */
 .data-stats {
-  background: var(--glass-bg, rgba(255, 255, 255, 0.5));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  background: var(--glass-strong-bg);
+  border: 1px solid var(--glass-strong-border);
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
-  backdrop-filter: blur(10px);
-  /* 强制显示边框确保样式生效 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: var(--glass-strong-blur);
+  -webkit-backdrop-filter: var(--glass-strong-blur);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .stat-item {
