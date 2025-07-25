@@ -72,48 +72,85 @@ $text-dark-muted: #a0aec0;
   }
 }
 
-// 完成按钮样式
+// 完成按钮样式 - 美化版本
 .completion-btn {
   width: 28px;
   height: 28px;
-  border: 2px solid $border-color-light;
+  border: 2px solid rgba(139, 92, 246, 0.3);
   border-radius: 50%;
-  background: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  font-size: 20px; // 增大字体大小以配合SVG
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
+  font-size: 20px;
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+
   svg {
     width: 20px !important;
     height: 20px !important;
     transition: all 0.3s ease;
     flex-shrink: 0;
+    color: rgba(139, 92, 246, 0.7);
   }
-  
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(72, 187, 120, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
   &:hover {
     border-color: $primary-green;
-    background: rgba(72, 187, 120, 0.1);
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.15) 0%, rgba(56, 161, 105, 0.1) 100%);
     transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.2);
-    
+    box-shadow:
+      0 6px 20px rgba(72, 187, 120, 0.3),
+      0 0 0 1px rgba(72, 187, 120, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
     svg {
       transform: scale(1.1);
+      color: $primary-green;
     }
   }
-  
+
+  &:hover::before {
+    left: 100%;
+  }
+
   &.completed {
     background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
     border-color: $primary-green;
     color: white;
-    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
-    
+    box-shadow:
+      0 4px 15px rgba(72, 187, 120, 0.4),
+      0 0 0 1px rgba(72, 187, 120, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+    svg {
+      color: white;
+    }
+
     &:hover {
       background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
       transform: scale(1.05);
+      box-shadow:
+        0 6px 20px rgba(72, 187, 120, 0.5),
+        0 0 0 1px rgba(72, 187, 120, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
   }
 }
