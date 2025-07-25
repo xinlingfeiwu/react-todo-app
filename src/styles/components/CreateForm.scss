@@ -142,7 +142,7 @@
 
 /* 输入框深色样式 */
 [data-theme="dark"] .input-group input {
-  background: rgba(58, 58, 58, 0.95);
+  background: rgba(26, 26, 26, 0.95);
   backdrop-filter: blur(20px);
   color: var(--text-primary);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -154,7 +154,7 @@
 }
 
 [data-theme="dark"] .input-group input:focus {
-  background: rgba(70, 70, 70, 1);
+  background: rgba(34, 34, 34, 1);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   border-color: var(--primary-color);
   transform: translateY(-2px);
@@ -163,7 +163,7 @@
 
 /* 错误状态深色样式 */
 [data-theme="dark"] .input-group input.input-error {
-  background: rgba(80, 45, 45, 0.95);
+  background: rgba(34, 17, 17, 0.95);
   box-shadow: 0 8px 32px rgba(229, 62, 62, 0.3);
   border-color: rgba(229, 62, 62, 0.5);
 }

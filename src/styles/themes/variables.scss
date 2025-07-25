@@ -13,18 +13,18 @@ $glass-bg-light: rgba(255, 255, 255, 0.8) !default;
 $glass-border-light: rgba(255, 255, 255, 0.3) !default;
 $primary-color-light: #4c51bf !default;
 
-// 深色主题变量
-$bg-primary-dark: #1a1a1a !default;
-$bg-secondary-dark: #2d2d2d !default;
-$bg-tertiary-dark: #3a3a3a !default;
+// 深色主题变量 - 主流黑色背景
+$bg-primary-dark: #000000 !default;
+$bg-secondary-dark: #111111 !default;
+$bg-tertiary-dark: #1a1a1a !default;
 $text-primary-dark: #ffffff !default;
-$text-secondary-dark: #b3b3b3 !default;
-$text-muted-dark: #8a8a8a !default;
-$border-color-dark: #4a4a4a !default;
-$shadow-color-dark: rgba(0, 0, 0, 0.3) !default;
-$glass-bg-dark: rgba(45, 45, 45, 0.8) !default;
+$text-secondary-dark: #e5e5e5 !default;
+$text-muted-dark: #a1a1a1 !default;
+$border-color-dark: #333333 !default;
+$shadow-color-dark: rgba(0, 0, 0, 0.5) !default;
+$glass-bg-dark: rgba(17, 17, 17, 0.9) !default;
 $glass-border-dark: rgba(255, 255, 255, 0.1) !default;
-$primary-color-dark: #805ad5 !default;
+$primary-color-dark: #8b5cf6 !default;
 
 /* 根元素主题变量 */
 :root {

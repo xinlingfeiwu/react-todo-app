@@ -442,10 +442,10 @@
 
 /* 反馈表单模态框深色主题 */
 [data-theme="dark"] .feedback-modal {
-  background: rgba(35, 35, 35, 0.95);
+  background: rgba(17, 17, 17, 0.95);
   backdrop-filter: blur(25px);
   border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
               0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 

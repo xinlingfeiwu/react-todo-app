@@ -9,10 +9,10 @@
 }
 
 [data-theme="dark"] {
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --background-color: #1f2937;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e5e5;
+  --text-muted: #a1a1a1;
+  --background-color: #000000;
 }
 
 * {
@@ -30,10 +30,10 @@ body {
     transition: background 0.3s ease;
 }
 
-/* 深色主题下的 body 背景 */
+/* 深色主题下的 body 背景 - 主流黑色渐变 */
 [data-theme="dark"] body {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: #f9fafb;
+    background: linear-gradient(135deg, #000000 0%, #111111 50%, #1a1a1a 100%);
+    color: #ffffff;
 }
 
 .App {

@@ -332,7 +332,7 @@
 }
 
 [data-theme="dark"] .donate-sidebar {
-  background: rgba(45, 45, 45, 0.95);
+  background: rgba(17, 17, 17, 0.95);
   border-right-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -353,6 +353,14 @@
 [data-theme="dark"] .close-btn:hover {
   background: var(--bg-tertiary);
   color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sidebar-content {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .donate-content {
+  background: var(--bg-primary);
 }
 
 

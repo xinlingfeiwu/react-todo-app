@@ -79,16 +79,16 @@ function updateThemeVariables(theme) {
   const root = document.documentElement;
   
   if (theme === 'dark') {
-    // 深色主题变量
-    root.style.setProperty('--bg-primary', '#1a1a1a');
-    root.style.setProperty('--bg-secondary', '#2d2d2d');
-    root.style.setProperty('--bg-tertiary', '#3a3a3a');
+    // 深色主题变量 - 主流黑色背景
+    root.style.setProperty('--bg-primary', '#000000');
+    root.style.setProperty('--bg-secondary', '#111111');
+    root.style.setProperty('--bg-tertiary', '#1a1a1a');
     root.style.setProperty('--text-primary', '#ffffff');
-    root.style.setProperty('--text-secondary', '#b3b3b3');
-    root.style.setProperty('--text-muted', '#8a8a8a');
-    root.style.setProperty('--border-color', '#4a4a4a');
-    root.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.3)');
-    root.style.setProperty('--glass-bg', 'rgba(45, 45, 45, 0.8)');
+    root.style.setProperty('--text-secondary', '#e5e5e5');
+    root.style.setProperty('--text-muted', '#a1a1a1');
+    root.style.setProperty('--border-color', '#333333');
+    root.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+    root.style.setProperty('--glass-bg', 'rgba(17, 17, 17, 0.9)');
     root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.1)');
   } else {
     // 浅色主题变量
