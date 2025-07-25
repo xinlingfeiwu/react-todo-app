@@ -30,6 +30,16 @@ function Donate({ isOpen, onClose }) {
     setShowFeedbackForm(false);
   };
 
+  // 处理 GitHub 点星
+  const handleGitHubStar = () => {
+    const githubUrl = 'https://github.com/xinlingfeiwu/react-todo-app';
+    // 在新标签页中打开 GitHub 仓库
+    window.open(githubUrl, '_blank', 'noopener,noreferrer');
+
+    // 可选：显示一个友好的提示
+    console.log('正在跳转到 GitHub 仓库，感谢您的支持！⭐');
+  };
+
   // 分享功能
   const handleShare = async () => {
     const shareData = {
@@ -217,9 +227,9 @@ ${shareData.text}
             <div className="donate-options">
               <h4>💰 其他支持方式</h4>
               <div className="option-list">
-                <div className="option-item" style={{ display: "none" }}>
+                <div className="option-item clickable" onClick={handleGitHubStar}>
                   <span className="option-icon">⭐</span>
-                  <span>在 GitHub 上给项目点星</span>
+                  <span>在 GitHub 上给项目点星 (免费支持)</span>
                 </div>
                 <div
                   className="option-item clickable"
