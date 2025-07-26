@@ -5,11 +5,11 @@
 
 const CACHE_NAME = 'todo-app-v1.0.0';
 const CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg',
-  '/todo-icon.svg',
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg',
+  './todo-icon.svg',
   // 动态添加其他资源
 ];
 
@@ -103,7 +103,7 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         // 离线时的降级策略
         if (event.request.destination === 'document') {
-          return caches.match('/index.html');
+          return caches.match('./index.html');
         }
       })
   );
