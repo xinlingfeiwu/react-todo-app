@@ -457,7 +457,7 @@
   cursor: not-allowed;
 }
 
-/* 检查状态指示器 */
+/* 检查状态指示器 - 保持在右侧 */
 .checking-indicator {
   position: fixed;
   bottom: 20px;
@@ -561,7 +561,8 @@
   animation: devButtonRotate 3s linear infinite;
 }
 
-.btn-dev-check:disabled svg {
+/* 检查时保持动画，只有在非检查状态下禁用时才停止动画 */
+.btn-dev-check:disabled:not(.checking) svg {
   animation: none;
 }
 
@@ -687,6 +688,12 @@
   .btn-dev-check svg {
     width: 18px;
     height: 18px;
+    animation: devButtonRotate 3s linear infinite;
+  }
+
+  /* 检查时保持动画，只有在非检查状态下禁用时才停止动画 */
+  .btn-dev-check:disabled:not(.checking) svg {
+    animation: none;
   }
 }
 

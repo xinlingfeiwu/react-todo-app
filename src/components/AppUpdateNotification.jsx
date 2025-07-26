@@ -226,9 +226,9 @@ export default function AppUpdateNotification() {
         </div>
       </div>
 
-      {/* 检查状态指示器（右下角小提示） */}
+      {/* 检查状态指示器（右下角小提示） - 隐藏但保留功能 */}
       {isChecking && (
-        <div className="checking-indicator">
+        <div className="checking-indicator" style={{ display: 'none' }}>
           <div className="checking-spinner"></div>
           <span>检查更新中...</span>
         </div>
@@ -238,7 +238,7 @@ export default function AppUpdateNotification() {
       {import.meta.env.DEV && (
         <div className="dev-controls">
           <button
-            className="btn-dev-check"
+            className={`btn-dev-check ${isChecking ? 'checking' : ''}`}
             onClick={handleManualCheck}
             disabled={isChecking}
             title="手动检查更新（开发环境）"

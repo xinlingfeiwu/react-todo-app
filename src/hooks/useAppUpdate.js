@@ -20,7 +20,7 @@ export function useAppUpdate() {
   // 配置选项
   const config = {
     checkInterval: 5 * 60 * 1000, // 5分钟检查一次
-    versionEndpoint: `${import.meta.env.BASE_URL}version.json`, // 版本信息端点
+    versionEndpoint: '/version.json', // 版本信息端点
     snoozeTime: 60 * 60 * 1000, // 稍后更新的延迟时间：1小时
   };
 
@@ -61,8 +61,9 @@ export function useAppUpdate() {
   /**
    * 简化的版本检测逻辑
    */
-  const checkForUpdate = useCallback(async () => {
+  const checkForUpdate = useCallback(async (minCheckingTime = 2000) => {
     setIsChecking(true);
+    const startTime = Date.now();
 
     try {
       // 获取当前版本信息
@@ -171,7 +172,17 @@ export function useAppUpdate() {
       console.warn('⚠️ 版本检查失败:', error.message);
       return false;
     } finally {
-      setIsChecking(false);
+      // 确保检查动画至少显示指定时间，让用户能看到
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, minCheckingTime - elapsedTime);
+
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          setIsChecking(false);
+        }, remainingTime);
+      } else {
+        setIsChecking(false);
+      }
     }
   }, [config.versionEndpoint, config.snoozeTime]);
 
@@ -268,11 +279,11 @@ export function useAppUpdate() {
     const currentInfo = getCurrentVersionInfo();
     setCurrentVersion(currentInfo.version);
 
-    // 页面刷新时立即检测版本更新（异步，不阻塞页面）
-    console.log('🔄 页面加载完成，立即检测版本更新...');
+    // 页面刷新时检测版本更新（异步，不阻塞页面）
+    console.log('🔄 页面加载完成，开始检测版本更新...');
     setTimeout(() => {
-      checkForUpdate();
-    }, 500); // 延迟500ms，让页面先完成渲染
+      checkForUpdate(3000); // 确保检查动画至少显示3秒
+    }, 1000); // 延迟1秒，让页面先完成渲染
 
     // 启动定时检查
     startAutoCheck();
