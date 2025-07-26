@@ -218,11 +218,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 📤 Upload Build Artifacts
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
   deploy-pages:
     needs: release
     runs-on: ubuntu-latest
@@ -231,6 +226,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: 📥 Checkout main branch for deployment
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 📦 Setup Node.js for deployment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📋 Install dependencies for deployment
+        run: npm ci
+
+      - name: 🏗️ Build for deployment
+        run: npm run build:gh
+
+      - name: 📤 Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
       - name: 🌐 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

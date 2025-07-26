@@ -2,12 +2,6 @@
 
 import { execSync } from 'child_process';
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// ES模块中获取 __dirname 的方法
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // 读取当前版本号
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -385,6 +379,11 @@ npm run build:gh
 }
 
 // 执行发布
-release();
-console.log('🚀 正在发布到 GitHub Pages...');
-execSync('npm run deploy', { stdio: 'inherit' });
+release().then(() => {
+  console.log('🎉 本地发布流程完成！');
+  console.log('📡 GitHub Actions 将自动处理 GitHub Pages 部署');
+  console.log('🔗 查看部署状态: https://github.com/xinlingfeiwu/react-todo-app/actions');
+}).catch((error) => {
+  console.error('❌ 发布失败:', error.message);
+  process.exit(1);
+});
