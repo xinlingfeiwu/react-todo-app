@@ -234,22 +234,20 @@ export default function AppUpdateNotification() {
         </div>
       )}
 
-      {/* 开发环境手动检查按钮 */}
-      {import.meta.env.DEV && (
-        <div className="dev-controls">
-          <button
-            className={`btn-dev-check ${isChecking ? 'checking' : ''}`}
-            onClick={handleManualCheck}
-            disabled={isChecking}
-            title="手动检查更新（开发环境）"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-              <path d="M21 3v5h-5" />
-            </svg>
-          </button>
-        </div>
-      )}
+      {/* 手动检查更新按钮 */}
+      <div className="dev-controls">
+        <button
+          className={`btn-dev-check ${isChecking ? 'checking' : ''}`}
+          onClick={handleManualCheck}
+          disabled={isChecking}
+          title="手动检查更新"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+            <path d="M21 3v5h-5" />
+          </svg>
+        </button>
+      </div>
 
       {/* 更新详情对话框 */}
       {showDetailsDialog && (
