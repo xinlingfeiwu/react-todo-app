@@ -17,6 +17,10 @@
   ],
   "author": "Leo Liu <lovexinlingfeiwu@foxmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.18.0",
+    "npm": ">=9.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/xinlingfeiwu/react-todo-app.git"
