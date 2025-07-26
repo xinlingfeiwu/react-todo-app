@@ -519,10 +519,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 4px 14px rgba(59, 130, 246, 0.2),
     0 0 0 1px var(--glass-border) inset;
   transition: var(--update-transition);
+  /* 触摸优化 */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* 深色模式适配 */
@@ -679,6 +684,11 @@
     background: rgba(59, 130, 246, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    /* 触摸优化 */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   [data-theme="dark"] .btn-dev-check {
@@ -987,5 +997,78 @@
   
   .update-warning {
     padding: 12px;
+  }
+
+  /* 移动端版本检测按钮优化 */
+  .dev-controls {
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .btn-dev-check {
+    width: 40px;
+    height: 40px;
+    background: rgba(59, 130, 246, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow:
+      0 2px 8px rgba(59, 130, 246, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  [data-theme="dark"] .btn-dev-check {
+    background: rgba(59, 130, 246, 0.8);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    box-shadow:
+      0 2px 8px rgba(59, 130, 246, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
+  .btn-dev-check svg {
+    width: 16px;
+    height: 16px;
+    animation: devButtonRotate 3s linear infinite;
+  }
+
+  .btn-dev-check:hover:not(:disabled) {
+    transform: translateY(-1px) scale(1.02);
+    background: rgba(59, 130, 246, 0.95);
+    box-shadow:
+      0 4px 12px rgba(59, 130, 246, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  }
+
+  [data-theme="dark"] .btn-dev-check:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.9);
+    box-shadow:
+      0 4px 12px rgba(59, 130, 246, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  /* 检查时保持动画，只有在非检查状态下禁用时才停止动画 */
+  .btn-dev-check:disabled:not(.checking) svg {
+    animation: none;
+  }
+}
+
+/* 超小屏幕优化 (iPhone SE等) */
+@media (max-width: 375px) {
+  .dev-controls {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .btn-dev-check {
+    width: 36px;
+    height: 36px;
+    background: rgba(59, 130, 246, 0.95);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .btn-dev-check svg {
+    width: 14px;
+    height: 14px;
   }
 }
