@@ -66,6 +66,9 @@ test-results/
 # Test files and temporary data
 test-*.json
 test-*.js
+*-test.json
+version-test.json
+temp/
 
 # Backup files
 *.backup

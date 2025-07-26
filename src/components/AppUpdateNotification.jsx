@@ -13,7 +13,7 @@ export default function AppUpdateNotification() {
     latestVersion,
     isChecking,
     applyUpdate,
-    dismissUpdate,
+    snoozeUpdate,
     checkForUpdate
   } = useAppUpdate();
 
@@ -68,9 +68,9 @@ export default function AppUpdateNotification() {
     setIsVisible(false);
     setUpdateDismissed(true);
     
-    // 调用hook的忽略函数
+    // 调用hook的稍后更新函数
     setTimeout(() => {
-      dismissUpdate();
+      snoozeUpdate();
     }, 300);
   };
 

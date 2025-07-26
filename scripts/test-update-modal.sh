@@ -67,9 +67,9 @@ echo ""
 
 print_info "创建测试版本文件..."
 
-# 创建一个测试版本文件
-mkdir -p public
-cat > public/version-test.json << EOF
+# 创建一个测试版本文件到临时目录
+mkdir -p temp
+cat > temp/version-test.json << EOF
 {
   "name": "react-todo-app",
   "version": "1.0.1",
@@ -85,7 +85,7 @@ cat > public/version-test.json << EOF
 }
 EOF
 
-print_success "✅ 测试版本文件已创建: public/version-test.json"
+print_success "✅ 测试版本文件已创建: temp/version-test.json"
 echo ""
 
 print_info "高级测试命令（在浏览器控制台中运行）:"

@@ -22,24 +22,22 @@ export const STORAGE_KEYS = {
   // 捐赠记录
   DONATION_RECORDS: 'donation_records',
   
-  // 应用更新相关
+  // 应用更新相关（简化版本）
+  APP_CURRENT_VERSION: 'app_current_version',
   APP_UPDATE_DISMISSED: 'app_update_dismissed',
-  APP_UPDATE_AVAILABLE: 'app_update_available',
-  APP_UPDATE_APPLIED: 'app_update_applied',
-  APP_ETAG: 'app_etag',
-  APP_LAST_MODIFIED: 'app_last_modified'
+  APP_UPDATE_SNOOZED: 'app_update_snoozed'
 };
 
 // 导出单独的常量以保持向后兼容
 export const STORAGE_KEY = STORAGE_KEYS.TODOS;
 export const OLD_STORAGE_KEY = STORAGE_KEYS.TODOS_OLD;
 export const THEME_STORAGE_KEY = STORAGE_KEYS.THEME;
-export const APP_UPDATE_DISMISSED_KEY = STORAGE_KEYS.APP_UPDATE_DISMISSED;
-export const APP_UPDATE_AVAILABLE_KEY = STORAGE_KEYS.APP_UPDATE_AVAILABLE;
-export const APP_UPDATE_APPLIED_KEY = STORAGE_KEYS.APP_UPDATE_APPLIED;
-export const APP_ETAG_KEY = STORAGE_KEYS.APP_ETAG;
-export const APP_LAST_MODIFIED_KEY = STORAGE_KEYS.APP_LAST_MODIFIED;
 export const DONATION_RECORDS_KEY = STORAGE_KEYS.DONATION_RECORDS;
+
+// 应用更新相关常量
+export const APP_CURRENT_VERSION_KEY = STORAGE_KEYS.APP_CURRENT_VERSION;
+export const APP_UPDATE_DISMISSED_KEY = STORAGE_KEYS.APP_UPDATE_DISMISSED;
+export const APP_UPDATE_SNOOZED_KEY = STORAGE_KEYS.APP_UPDATE_SNOOZED;
 
 // 主题相关常量
 export const THEME_VALUES = {
