@@ -20,7 +20,7 @@ export function useAppUpdate() {
   // 配置选项
   const config = {
     checkInterval: 5 * 60 * 1000, // 5分钟检查一次
-    versionEndpoint: '/version.json', // 版本信息端点
+    versionEndpoint: `${import.meta.env.BASE_URL}version.json`, // 版本信息端点
     snoozeTime: 60 * 60 * 1000, // 稍后更新的延迟时间：1小时
   };
 

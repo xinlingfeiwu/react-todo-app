@@ -5,11 +5,11 @@
 
 const CACHE_NAME = 'todo-app-v1.0.0';
 const CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg',
-  '/todo-icon.svg',
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg',
+  './todo-icon.svg',
   // 动态添加其他资源
 ];
 
