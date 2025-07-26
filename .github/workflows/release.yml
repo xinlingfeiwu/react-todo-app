@@ -191,21 +191,32 @@ jobs:
           • **下载**: [源码包](https://github.com/xinlingfeiwu/react-todo-app/archive/refs/tags/$VERSION.tar.gz)
           EOF
 
-      - name: 🚀 Create GitHub Release
-        uses: actions/create-release@v1
+      - name: 🔍 Check if Release exists
+        id: check_release
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "release_exists=true" >> $GITHUB_OUTPUT
+            echo "Release $VERSION already exists, skipping creation"
+          else
+            echo "release_exists=false" >> $GITHUB_OUTPUT
+            echo "Release $VERSION does not exist, will create"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚀 Create GitHub Release
+        if: steps.check_release.outputs.release_exists == 'false'
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.release_notes.outputs.version }}
-          release_name: ${{ steps.release_notes.outputs.version }}
+          name: ${{ steps.release_notes.outputs.version }}
           body_path: release_notes.md
           draft: false
           prerelease: false
-
-      - name: 🌐 Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📤 Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
