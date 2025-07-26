@@ -381,8 +381,14 @@ npm run build:gh
 // 执行发布
 release().then(() => {
   console.log('🎉 本地发布流程完成！');
-  console.log('📡 GitHub Actions 将自动处理 GitHub Pages 部署');
-  console.log('🔗 查看部署状态: https://github.com/xinlingfeiwu/react-todo-app/actions');
+  console.log('');
+  console.log('📡 GitHub Actions 将自动执行以下任务：');
+  console.log('   1. 🚀 创建 GitHub Release（由标签触发）');
+  console.log('   2. 🌐 部署到 GitHub Pages（由main分支推送触发）');
+  console.log('');
+  console.log('🔗 查看状态: https://github.com/xinlingfeiwu/react-todo-app/actions');
+  console.log('📦 Release: https://github.com/xinlingfeiwu/react-todo-app/releases');
+  console.log('🌐 网站: https://xinlingfeiwu.github.io/react-todo-app/');
 }).catch((error) => {
   console.error('❌ 发布失败:', error.message);
   process.exit(1);
