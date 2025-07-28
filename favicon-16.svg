@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea" />
+      <stop offset="100%" style="stop-color:#764ba2" />
+    </linearGradient>
+    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f260" />
+      <stop offset="100%" style="stop-color:#0575e6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景圆形 -->
+  <circle cx="8" cy="8" r="7" fill="url(#bgGrad)"/>
+  
+  <!-- 白色内圆 -->
+  <circle cx="8" cy="8" r="5.5" fill="white" fill-opacity="0.95"/>
+  
+  <!-- 复选框 -->
+  <rect x="3.5" y="4.5" width="2.5" height="2.5" rx="0.5" fill="url(#checkGrad)"/>
+  <rect x="3.5" y="9" width="2.5" height="2.5" rx="0.5" fill="#e5e7eb"/>
+  
+  <!-- 勾号 -->
+  <path d="M4.2 5.8 L4.8 6.4 L5.8 5.2" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="0.6" 
+        stroke-linecap="round"/>
+  
+  <!-- 任务线条 -->
+  <line x1="7" y1="5.8" x2="11.5" y2="5.8" 
+        stroke="url(#checkGrad)" 
+        stroke-width="0.8" 
+        stroke-linecap="round"/>
+  <line x1="7" y1="10.2" x2="10.5" y2="10.2" 
+        stroke="#9ca3af" 
+        stroke-width="0.8" 
+        stroke-linecap="round"/>
+  
+  <!-- 装饰点 -->
+  <circle cx="12" cy="5.8" r="0.4" fill="url(#checkGrad)" fill-opacity="0.6"/>
+  <circle cx="11" cy="10.2" r="0.4" fill="#9ca3af" fill-opacity="0.6"/>
+</svg>
