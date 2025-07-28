@@ -40,19 +40,49 @@ VITE_ICP_BEIAN_URL=https://beian.miit.gov.cn
 
 ## 🚀 生产环境部署
 
-### 方案一：服务器环境变量
+### 🎯 智能备案信息注入（推荐）
 
-在服务器上设置环境变量：
+项目采用智能环境变量注入机制，**只需在`.env.local`中维护一份备案信息**：
 
+#### **工作原理**：
+1. **开发环境**: 直接从`.env.local`读取备案信息
+2. **生产构建**: 自动从`.env.local`提取备案信息并注入到构建中
+3. **构建完成**: 自动清理临时文件，不留痕迹
+
+#### **使用方法**：
 ```bash
-# 设置环境变量
-export VITE_ICP_BEIAN_NUMBER="京ICP备12345678号-1"
-export VITE_ICP_BEIAN_URL="https://beian.miit.gov.cn"
+# 1. 在 .env.local 中配置真实备案信息（已配置）
+VITE_ICP_BEIAN_NUMBER=您的真实ICP备案号
+VITE_ICP_BEIAN_URL=https://beian.miit.gov.cn
 
 # 公安备案通过后添加
-export VITE_POLICE_BEIAN_NUMBER="京公网安备11010802012345号"
-export VITE_POLICE_BEIAN_CODE="11010802012345"
-export VITE_POLICE_BEIAN_URL="https://beian.mps.gov.cn/#/query/webSearch?code=11010802012345"
+# VITE_POLICE_BEIAN_NUMBER=您的真实公安备案号
+# VITE_POLICE_BEIAN_CODE=您的备案代码
+# VITE_POLICE_BEIAN_URL=https://beian.mps.gov.cn/#/query/webSearch?code=您的备案代码
+
+# 2. 直接构建，系统会自动处理
+npm run build:prod
+```
+
+#### **构建流程**：
+```bash
+npm run build:prod
+# ↓ 自动执行以下步骤：
+# 1. 生成版本信息
+# 2. 从 .env.local 提取备案信息 ✅
+# 3. 创建临时 .env.production 文件
+# 4. 执行 Vite 生产构建
+# 5. 自动清理临时文件 ✅
+```
+
+### 🔄 备用方案：服务器环境变量
+
+如果需要在服务器上覆盖备案信息：
+
+```bash
+# 设置环境变量（会覆盖 .env.local 中的配置）
+export VITE_ICP_BEIAN_NUMBER="服务器上的备案号"
+export VITE_ICP_BEIAN_URL="https://beian.miit.gov.cn"
 
 # 构建应用
 npm run build
@@ -171,7 +201,9 @@ npm run preview
 - `src/styles/components/BeianInfo.scss`: SCSS样式文件，支持深浅主题和移动端适配
 - `src/styles/main.scss`: 统一样式导入管理（包含BeianInfo样式）
 - `.env.example`: 环境变量配置示例
-- `.env.local`: 本地环境变量（不会被提交到Git）
+- `.env.local`: 本地环境变量（包含真实备案信息，不会被提交到Git）
+- `scripts/inject-beian-vars.js`: 智能备案信息注入脚本
+- `scripts/cleanup-beian-vars.js`: 临时文件清理脚本
 - `public/beian-logo.svg`: 公安备案logo占位符
 
 ### 布局特性

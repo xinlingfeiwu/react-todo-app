@@ -12,11 +12,13 @@ const BeianInfo = () => {
   // 从环境变量读取备案信息
   const icpNumber = import.meta.env.VITE_ICP_BEIAN_NUMBER;
   const icpUrl = import.meta.env.VITE_ICP_BEIAN_URL || 'https://beian.miit.gov.cn';
-  
+
   const policeNumber = import.meta.env.VITE_POLICE_BEIAN_NUMBER;
   const policeUrl = import.meta.env.VITE_POLICE_BEIAN_URL;
   const policeCode = import.meta.env.VITE_POLICE_BEIAN_CODE;
-  
+
+
+
   // 如果没有配置任何备案信息，不显示组件
   if (!icpNumber && !policeNumber) {
     return null;
