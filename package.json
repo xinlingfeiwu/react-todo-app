@@ -74,6 +74,7 @@
     "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
     "update-ios-png-config": "node scripts/update-ios-png-config.js",
     "setup-ios-png": "npm run convert-svg-to-png && npm run update-ios-png-config",
+    "diagnose-ios": "node scripts/diagnose-ios-icons.js",
     "prebuild:prod": "npm run prepare-release"
   },
   "dependencies": {
