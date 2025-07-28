@@ -1,36 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
-  <g transform="scale(1.5)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="96" height="96">
   <!-- 定义渐变和滤镜 -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="android96_bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="android96_checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#00f260;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0575e6;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="pendingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="android96_pendingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#ffeaa7;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#fab1a0;stop-opacity:1" />
     </linearGradient>
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="android96_shadow" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
     </filter>
-    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="android96_innerShadow" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.15"/>
     </filter>
   </defs>
   
   <!-- 主背景圆形 -->
-  <circle cx="32" cy="32" r="30" fill="url(#bgGradient)" filter="url(#shadow)"/>
+  <circle cx="32" cy="32" r="30" fill="url(#android96_bgGradient)" filter="url(#android96_android96_shadow)"/>
   
   <!-- 内部白色区域 -->
-  <circle cx="32" cy="32" r="24" fill="white" fill-opacity="0.95" filter="url(#innerShadow)"/>
+  <circle cx="32" cy="32" r="24" fill="white" fill-opacity="0.95" filter="url(#android96_android96_innerShadow)"/>
   
   <!-- 已完成任务 -->
-  <rect x="14" y="19" width="7" height="7" rx="1.5" fill="url(#checkGradient)"/>
+  <rect x="14" y="19" width="7" height="7" rx="1.5" fill="url(#android96_checkGradient)"/>
   <path d="M15.5 22 L17 23.5 L20 20.5"
         fill="none"
         stroke="white"
@@ -39,16 +38,16 @@
         stroke-linejoin="round"/>
 
   <!-- 待办任务 -->
-  <rect x="14" y="30" width="7" height="7" rx="1.5" fill="url(#pendingGradient)"/>
+  <rect x="14" y="30" width="7" height="7" rx="1.5" fill="url(#android96_pendingGradient)"/>
   <rect x="14" y="41" width="7" height="7" rx="1.5" fill="#e5e7eb"/>
 
   <!-- 任务文本线条 -->
   <line x1="24" y1="22.5" x2="50" y2="22.5"
-        stroke="url(#checkGradient)"
+        stroke="url(#android96_checkGradient)"
         stroke-width="2"
         stroke-linecap="round"/>
   <line x1="24" y1="33.5" x2="48" y2="33.5"
-        stroke="url(#pendingGradient)"
+        stroke="url(#android96_pendingGradient)"
         stroke-width="2"
         stroke-linecap="round"/>
   <line x1="24" y1="44.5" x2="46" y2="44.5"
@@ -57,16 +56,15 @@
         stroke-linecap="round"/>
 
   <!-- 装饰性元素 -->
-  <circle cx="51" cy="22.5" r="1.2" fill="url(#checkGradient)" fill-opacity="0.7"/>
-  <circle cx="49" cy="33.5" r="1.2" fill="url(#pendingGradient)" fill-opacity="0.7"/>
+  <circle cx="51" cy="22.5" r="1.2" fill="url(#android96_checkGradient)" fill-opacity="0.7"/>
+  <circle cx="49" cy="33.5" r="1.2" fill="url(#android96_pendingGradient)" fill-opacity="0.7"/>
   <circle cx="47" cy="44.5" r="1.2" fill="#9ca3af" fill-opacity="0.7"/>
   
   <!-- 顶部装饰弧线 -->
   <path d="M22 14 Q32 11 42 14"
         fill="none"
-        stroke="url(#bgGradient)"
+        stroke="url(#android96_bgGradient)"
         stroke-width="1.5"
         stroke-linecap="round"
         opacity="0.6"/>
-  </g>
 </svg>

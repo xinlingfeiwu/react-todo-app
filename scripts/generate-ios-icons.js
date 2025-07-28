@@ -28,10 +28,11 @@ const IOS_ICON_SIZES = [
   { size: 512, name: 'icon-512x512.png', desc: 'Android Chrome (大)' }
 ];
 
+
 /**
- * 读取基础SVG文件并调整尺寸
+ * 生成iOS图标SVG
  */
-function generateSVG(size) {
+function generateIOSSVG(size) {
   const baseSvgPath = path.join(__dirname, '..', 'public', 'todo-icon.svg');
 
   // 检查基础SVG文件是否存在
@@ -42,26 +43,19 @@ function generateSVG(size) {
   // 读取基础SVG内容
   let svgContent = fs.readFileSync(baseSvgPath, 'utf8');
 
-  // 更新SVG的尺寸属性
+  // 为每个尺寸创建唯一的ID前缀，避免ID冲突
+  const idPrefix = `ios${size}`;
+
+  // 替换所有ID引用，避免多个SVG在同一页面时的ID冲突
+  svgContent = svgContent.replace(/id="([^"]+)"/g, `id="${idPrefix}_$1"`);
+  svgContent = svgContent.replace(/url\(#([^)]+)\)/g, `url(#${idPrefix}_$1)`);
+  svgContent = svgContent.replace(/filter="url\(#([^)]+)\)"/g, `filter="url(#${idPrefix}_$1)"`);
+
+  // 直接更新viewBox和尺寸，不使用transform缩放
   svgContent = svgContent.replace(
     /viewBox="0 0 64 64" width="64" height="64"/,
-    `viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"`
+    `viewBox="0 0 64 64" width="${size}" height="${size}"`
   );
-
-  // 如果需要缩放内部元素，可以添加transform
-  if (size !== 64) {
-    const scale = size / 64;
-    // 在SVG开始标签后添加缩放组
-    svgContent = svgContent.replace(
-      /(<svg[^>]*>)/,
-      `$1\n  <g transform="scale(${scale})">`
-    );
-    // 在SVG结束标签前关闭缩放组
-    svgContent = svgContent.replace(
-      /(<\/svg>)/,
-      '  </g>\n$1'
-    );
-  }
 
   return svgContent;
 }
@@ -71,16 +65,16 @@ function generateSVG(size) {
  */
 async function main() {
   console.log('🎨 开始生成 iOS PWA 图标...\n');
-  
+
   const publicDir = path.join(__dirname, '..', 'public');
   const iconsDir = path.join(publicDir, 'icons');
-  
+
   // 创建icons目录
   if (!fs.existsSync(iconsDir)) {
     fs.mkdirSync(iconsDir, { recursive: true });
     console.log('📁 创建 icons 目录');
   }
-  
+
   // 生成说明文件
   const readmeContent = `# iOS PWA 图标说明
 
@@ -96,21 +90,21 @@ ${IOS_ICON_SIZES.map(icon => `- **${icon.name}** (${icon.size}x${icon.size}) - $
 
 生成时间: ${new Date().toLocaleString('zh-CN')}
 `;
-  
+
   fs.writeFileSync(path.join(iconsDir, 'README.md'), readmeContent);
-  
+
   // 为每个尺寸生成SVG文件（作为PNG的替代方案）
   let generatedCount = 0;
-  
+
   for (const iconConfig of IOS_ICON_SIZES) {
-    const svgContent = generateSVG(iconConfig.size);
+    const svgContent = generateIOSSVG(iconConfig.size);
     const svgPath = path.join(iconsDir, iconConfig.name.replace('.png', '.svg'));
-    
+
     fs.writeFileSync(svgPath, svgContent);
     console.log(`✅ 生成 ${iconConfig.name.replace('.png', '.svg')} (${iconConfig.size}x${iconConfig.size}) - ${iconConfig.desc}`);
     generatedCount++;
   }
-  
+
   console.log(`\n🎉 成功生成 ${generatedCount} 个图标文件！`);
   console.log('\n📝 下一步：');
   console.log('1. 运行 npm run update-ios-config 更新HTML和manifest配置');

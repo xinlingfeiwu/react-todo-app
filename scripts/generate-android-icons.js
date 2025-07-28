@@ -45,26 +45,19 @@ function generateAndroidSVG(size) {
   // 读取基础SVG内容
   let svgContent = fs.readFileSync(baseSvgPath, 'utf8');
 
-  // 更新SVG的尺寸属性
+  // 为每个尺寸创建唯一的ID前缀，避免ID冲突
+  const idPrefix = `android${size}`;
+
+  // 替换所有ID引用，避免多个SVG在同一页面时的ID冲突
+  svgContent = svgContent.replace(/id="([^"]+)"/g, `id="${idPrefix}_$1"`);
+  svgContent = svgContent.replace(/url\(#([^)]+)\)/g, `url(#${idPrefix}_$1)`);
+  svgContent = svgContent.replace(/filter="url\(#([^)]+)\)"/g, `filter="url(#${idPrefix}_$1)"`);
+
+  // 直接更新viewBox和尺寸，不使用transform缩放
   svgContent = svgContent.replace(
     /viewBox="0 0 64 64" width="64" height="64"/,
-    `viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"`
+    `viewBox="0 0 64 64" width="${size}" height="${size}"`
   );
-
-  // 如果需要缩放内部元素，可以添加transform
-  if (size !== 64) {
-    const scale = size / 64;
-    // 在SVG开始标签后添加缩放组
-    svgContent = svgContent.replace(
-      /(<svg[^>]*>)/,
-      `$1\n  <g transform="scale(${scale})">`
-    );
-    // 在SVG结束标签前关闭缩放组
-    svgContent = svgContent.replace(
-      /(<\/svg>)/,
-      '  </g>\n$1'
-    );
-  }
 
   return svgContent;
 }
@@ -83,10 +76,18 @@ function generateMaskableSVG(size) {
   // 读取基础SVG内容
   let svgContent = fs.readFileSync(baseSvgPath, 'utf8');
 
-  // 更新SVG的尺寸属性
+  // 为Maskable图标创建唯一的ID前缀，避免ID冲突
+  const idPrefix = `maskable${size}`;
+
+  // 替换所有ID引用，避免多个SVG在同一页面时的ID冲突
+  svgContent = svgContent.replace(/id="([^"]+)"/g, `id="${idPrefix}_$1"`);
+  svgContent = svgContent.replace(/url\(#([^)]+)\)/g, `url(#${idPrefix}_$1)`);
+  svgContent = svgContent.replace(/filter="url\(#([^)]+)\)"/g, `filter="url(#${idPrefix}_$1)"`);
+
+  // 直接更新viewBox和尺寸，不使用transform缩放
   svgContent = svgContent.replace(
     /viewBox="0 0 64 64" width="64" height="64"/,
-    `viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"`
+    `viewBox="0 0 64 64" width="${size}" height="${size}"`
   );
 
   // Maskable图标需要在安全区域内（中心80%区域）
@@ -99,7 +100,7 @@ function generateMaskableSVG(size) {
     /(<svg[^>]*>)/,
     `$1
   <!-- Maskable图标全尺寸背景 -->
-  <rect x="0" y="0" width="${size}" height="${size}" fill="url(#bgGradient)" opacity="0.1"/>
+  <rect x="0" y="0" width="${size}" height="${size}" fill="url(#${idPrefix}_bgGradient)" opacity="0.1"/>
   <g transform="translate(${offset}, ${offset}) scale(${safeZoneScale})">`
   );
 
