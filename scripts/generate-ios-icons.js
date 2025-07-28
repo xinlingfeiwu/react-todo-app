@@ -46,10 +46,28 @@ function generateIOSSVG(size) {
   // 为每个尺寸创建唯一的ID前缀，避免ID冲突
   const idPrefix = `ios${size}`;
 
-  // 替换所有ID引用，避免多个SVG在同一页面时的ID冲突
-  svgContent = svgContent.replace(/id="([^"]+)"/g, `id="${idPrefix}_$1"`);
-  svgContent = svgContent.replace(/url\(#([^)]+)\)/g, `url(#${idPrefix}_$1)`);
-  svgContent = svgContent.replace(/filter="url\(#([^)]+)\)"/g, `filter="url(#${idPrefix}_$1)"`);
+  // 先收集所有原始ID
+  const originalIds = [];
+  const idMatches = svgContent.match(/id="([^"]+)"/g);
+  if (idMatches) {
+    idMatches.forEach(match => {
+      const id = match.match(/id="([^"]+)"/)[1];
+      if (!originalIds.includes(id)) {
+        originalIds.push(id);
+      }
+    });
+  }
+
+  // 替换所有ID定义和引用
+  originalIds.forEach(originalId => {
+    const newId = `${idPrefix}_${originalId}`;
+    // 替换ID定义
+    svgContent = svgContent.replace(new RegExp(`id="${originalId}"`, 'g'), `id="${newId}"`);
+    // 替换URL引用
+    svgContent = svgContent.replace(new RegExp(`url\\(#${originalId}\\)`, 'g'), `url(#${newId})`);
+    // 替换filter引用
+    svgContent = svgContent.replace(new RegExp(`filter="url\\(#${originalId}\\)"`, 'g'), `filter="url(#${newId})"`);
+  });
 
   // 直接更新viewBox和尺寸，不使用transform缩放
   svgContent = svgContent.replace(

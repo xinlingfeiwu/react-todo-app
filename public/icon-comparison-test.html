@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图标对比测试</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .comparison-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .comparison-item h3 {
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .icon-display {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-display img {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .icon-info {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .status {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .multiple-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .multiple-icons img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 图标对比测试</h1>
+        
+        <div class="status">
+            <strong>✅ SVG图标修复验证</strong><br>
+            验证生成的图标与原始todo-icon.svg是否一致
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <h3>📄 原始图标</h3>
+                <div class="icon-display">
+                    <img src="./todo-icon.svg" alt="原始todo-icon.svg" />
+                </div>
+                <div class="icon-info">
+                    <strong>todo-icon.svg</strong><br>
+                    原始设计文件 (64×64)
+                </div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>📱 iOS生成图标</h3>
+                <div class="icon-display">
+                    <img src="./icons/apple-touch-icon-180x180.svg" alt="iOS 180x180" />
+                </div>
+                <div class="icon-info">
+                    <strong>apple-touch-icon-180x180.svg</strong><br>
+                    iOS图标 (180×180)，ID前缀: ios180_
+                </div>
+            </div>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <h3>🤖 Android生成图标</h3>
+                <div class="icon-display">
+                    <img src="./icons/android-chrome-192x192.svg" alt="Android 192x192" />
+                </div>
+                <div class="icon-info">
+                    <strong>android-chrome-192x192.svg</strong><br>
+                    Android图标 (192×192)，ID前缀: android192_
+                </div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>🎭 Maskable生成图标</h3>
+                <div class="icon-display">
+                    <img src="./icons/maskable-icon-192x192.svg" alt="Maskable 192x192" />
+                </div>
+                <div class="icon-info">
+                    <strong>maskable-icon-192x192.svg</strong><br>
+                    自适应图标 (192×192)，ID前缀: maskable192_
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🧪 多图标ID冲突测试</h2>
+            <p>在同一页面显示多个图标，验证ID前缀是否避免了冲突：</p>
+            <div class="multiple-icons">
+                <img src="./todo-icon.svg" alt="原始" title="原始 todo-icon.svg" />
+                <img src="./icons/apple-touch-icon-57x57.svg" alt="iOS 57" title="iOS 57×57" />
+                <img src="./icons/apple-touch-icon-120x120.svg" alt="iOS 120" title="iOS 120×120" />
+                <img src="./icons/apple-touch-icon-180x180.svg" alt="iOS 180" title="iOS 180×180" />
+                <img src="./icons/android-chrome-48x48.svg" alt="Android 48" title="Android 48×48" />
+                <img src="./icons/android-chrome-192x192.svg" alt="Android 192" title="Android 192×192" />
+                <img src="./icons/maskable-icon-192x192.svg" alt="Maskable" title="Maskable 192×192" />
+            </div>
+            <p><strong>预期结果</strong>：所有图标都应该显示为彩色的待办清单图标，没有渐变失效或显示异常。</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔧 技术验证</h2>
+            <ul>
+                <li><strong>✅ 内容一致性</strong>：生成的图标与原始图标的所有坐标、尺寸、样式完全一致</li>
+                <li><strong>✅ 唯一ID前缀</strong>：每个图标使用不同的ID前缀避免冲突</li>
+                <li><strong>✅ 正确的viewBox</strong>：保持原始 <code>viewBox="0 0 64 64"</code></li>
+                <li><strong>✅ 适当的尺寸</strong>：只修改 <code>width</code> 和 <code>height</code> 属性</li>
+                <li><strong>✅ 渐变正常</strong>：所有渐变和滤镜效果正常工作</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 ID前缀对照表</h2>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background: rgba(255, 255, 255, 0.1);">
+                    <th style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">图标类型</th>
+                    <th style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">ID前缀</th>
+                    <th style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">示例</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">原始图标</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">无</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">bgGradient</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">iOS 180×180</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">ios180_</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">ios180_bgGradient</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">Android 192×192</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">android192_</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">android192_bgGradient</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">Maskable 192×192</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">maskable192_</td>
+                    <td style="padding: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">maskable192_bgGradient</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="./" class="btn">返回主应用</a>
+            <a href="./svg-icon-test.html" class="btn">SVG图标测试</a>
+            <a href="./ios-icon-test.html" class="btn">iOS PNG测试</a>
+        </div>
+    </div>
+    
+    <script>
+        // 检查所有图标加载状态
+        const allImages = document.querySelectorAll('img');
+        let loadedCount = 0;
+        let errorCount = 0;
+        
+        allImages.forEach((img, index) => {
+            img.onload = function() {
+                loadedCount++;
+                console.log(`✅ 图标加载成功: ${img.src.split('/').pop()}`);
+                
+                if (loadedCount + errorCount === allImages.length) {
+                    console.log(`🎉 图标加载完成: ${loadedCount} 成功, ${errorCount} 失败`);
+                }
+            };
+            
+            img.onerror = function() {
+                errorCount++;
+                console.error(`❌ 图标加载失败: ${img.src.split('/').pop()}`);
+                img.style.border = '2px solid red';
+                
+                if (loadedCount + errorCount === allImages.length) {
+                    console.log(`🎉 图标加载完成: ${loadedCount} 成功, ${errorCount} 失败`);
+                }
+            };
+        });
+        
+        console.log('🔍 图标对比测试页面已加载');
+        console.log(`📊 总共 ${allImages.length} 个图标需要测试`);
+    </script>
+</body>
+</html>

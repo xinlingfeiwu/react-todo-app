@@ -23,10 +23,10 @@
   </defs>
   
   <!-- 主背景圆形 -->
-  <circle cx="32" cy="32" r="30" fill="url(#ios60_bgGradient)" filter="url(#ios60_ios60_shadow)"/>
+  <circle cx="32" cy="32" r="30" fill="url(#ios60_bgGradient)" filter="url(#ios60_shadow)"/>
   
   <!-- 内部白色区域 -->
-  <circle cx="32" cy="32" r="24" fill="white" fill-opacity="0.95" filter="url(#ios60_ios60_innerShadow)"/>
+  <circle cx="32" cy="32" r="24" fill="white" fill-opacity="0.95" filter="url(#ios60_innerShadow)"/>
   
   <!-- 已完成任务 -->
   <rect x="14" y="19" width="7" height="7" rx="1.5" fill="url(#ios60_checkGradient)"/>
