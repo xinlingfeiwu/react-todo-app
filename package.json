@@ -64,6 +64,9 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:performance": "vitest run src/__tests__/performance.test.js",
+    "generate-icons": "node scripts/generate-ios-icons.js",
+    "update-ios-config": "node scripts/update-ios-config.js",
+    "setup-ios-pwa": "npm run generate-icons && npm run update-ios-config",
     "prebuild:prod": "npm run prepare-release"
   },
   "dependencies": {

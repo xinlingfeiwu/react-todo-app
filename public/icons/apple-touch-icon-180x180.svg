@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f260;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0575e6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pendingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffeaa7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fab1a0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="5.625" stdDeviation="5.625" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- 主背景圆形 -->
+  <circle cx="90" cy="90" r="84.375" fill="url(#bgGradient)" filter="url(#shadow)"/>
+  
+  <!-- 内部白色区域 -->
+  <circle cx="90" cy="90" r="67.5" fill="white" fill-opacity="0.95"/>
+  
+  <!-- 已完成任务 -->
+  <rect x="33.75" y="50.625" width="22.5" height="22.5" rx="5.625" fill="url(#checkGradient)"/>
+  <path d="M40.78125 60.46875 L45 64.6875 L54.84375 54.84375" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="5.625" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- 待办任务 -->
+  <rect x="33.75" y="84.375" width="22.5" height="22.5" rx="5.625" fill="url(#pendingGradient)"/>
+  <rect x="33.75" y="118.125" width="22.5" height="22.5" rx="5.625" fill="#e5e7eb"/>
+  
+  <!-- 任务文本线条 -->
+  <line x1="67.5" y1="61.875" x2="135" y2="61.875" 
+        stroke="url(#checkGradient)" 
+        stroke-width="7.03125" 
+        stroke-linecap="round"/>
+  <line x1="67.5" y1="95.625" x2="129.375" y2="95.625" 
+        stroke="url(#pendingGradient)" 
+        stroke-width="7.03125" 
+        stroke-linecap="round"/>
+  <line x1="67.5" y1="129.375" x2="118.125" y2="129.375" 
+        stroke="#9ca3af" 
+        stroke-width="7.03125" 
+        stroke-linecap="round"/>
+  
+  <!-- 装饰性元素 -->
+  <circle cx="137.8125" cy="61.875" r="4.21875" fill="url(#checkGradient)" fill-opacity="0.7"/>
+  <circle cx="132.1875" cy="95.625" r="4.21875" fill="url(#pendingGradient)" fill-opacity="0.7"/>
+  <circle cx="120.9375" cy="129.375" r="4.21875" fill="#9ca3af" fill-opacity="0.7"/>
+  
+  <!-- 顶部装饰弧线 -->
+  <path d="M56.25 33.75 Q90 22.5 123.75 33.75" 
+        fill="none" 
+        stroke="url(#bgGradient)" 
+        stroke-width="4.21875" 
+        stroke-linecap="round" 
+        opacity="0.6"/>
+</svg>
