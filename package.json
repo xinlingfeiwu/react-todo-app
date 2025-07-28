@@ -71,6 +71,9 @@
     "update-android-config": "node scripts/update-android-config.js",
     "setup-android-pwa": "npm run generate-android-icons && npm run update-android-config",
     "setup-all-pwa": "npm run setup-ios-pwa && npm run setup-android-pwa",
+    "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
+    "update-ios-png-config": "node scripts/update-ios-png-config.js",
+    "setup-ios-png": "npm run convert-svg-to-png && npm run update-ios-png-config",
     "prebuild:prod": "npm run prepare-release"
   },
   "dependencies": {
@@ -100,6 +103,7 @@
     "globals": "^16.3.0",
     "husky": "^9.1.6",
     "sass": "^1.77.6",
+    "sharp": "^0.34.3",
     "terser": "^5.43.1",
     "vite": "^5.4.19"
   },
