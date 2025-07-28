@@ -1,0 +1,230 @@
+/* 备案信息组件样式 */
+.beian-info {
+  width: 100%;
+  padding: 16px 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  
+  .beian-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    
+    // 桌面端：公安备案在左，ICP备案在右
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+      
+      .police-beian {
+        order: 1; // 公安备案在左边
+      }
+      
+      .icp-beian {
+        order: 2; // ICP备案在右边
+      }
+    }
+    
+    // 移动端：垂直排列，公安备案在上
+    @media (max-width: 767px) {
+      .police-beian {
+        order: 1; // 公安备案在上面
+      }
+      
+      .icp-beian {
+        order: 2; // ICP备案在下面
+      }
+    }
+  }
+  
+  .beian-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    
+    // 移动端字体稍大一些
+    @media (max-width: 767px) {
+      font-size: 13px;
+      justify-content: center;
+    }
+    
+    // 平板端
+    @media (min-width: 768px) and (max-width: 1024px) {
+      font-size: 12px;
+    }
+    
+    // 桌面端
+    @media (min-width: 1025px) {
+      font-size: 12px;
+    }
+  }
+  
+  .beian-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 2px 4px;
+    border-radius: 3px;
+    
+    &:hover {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: underline;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    &:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.3);
+      outline-offset: 2px;
+    }
+  }
+  
+  .police-logo {
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+    
+    // 确保logo在不同设备上大小合适
+    @media (max-width: 767px) {
+      width: 18px;
+      height: 18px;
+    }
+    
+    @media (min-width: 768px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  // 公安备案项样式
+  .police-beian {
+    .beian-link:hover + .police-logo,
+    &:hover .police-logo {
+      opacity: 0.9;
+    }
+  }
+  
+  // ICP备案项样式
+  .icp-beian {
+    .beian-link {
+      font-weight: 500;
+    }
+  }
+}
+
+/* 深色主题适配 */
+[data-theme="dark"] {
+  .beian-info {
+    background: rgba(0, 0, 0, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.05);
+    
+    .beian-item {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .beian-link {
+      color: rgba(255, 255, 255, 0.7);
+      
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      
+      &:focus {
+        outline-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+    
+    .police-logo {
+      opacity: 0.7;
+      filter: brightness(1.1);
+    }
+  }
+}
+
+/* 浅色主题适配 */
+[data-theme="light"] {
+  .beian-info {
+    background: rgba(0, 0, 0, 0.02);
+    border-top-color: rgba(0, 0, 0, 0.1);
+    
+    .beian-item {
+      color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .beian-link {
+      color: rgba(0, 0, 0, 0.6);
+      
+      &:hover {
+        color: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.03);
+      }
+      
+      &:focus {
+        outline-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+    
+    .police-logo {
+      opacity: 0.6;
+      filter: brightness(0.9);
+    }
+  }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .beian-info {
+    border-top-width: 2px;
+    
+    .beian-link {
+      text-decoration: underline;
+      
+      &:focus {
+        outline-width: 3px;
+      }
+    }
+  }
+}
+
+/* 减少动画模式支持 */
+@media (prefers-reduced-motion: reduce) {
+  .beian-info {
+    .beian-item,
+    .beian-link,
+    .police-logo {
+      transition: none;
+    }
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .beian-info {
+    background: transparent !important;
+    border-top: 1px solid #000 !important;
+    
+    .beian-item {
+      color: #000 !important;
+    }
+    
+    .beian-link {
+      color: #000 !important;
+      text-decoration: underline !important;
+    }
+    
+    .police-logo {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import CustomSelectDemo from './components/CustomSelectDemo'
 import FeedbackTest from './components/FeedbackTest'
 import CookieConsent from './components/CookieConsent'
 import PrivacyPolicy from './components/PrivacyPolicy'
+import BeianInfo from './components/BeianInfo'
 
 function App() {
   // 检查是否需要显示演示页面
@@ -37,6 +38,9 @@ function App() {
       
       {/* 应用更新通知 */}
       <AppUpdateNotification />
+
+      {/* 备案信息 */}
+      <BeianInfo />
     </div>
   )
 }
