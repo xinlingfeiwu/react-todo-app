@@ -126,24 +126,33 @@ function generateMaskableSVG(size) {
     `viewBox="0 0 64 64" width="${size}" height="${size}"`
   );
 
-  // Maskable图标需要在安全区域内（中心80%区域）
-  // 添加背景和安全区域缩放
+  // 为Maskable图标创建完整的SVG结构
+  // Maskable图标需要全尺寸背景和安全区域内的内容
   const safeZoneScale = 0.8;
-  const offset = size * 0.1; // 10%边距
 
-  // 为maskable图标添加全尺寸背景和安全区域缩放
-  svgContent = svgContent.replace(
-    /(<svg[^>]*>)/,
-    `$1
+  // 提取defs内容
+  const defsMatch = svgContent.match(/<defs>([\s\S]*?)<\/defs>/);
+  const defsContent = defsMatch ? defsMatch[1] : '';
+
+  // 提取主要内容（除了defs）
+  const mainContentMatch = svgContent.match(/<\/defs>\s*([\s\S]*?)\s*<\/svg>/);
+  const mainContent = mainContentMatch ? mainContentMatch[1] : '';
+
+  // 创建新的Maskable SVG结构
+  svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
+  <!-- 定义渐变和滤镜 -->
+  <defs>
+${defsContent}
+  </defs>
+
   <!-- Maskable图标全尺寸背景 -->
-  <rect x="0" y="0" width="${size}" height="${size}" fill="url(#${idPrefix}_bgGradient)" opacity="0.1"/>
-  <g transform="translate(${offset}, ${offset}) scale(${safeZoneScale})">`
-  );
+  <rect x="0" y="0" width="64" height="64" fill="url(#${idPrefix}_bgGradient)" opacity="0.15"/>
 
-  svgContent = svgContent.replace(
-    /(<\/svg>)/,
-    '  </g>\n$1'
-  );
+  <!-- 安全区域内的主要内容 -->
+  <g transform="translate(6.4, 6.4) scale(${safeZoneScale})">
+${mainContent}
+  </g>
+</svg>`;
 
   return svgContent;
 }

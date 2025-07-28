@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
-  <!-- Maskable图标全尺寸背景 -->
-  <rect x="0" y="0" width="512" height="512" fill="url(#maskable512_bgGradient)" opacity="0.1"/>
-  <g transform="translate(51.2, 51.2) scale(0.8)">
   <!-- 定义渐变和滤镜 -->
   <defs>
+
     <linearGradient id="maskable512_bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
@@ -23,9 +21,15 @@
     <filter id="maskable512_innerShadow" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.15"/>
     </filter>
-  </defs>
   
-  <!-- 主背景圆形 -->
+  </defs>
+
+  <!-- Maskable图标全尺寸背景 -->
+  <rect x="0" y="0" width="64" height="64" fill="url(#maskable512_bgGradient)" opacity="0.15"/>
+
+  <!-- 安全区域内的主要内容 -->
+  <g transform="translate(6.4, 6.4) scale(0.8)">
+<!-- 主背景圆形 -->
   <circle cx="32" cy="32" r="30" fill="url(#maskable512_bgGradient)" filter="url(#maskable512_shadow)"/>
   
   <!-- 内部白色区域 -->
