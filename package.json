@@ -67,6 +67,10 @@
     "generate-icons": "node scripts/generate-ios-icons.js",
     "update-ios-config": "node scripts/update-ios-config.js",
     "setup-ios-pwa": "npm run generate-icons && npm run update-ios-config",
+    "generate-android-icons": "node scripts/generate-android-icons.js",
+    "update-android-config": "node scripts/update-android-config.js",
+    "setup-android-pwa": "npm run generate-android-icons && npm run update-android-config",
+    "setup-all-pwa": "npm run setup-ios-pwa && npm run setup-android-pwa",
     "prebuild:prod": "npm run prepare-release"
   },
   "dependencies": {
