@@ -29,42 +29,42 @@
   <circle cx="32" cy="32" r="24" fill="white" fill-opacity="0.95" filter="url(#innerShadow)"/>
   
   <!-- 已完成任务 -->
-  <rect x="12" y="18" width="8" height="8" rx="2" fill="url(#checkGradient)"/>
-  <path d="M14.5 21.5 L16 23 L19.5 19.5" 
-        fill="none" 
-        stroke="white" 
-        stroke-width="2" 
-        stroke-linecap="round" 
+  <rect x="14" y="19" width="7" height="7" rx="1.5" fill="url(#checkGradient)"/>
+  <path d="M15.5 22 L17 23.5 L20 20.5"
+        fill="none"
+        stroke="white"
+        stroke-width="1.8"
+        stroke-linecap="round"
         stroke-linejoin="round"/>
-  
+
   <!-- 待办任务 -->
-  <rect x="12" y="30" width="8" height="8" rx="2" fill="url(#pendingGradient)"/>
-  <rect x="12" y="42" width="8" height="8" rx="2" fill="#e5e7eb"/>
-  
+  <rect x="14" y="30" width="7" height="7" rx="1.5" fill="url(#pendingGradient)"/>
+  <rect x="14" y="41" width="7" height="7" rx="1.5" fill="#e5e7eb"/>
+
   <!-- 任务文本线条 -->
-  <line x1="24" y1="22" x2="48" y2="22" 
-        stroke="url(#checkGradient)" 
-        stroke-width="2.5" 
+  <line x1="24" y1="22.5" x2="50" y2="22.5"
+        stroke="url(#checkGradient)"
+        stroke-width="2"
         stroke-linecap="round"/>
-  <line x1="24" y1="34" x2="46" y2="34" 
-        stroke="url(#pendingGradient)" 
-        stroke-width="2.5" 
+  <line x1="24" y1="33.5" x2="48" y2="33.5"
+        stroke="url(#pendingGradient)"
+        stroke-width="2"
         stroke-linecap="round"/>
-  <line x1="24" y1="46" x2="42" y2="46" 
-        stroke="#9ca3af" 
-        stroke-width="2.5" 
+  <line x1="24" y1="44.5" x2="46" y2="44.5"
+        stroke="#9ca3af"
+        stroke-width="2"
         stroke-linecap="round"/>
-  
+
   <!-- 装饰性元素 -->
-  <circle cx="49" cy="22" r="1.5" fill="url(#checkGradient)" fill-opacity="0.7"/>
-  <circle cx="47" cy="34" r="1.5" fill="url(#pendingGradient)" fill-opacity="0.7"/>
-  <circle cx="43" cy="46" r="1.5" fill="#9ca3af" fill-opacity="0.7"/>
+  <circle cx="51" cy="22.5" r="1.2" fill="url(#checkGradient)" fill-opacity="0.7"/>
+  <circle cx="49" cy="33.5" r="1.2" fill="url(#pendingGradient)" fill-opacity="0.7"/>
+  <circle cx="47" cy="44.5" r="1.2" fill="#9ca3af" fill-opacity="0.7"/>
   
   <!-- 顶部装饰弧线 -->
-  <path d="M20 12 Q32 8 44 12" 
-        fill="none" 
-        stroke="url(#bgGradient)" 
-        stroke-width="1.5" 
-        stroke-linecap="round" 
+  <path d="M22 14 Q32 11 42 14"
+        fill="none"
+        stroke="url(#bgGradient)"
+        stroke-width="1.5"
+        stroke-linecap="round"
         opacity="0.6"/>
 </svg>
