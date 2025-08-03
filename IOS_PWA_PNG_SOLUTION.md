@@ -36,6 +36,7 @@
 更新后的HTML配置现在正确指向PNG文件：
 
 ```html
+
 <!-- iOS PWA 专用配置 -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -48,6 +49,7 @@
 <!-- ... 其他尺寸 ... -->
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon-180x180.png" />
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180x180.png" />
+
 ```
 
 ### 4. **自动化脚本**
@@ -55,13 +57,15 @@
 创建了完整的自动化工具链：
 
 ```json
+
 {
   "scripts": {
     "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
-    "update-ios-png-config": "node scripts/update-ios-png-config.js", 
+    "update-ios-png-config": "node scripts/update-ios-png-config.js",
     "setup-ios-png": "npm run convert-svg-to-png && npm run update-ios-png-config"
   }
 }
+
 ```
 
 ## 🔧 技术实现

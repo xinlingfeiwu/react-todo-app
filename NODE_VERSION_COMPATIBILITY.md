@@ -5,14 +5,18 @@
 ### 📋 问题描述
 
 在GitHub Actions CI中，Node.js 16.x版本在运行ESLint时失败，错误信息：
+
 ```
+
 Run linter
 Process completed with exit code 2.
+
 ```
 
 ### 🔍 根本原因
 
 **ESLint 9.x 版本要求**：
+
 - **最低Node.js版本**: 18.18.0+
 - **当前项目使用**: ESLint ^9.30.1
 - **不兼容版本**: Node.js 16.x (任何版本)
@@ -22,29 +26,38 @@ Process completed with exit code 2.
 #### 1. 更新CI配置
 
 **修改前**:
+
 ```yaml
+
 strategy:
   matrix:
     node-version: [16.x, 18.x, 20.x]  # ❌ 包含不兼容的16.x
+
 ```
 
 **修改后**:
+
 ```yaml
+
 strategy:
   matrix:
     node-version: [18.x, 20.x]  # ✅ 只使用兼容版本
+
 ```
 
 #### 2. 添加engines字段
 
 在`package.json`中明确版本要求：
+
 ```json
+
 {
   "engines": {
     "node": ">=18.18.0",
     "npm": ">=9.0.0"
   }
 }
+
 ```
 
 ### 📊 版本兼容性矩阵
@@ -58,36 +71,50 @@ strategy:
 ### 🎯 影响范围
 
 #### ✅ 不受影响的工作流
+
 - `deploy-pages.yml` - 已使用Node.js 18
 - `release.yml` - 已使用Node.js 18
 - `test.yml` - 已使用Node.js 18.x, 20.x
 
 #### 🔧 已修复的工作流
+
 - `ci.yml` - 移除Node.js 16.x支持
 
 ### 📝 开发环境建议
 
 #### 本地开发
+
 ```bash
+
 # 检查当前Node.js版本
+
 node --version
 
 # 如果版本低于18.18.0，请升级
+
 # 使用nvm (推荐)
+
 nvm install 18
 nvm use 18
 
 # 或使用n
+
 n 18
+
 ```
 
 #### Docker环境
+
 ```dockerfile
+
 # 使用Node.js 18 LTS
+
 FROM node:18-alpine
 
 # 或使用Node.js 20 LTS
+
 FROM node:20-alpine
+
 ```
 
 ### 🚀 验证修复

@@ -3,6 +3,7 @@
 ## 📋 部署准备
 
 ### 1. 服务器要求
+
 - Ubuntu 20.04+ 服务器
 - 域名已解析到服务器 IP
 - 开放 80, 443 端口
@@ -10,7 +11,9 @@
 ### 2. 本地构建
 
 ```bash
+
 npm run build
+
 ```
 
 > 💡 **提示**: 构建过程会自动压缩和优化代码，无需担心构建时的警告。
@@ -18,20 +21,29 @@ npm run build
 ## 🔧 一键部署
 
 ### 上传代码到服务器
+
 ```bash
+
 # 使用 Git
+
 git clone https://github.com/yourusername/react-todo.git
 cd react-todo
 
 # 或使用 SCP
+
 scp -r . user@yourserver:/home/user/react-todo/
+
 ```
 
 ### 运行部署脚本
+
 ```bash
+
 # 在服务器上执行
+
 chmod +x deploy/deploy.sh
 ./deploy/deploy.sh todo.yourdomain.com
+
 ```
 
 ## ✅ 部署完成
@@ -41,11 +53,15 @@ chmod +x deploy/deploy.sh
 ## 🔄 更新应用
 
 ```bash
+
 # 本地重新构建
+
 npm run build
 
 # 服务器上更新
+
 ./deploy/update.sh
+
 ```
 
 ## 📞 问题排查

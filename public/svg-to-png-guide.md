@@ -3,6 +3,7 @@
 ## 🎯 为什么需要PNG格式
 
 iOS Safari对PWA图标有特殊要求：
+
 - **apple-touch-icon必须是PNG格式**
 - SVG格式在iOS Safari中无法正确显示
 - 需要多个尺寸以适配不同设备
@@ -12,13 +13,19 @@ iOS Safari对PWA图标有特殊要求：
 ### 方法一：使用Sharp (推荐)
 
 1. 安装Sharp：
+
    ```bash
+
    npm install sharp --save-dev
+
    ```
 
 2. 运行转换脚本：
+
    ```bash
+
    npm run convert-svg-to-png
+
    ```
 
 ### 方法二：在线转换工具

@@ -23,24 +23,32 @@
 ### 1. 上传代码到服务器
 
 ```bash
+
 # 上传项目文件到服务器
+
 scp -r ./react-todo-app user@your-server:/path/to/deployment/
+
 ```
 
 ### 2. 安装依赖
 
 ```bash
+
 cd /path/to/deployment/react-todo-app
 npm install
+
 ```
 
 ### 3. 检查 Node.js 版本并选择构建命令
 
 ```bash
+
 # 检查版本
+
 node --version
 
 # 如果是 Node.js 16.x，使用专用构建脚本
+
 if [[ $(node --version | cut -d'.' -f1 | sed 's/v//') -eq 16 ]]; then
     echo "检测到 Node.js 16，使用兼容构建"
     chmod +x build-node16.sh
@@ -49,15 +57,19 @@ else
     echo "使用标准构建"
     npm run build
 fi
+
 ```
 
 ### 4. 或者使用自动化部署脚本
 
 ```bash
+
 # 使用自动检测部署脚本
+
 cd deploy
 chmod +x pre-deploy-check.sh deploy.sh
 ./pre-deploy-check.sh && ./deploy.sh
+
 ```
 
 ## 技术细节
@@ -87,23 +99,31 @@ chmod +x pre-deploy-check.sh deploy.sh
 1. **检查 Node.js 版本**:
 
    ```bash
+
    node --version
+
    ```
 
 2. **验证 polyfill 加载**:
+
    查看构建日志中是否有 "Enhanced Node.js 16 crypto polyfill loaded" 消息
 
 3. **检查构建输出**:
 
    ```bash
+
    ls -la dist/
+
    ```
 
 4. **测试本地构建**:
 
    ```bash
+
    # 先在本地测试
+
    ./build-node16.sh
+
    ```
 
 ### 常见问题
@@ -122,20 +142,30 @@ A: 是的，polyfill 对所有版本都是安全的，只在需要时才激活�
 ### 1. 检查构建文件
 
 ```bash
+
 ls -la dist/
-# 应该看到：
+
+# 应该看到
+
 # - index.html
+
 # - assets/ 目录
+
 # - 各种 .js 和 .css 文件
+
 ```
 
 ### 2. 测试应用加载
 
 ```bash
+
 # 如果使用简单的 HTTP 服务器测试
+
 cd dist
 python3 -m http.server 8000
+
 # 然后访问 http://your-server:8000
+
 ```
 
 ### 3. 检查浏览器控制台

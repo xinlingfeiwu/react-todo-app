@@ -1,7 +1,9 @@
 # ICP备案问题解决指南
 
 ## 🚨 问题确认
+
 您的网站被阿里云ICP备案系统拦截，返回 "Non-compliance ICP Filing" 错误。这就是为什么：
+
 - ❌ iOS Safari无法访问
 - ❌ Android浏览器也应该无法访问（除非有缓存）
 - ❌ SSL Labs测试失败
@@ -10,44 +12,61 @@
 ## 🎯 立即解决方案
 
 ### 方案1：IP直接访问（推荐测试用）
+
 ```bash
+
 # 运行脚本配置IP访问
+
 chmod +x deploy/fix-icp-beian-issue.sh
 ./deploy/fix-icp-beian-issue.sh
+
 ```
 
 访问地址：
+
 - HTTP: `http://47.92.208.198/`
 - HTTPS: `https://47.92.208.198/` (会有证书警告，点击"高级"继续)
 
 ### 方案2：修改本地hosts文件测试
+
 在您的设备上添加以下记录到hosts文件：
 
-#### macOS/Linux:
+#### macOS/Linux
+
 ```bash
+
 sudo echo "47.92.208.198 todo.ylingtech.com" >> /etc/hosts
+
 ```
 
-#### Windows:
+#### Windows
+
 编辑 `C:\Windows\System32\drivers\etc\hosts`，添加：
-```
-47.92.208.198 todo.ylingtech.com
+
 ```
 
-#### iOS设备:
+47.92.208.198 todo.ylingtech.com
+
+```
+
+#### iOS设备
+
 1. 设置 → 通用 → VPN与设备管理 → DNS
 2. 使用自定义DNS，或者安装DNS配置描述文件
 
 ### 方案3：使用代理/VPN
+
 使用海外VPN可能绕过备案检查（不稳定）
 
 ## 🏆 长期解决方案
 
 ### 选项A：完成ICP备案 ⭐⭐⭐⭐⭐
+
 **优点：** 合规、稳定、支持域名
 **缺点：** 需要7-20工作日
 
 **步骤：**
+
 1. 登录阿里云备案系统：https://beian.aliyun.com/
 2. 选择"首次备案"
 3. 准备材料：
@@ -59,41 +78,52 @@ sudo echo "47.92.208.198 todo.ylingtech.com" >> /etc/hosts
 **费用：** 免费
 
 ### 选项B：迁移到海外服务器 ⭐⭐⭐⭐
+
 **优点：** 无需备案，立即生效
 **缺点：** 国内访问可能较慢
 
 **推荐服务器：**
+
 - 阿里云香港
 - 腾讯云香港
 - AWS 新加坡
 - Vultr 日本
 
 ### 选项C：使用CDN加速 ⭐⭐⭐
+
 **优点：** 加速访问，部分绕过限制
 **缺点：** 成本较高，配置复杂
 
 ## 📱 测试iOS Safari
 
 ### 1. 清除Safari缓存
+
 设置 → Safari → 清除历史记录和网站数据
 
 ### 2. 使用IP地址测试
+
 在Safari中访问：`http://47.92.208.198/`
 
 ### 3. 检查是否正常显示
+
 如果显示Todo应用界面，说明网站本身没问题，只是域名被拦截。
 
 ## 🔧 快速诊断命令
 
 ```bash
+
 # 测试IP访问
+
 curl -v http://47.92.208.198/
 
 # 测试域名访问（会返回备案页面）
+
 curl -v http://todo.ylingtech.com/
 
 # 查看完整响应
+
 curl -v -L http://todo.ylingtech.com/ 2>&1 | head -50
+
 ```
 
 ## 💡 建议操作顺序
@@ -119,6 +149,7 @@ A: 可以，但要注意稳定性和数据安全。
 ## 📞 需要帮助？
 
 如果遇到任何问题，请提供以下信息：
+
 1. 执行脚本的输出
 2. 浏览器错误截图
 3. 服务器控制台的错误日志

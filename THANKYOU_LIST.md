@@ -15,6 +15,7 @@
 - 界面简洁，用户体验良好
 
 ### 方案二：动态感谢榜（已实现）
+
 - 使用 `ThankYouList` 组件
 - 支持本地存储的捐赠记录
 - 可以添加、显示、统计捐赠数据
@@ -22,6 +23,7 @@
 ## 文件结构
 
 ```
+
 src/
 ├── components/
 │   ├── Donate.jsx          # 捐赠主组件
@@ -30,6 +32,7 @@ src/
 ├── utils/
 │   └── donationManager.js  # 捐赠记录管理工具
 └── App.css                 # 样式文件（包含感谢榜样式）
+
 ```
 
 ## 使用方法
@@ -39,25 +42,30 @@ src/
 当前 `Donate.jsx` 已经引入了 `ThankYouList` 组件：
 
 ```jsx
+
 // 在 Donate.jsx 中
 import ThankYouList from './ThankYouList';
 
 // 使用组件
 <ThankYouList showAddDemo={true} />
+
 ```
 
 ### 添加捐赠记录
 
 ```javascript
+
 import { addDonationRecord } from '../utils/donationManager';
 
 // 添加记录
 addDonationRecord('用户名', 金额, '支付方式');
+
 ```
 
 ### 获取捐赠记录
 
 ```javascript
+
 import { getDonationRecords, getDonationStats } from '../utils/donationManager';
 
 // 获取所有记录
@@ -65,11 +73,13 @@ const records = getDonationRecords();
 
 // 获取统计信息
 const stats = getDonationStats();
+
 ```
 
 ## 功能特性
 
 ### ThankYouList 组件功能
+
 - ✅ 显示捐赠记录列表（最多显示10条）
 - ✅ 支持者排名显示
 - ✅ 支付方式图标（支付宝💙、微信💚）
@@ -80,6 +90,7 @@ const stats = getDonationStats();
 - ✅ 深色主题适配
 
 ### 捐赠管理工具功能
+
 - ✅ 本地存储捐赠记录
 - ✅ 自动生成唯一ID和时间戳
 - ✅ 数据验证和错误处理
@@ -89,6 +100,7 @@ const stats = getDonationStats();
 ## 样式说明
 
 感谢榜使用了与应用一致的毛玻璃风格：
+
 - 半透明背景和毛玻璃效果
 - 悬停动画效果
 - 支持深色主题切换
@@ -97,20 +109,28 @@ const stats = getDonationStats();
 ## 开发和测试
 
 ### 测试功能
+
 在开发环境中，可以使用组件自带的测试按钮：
+
 - "添加演示数据" - 添加5条测试记录
 - "清空记录" - 清除所有记录
 
 ### 生产环境
+
 正式部署时，将 `showAddDemo` 设置为 `false`：
+
 ```jsx
+
 <ThankYouList showAddDemo={false} />
+
 ```
 
 ## 集成真实支付
 
 ### 支付宝当面付集成
+
 ```javascript
+
 // 示例：支付成功回调
 function onPaymentSuccess(paymentData) {
   addDonationRecord(
@@ -119,10 +139,13 @@ function onPaymentSuccess(paymentData) {
     'alipay'
   );
 }
+
 ```
 
 ### 微信支付集成
+
 ```javascript
+
 // 示例：微信支付成功回调
 function onWechatPaySuccess(paymentData) {
   addDonationRecord(
@@ -131,12 +154,15 @@ function onWechatPaySuccess(paymentData) {
     'wechat'
   );
 }
+
 ```
 
 ## 数据格式
 
 ### 捐赠记录数据结构
+
 ```javascript
+
 {
   id: "1703123456789_abc123",     // 唯一标识
   name: "用户名",                  // 捐赠者姓名
@@ -145,6 +171,7 @@ function onWechatPaySuccess(paymentData) {
   timestamp: 1703123456789,       // 时间戳
   date: "2023-12-21 10:30:56"     // 格式化日期
 }
+
 ```
 
 ## 最佳实践
@@ -173,18 +200,24 @@ function onWechatPaySuccess(paymentData) {
 当需要开放感谢榜功能时，只需要：
 
 1. **取消注释导入**：
+
 ```jsx
+
 // 在 src/components/Donate.jsx 中
 import ThankYouList from './ThankYouList'; // 取消注释这行
+
 ```
 
-2. **取消注释组件使用**：
+1. **取消注释组件使用**：
+
 ```jsx
+
 // 在 Donate.jsx 的 JSX 中
 <ThankYouList showAddDemo={false} /> {/* 取消注释这行 */}
+
 ```
 
-3. **生产环境设置**：
+1. **生产环境设置**：
    - 开发测试：`showAddDemo={true}`
    - 正式环境：`showAddDemo={false}`
 

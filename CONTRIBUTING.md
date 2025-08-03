@@ -25,10 +25,14 @@
 1. Fork 项目
 2. 创建你的功能分支 (`git checkout -b feature/AmazingFeature`)
 3. 确保代码符合项目标准：
+
    ```bash
+
    npm run lint
    npm run build
+
    ```
+
 4. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
 5. 推送到分支 (`git push origin feature/AmazingFeature`)
 6. 创建 Pull Request
@@ -38,15 +42,20 @@
 ### 环境设置
 
 ```bash
+
 # 克隆项目
+
 git clone https://github.com/yourusername/react-todo-app.git
 cd react-todo-app
 
 # 安装依赖
+
 npm install
 
 # 启动开发服务器
+
 npm run dev
+
 ```
 
 ### 代码规范
@@ -63,11 +72,13 @@ npm run dev
 #### 🎯 提交格式
 
 ```
+
 <类型>[可选 范围]: <描述>
 
 [可选 正文]
 
 [可选 脚注]
+
 ```
 
 #### 支持的提交类型
@@ -102,8 +113,11 @@ npm run dev
 
 ##### 🔧 构建/工具
 
-<pre class="font-ui border-border-100/50 overflow-x-scroll w-full rounded border-[0.5px] shadow-[0_2px_12px_hsl(var(--always-black)/5%)]"><table class="bg-bg-100 min-w-full border-separate border-spacing-0 text-sm leading-[1.88888] whitespace-normal"><thead class="border-b-border-100/50 border-b-[0.5px] text-left"><tr class="[tbody>&]:odd:bg-bg-500/10"><th class="text-text-000 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&:not(:first-child)]:border-l-[0.5px]">类型</th><th class="text-text-000 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&:not(:first-child)]:border-l-[0.5px]">图标</th><th class="text-text-000 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&:not(:first-child)]:border-l-[0.5px]">说明</th><th class="text-text-000 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&:not(:first-child)]:border-l-[0.5px]">示例</th></tr></thead><tbody><tr class="[tbody>&]:odd:bg-bg-500/10"><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">chore</code></td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">🔧</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">构建/工具</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">chore: 更新依赖包版本</code></td></tr><tr class="[tbody>&]:odd:bg-bg-500/10"><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">build</code></td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">🔧</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">构建相关</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">build: 优化webpack配置</code></td></tr><tr class="[tbody>&]:odd:bg-bg-500/10"><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">ci</code></td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">🔧</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]">CI配置</td><td class="border-t-border-100/50 [&:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&:not(:first-child)]:border-l-[0.5px]"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">ci: 添加自动部署流程</code></td></tr></tbody></table></pre>
-
+| 类型 | 图标 | 说明 | 示例 |
+|------|------|------|------|
+| `chore` | 🔧 | 构建/工具 | `chore: 更新依赖包版本` |
+| `build` | 🔧 | 构建相关 | `build: 优化webpack配置` |
+| `ci` | 🔧 | CI配置 | `ci: 添加自动部署流程` |
 
 #### ✅提交示例
 
@@ -112,6 +126,7 @@ npm run dev
 bash
 
 ```bash
+
 feat: 添加任务拖拽排序功能
 fix: 修复在Safari中日期显示错误的问题
 perf: 优化大量任务时的渲染性能
@@ -120,22 +135,29 @@ style: 统一按钮圆角样式
 refactor: 使用useReducer重构状态管理
 test: 添加任务CRUD操作测试用例
 chore: 升级React到最新版本
+
 ```
 
 ##### 不推荐的提交示例
 
 ```bash
+
 # ❌ 太简单，没有描述具体做了什么
+
 update
 
 # ❌ 没有使用规范的类型前缀
+
 更新了一些样式
 
 # ❌ 类型不准确
+
 feat: 修复了一个bug
 
 # ❌ 描述不清楚
+
 fix: 修复问题
+
 ```
 
 #### 🎯 最佳实践
@@ -156,13 +178,15 @@ fix: 修复问题
 
 ## 项目结构
 
-```
+```text
+
 src/
 ├── components/        # React 组件
 ├── hooks/            # 自定义 Hooks
 ├── utils/            # 工具函数
 ├── styles/           # 样式文件
 └── constants/        # 常量定义
+
 ```
 
 ## 问题和建议
@@ -171,6 +195,6 @@ src/
 
 1. 查看现有的 Issues
 2. 创建新的 Issue
-3. 发送邮件到：lovexinlingfeiwu@foxmail.com
+3. 发送邮件到：<lovexinlingfeiwu@foxmail.com>
 
 再次感谢你的贡献！

@@ -7,11 +7,13 @@
 ## 📋 当前配置状态
 
 ### ✅ 已完成
+
 - **ICP备案**: 已配置（示例：京ICP备12345678号-1）
 - **备案信息组件**: 已集成到应用底部
 - **环境变量配置**: 支持本地和生产环境配置
 
 ### ⏳ 待完成
+
 - **公安备案**: 审核中，通过后需要添加配置
 - **公安备案logo**: 需要从官方平台下载真实logo
 
@@ -22,14 +24,20 @@
 **文件**: `.env.local` (不会被提交到Git)
 
 ```bash
+
 # ICP备案信息
+
 VITE_ICP_BEIAN_NUMBER=京ICP备12345678号-1
 VITE_ICP_BEIAN_URL=https://beian.miit.gov.cn
 
 # 公安备案信息（审核通过后取消注释）
+
 # VITE_POLICE_BEIAN_NUMBER=京公网安备11010802012345号
+
 # VITE_POLICE_BEIAN_CODE=11010802012345
+
 # VITE_POLICE_BEIAN_URL=https://beian.mps.gov.cn/#/query/webSearch?code=11010802012345
+
 ```
 
 ### 2. 示例文件
@@ -44,35 +52,53 @@ VITE_ICP_BEIAN_URL=https://beian.miit.gov.cn
 
 项目采用智能环境变量注入机制，**只需在`.env.local`中维护一份备案信息**：
 
-#### **工作原理**：
+#### **工作原理**
+
 1. **开发环境**: 直接从`.env.local`读取备案信息
 2. **生产构建**: 自动从`.env.local`提取备案信息并注入到构建中
 3. **构建完成**: 自动清理临时文件，不留痕迹
 
-#### **使用方法**：
+#### **使用方法**
+
 ```bash
+
 # 1. 在 .env.local 中配置真实备案信息（已配置）
+
 VITE_ICP_BEIAN_NUMBER=您的真实ICP备案号
 VITE_ICP_BEIAN_URL=https://beian.miit.gov.cn
 
 # 公安备案通过后添加
+
 # VITE_POLICE_BEIAN_NUMBER=您的真实公安备案号
+
 # VITE_POLICE_BEIAN_CODE=您的备案代码
+
 # VITE_POLICE_BEIAN_URL=https://beian.mps.gov.cn/#/query/webSearch?code=您的备案代码
 
 # 2. 直接构建，系统会自动处理
+
 npm run build:prod
+
 ```
 
-#### **构建流程**：
+#### **构建流程**
+
 ```bash
+
 npm run build:prod
-# ↓ 自动执行以下步骤：
+
+# ↓ 自动执行以下步骤
+
 # 1. 生成版本信息
+
 # 2. 从 .env.local 提取备案信息 ✅
+
 # 3. 创建临时 .env.production 文件
+
 # 4. 执行 Vite 生产构建
+
 # 5. 自动清理临时文件 ✅
+
 ```
 
 ### 🔄 备用方案：服务器环境变量
@@ -80,12 +106,16 @@ npm run build:prod
 如果需要在服务器上覆盖备案信息：
 
 ```bash
+
 # 设置环境变量（会覆盖 .env.local 中的配置）
+
 export VITE_ICP_BEIAN_NUMBER="服务器上的备案号"
 export VITE_ICP_BEIAN_URL="https://beian.miit.gov.cn"
 
 # 构建应用
+
 npm run build
+
 ```
 
 ### 方案二：CI/CD配置
@@ -93,27 +123,35 @@ npm run build
 在GitHub Actions、Jenkins等CI/CD平台中配置环境变量：
 
 ```yaml
+
 # GitHub Actions 示例
+
 env:
   VITE_ICP_BEIAN_NUMBER: ${{ secrets.ICP_BEIAN_NUMBER }}
   VITE_ICP_BEIAN_URL: ${{ secrets.ICP_BEIAN_URL }}
   VITE_POLICE_BEIAN_NUMBER: ${{ secrets.POLICE_BEIAN_NUMBER }}
   VITE_POLICE_BEIAN_CODE: ${{ secrets.POLICE_BEIAN_CODE }}
   VITE_POLICE_BEIAN_URL: ${{ secrets.POLICE_BEIAN_URL }}
+
 ```
 
 ### 方案三：Docker部署
 
 ```dockerfile
+
 # Dockerfile 示例
+
 FROM node:18-alpine
 
 # 设置环境变量
+
 ENV VITE_ICP_BEIAN_NUMBER="京ICP备12345678号-1"
 ENV VITE_ICP_BEIAN_URL="https://beian.miit.gov.cn"
 
 # 构建应用
+
 RUN npm run build
+
 ```
 
 ## 📱 公安备案配置步骤
@@ -132,11 +170,15 @@ RUN npm run build
    - 替换 `public/beian-logo.svg` 文件
 
 3. **更新环境变量**：
+
    ```bash
+
    # 在 .env.local 中取消注释并填写真实信息
+
    VITE_POLICE_BEIAN_NUMBER=京公网安备11010802012345号
    VITE_POLICE_BEIAN_CODE=11010802012345
    VITE_POLICE_BEIAN_URL=https://beian.mps.gov.cn/#/query/webSearch?code=11010802012345
+
    ```
 
 ### 2. 验证显示效果
@@ -144,7 +186,9 @@ RUN npm run build
 配置完成后，备案信息将显示在应用底部：
 
 ```
+
 京ICP备12345678号-1    [🛡️] 京公网安备11010802012345号
+
 ```
 
 ## 🔒 安全考虑
@@ -166,23 +210,31 @@ RUN npm run build
 ### 1. 本地测试
 
 ```bash
+
 # 启动开发服务器
+
 npm run dev
 
 # 检查页面底部是否显示备案信息
+
 # 点击备案号链接验证跳转是否正确
+
 ```
 
 ### 2. 生产测试
 
 ```bash
+
 # 构建生产版本
+
 npm run build
 
 # 预览生产版本
+
 npm run preview
 
 # 验证备案信息显示和链接功能
+
 ```
 
 ## 📞 技术支持
@@ -197,6 +249,7 @@ npm run preview
 ## 📁 文件结构
 
 ### 核心文件
+
 - `src/components/BeianInfo.jsx`: 备案信息展示组件
 - `src/styles/components/BeianInfo.scss`: SCSS样式文件，支持深浅主题和移动端适配
 - `src/styles/main.scss`: 统一样式导入管理（包含BeianInfo样式）
@@ -207,6 +260,7 @@ npm run preview
 - `public/beian-logo.svg`: 公安备案logo占位符
 
 ### 布局特性
+
 - **桌面端**: 公安备案在左，ICP备案在右
 - **移动端**: 垂直排列，公安备案在上，ICP备案在下
 - **响应式设计**: 自适应不同屏幕尺寸
@@ -220,11 +274,15 @@ npm run preview
 为确保敏感信息不会被意外提交到代码仓库，项目包含了自动检查脚本：
 
 ```bash
+
 # 检查是否有敏感信息
+
 npm run check-sensitive
+
 ```
 
 该脚本会检查：
+
 - 真实的ICP备案号
 - 真实的公安备案号
 - 排除测试用的示例备案号

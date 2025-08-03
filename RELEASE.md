@@ -26,13 +26,17 @@
 ### 1. 准备发布
 
 ```bash
+
 # 确保代码已提交并推送
+
 git add .
 git commit -m "feat: 新功能描述"
 git push origin main
 
 # 运行检查（可选）
+
 npm run prepare-release
+
 ```
 
 ### 2. 版本发布
@@ -40,14 +44,19 @@ npm run prepare-release
 根据更改类型选择对应的发布命令：
 
 ```bash
+
 # 补丁版本 (1.0.0 -> 1.0.1)
+
 npm run release:patch
 
-# 次版本 (1.0.0 -> 1.1.0) 
+# 次版本 (1.0.0 -> 1.1.0)
+
 npm run release:minor
 
 # 主版本 (1.0.0 -> 2.0.0)
+
 npm run release:major
+
 ```
 
 ### 3. 自动化处理
@@ -68,14 +77,16 @@ npm run release:major
 建议使用 [约定式提交](https://www.conventionalcommits.org/zh-hans/) 格式：
 
 ```
+
 <类型>[可选 范围]: <描述>
 
 [可选 正文]
 
 [可选 脚注]
+
 ```
 
-### 常用类型：
+### 常用类型
 
 * `feat`: 新功能
 * `fix`: 修复问题
@@ -86,12 +97,14 @@ npm run release:major
 * `test`: 添加测试
 * `chore`: 构建过程或辅助工具的变动
 
-### 示例：
+### 示例
 
 ```bash
+
 git commit -m "feat: 添加任务优先级功能"
 git commit -m "fix: 修复任务删除时的内存泄漏"
 git commit -m "docs: 更新 README 安装说明"
+
 ```
 
 ## 🔧 手动发布
@@ -99,19 +112,25 @@ git commit -m "docs: 更新 README 安装说明"
 如果需要手动控制发布过程：
 
 ```bash
+
 # 1. 更新版本号（不创建标签）
+
 npm version patch --no-git-tag-version
 
 # 2. 构建项目
+
 npm run build
 
 # 3. 手动提交和标签
+
 git add .
 git commit -m "chore: release v$(node -p require('./package.json').version)"
 git tag v$(node -p "require('./package.json').version")
 
 # 4. 推送
+
 git push origin main --tags
+
 ```
 
 ## 📊 版本检查
@@ -125,24 +144,37 @@ git push origin main --tags
 
 ## 🛠️ 故障排除
 
-### 发布失败的常见原因：
+### 发布失败的常见原因
 
 1. **工作目录不干净**
+
    ```bash
+
    git status
    git add .
    git commit -m "提交描述"
+
    ```
+
 2. **没有推送权限**
+
    ```bash
+
    git remote -v
+
    # 确保使用正确的仓库地址和权限
+
    ```
+
 3. **标签已存在**
+
    ```bash
+
    git tag -d v1.0.0  # 删除本地标签
    git push origin :refs/tags/v1.0.0  # 删除远程标签
+
    ```
+
 4. **GitHub CLI 未安装**
    * 自动创建 Release 需要 [GitHub CLI](https://cli.github.com/)
    * 或手动在 GitHub 网站创建 Release
@@ -152,14 +184,19 @@ git push origin main --tags
 查看版本历史：
 
 ```bash
+
 # 查看所有标签
+
 git tag -l
 
 # 查看标签详情
+
 git show v1.0.0
 
 # 查看两个版本间的变更
+
 git log v1.0.0..v1.1.0 --oneline
+
 ```
 
 ## 🎯 最佳实践

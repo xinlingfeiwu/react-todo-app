@@ -9,11 +9,13 @@
 ## 📱 iOS PWA优化
 
 ### iOS图标配置
+
 - **12个不同尺寸**：覆盖iPhone/iPad所有设备
 - **apple-touch-icon**：完整的iOS专用图标链接
 - **iOS专用meta标签**：优化iOS PWA体验
 
 ### iOS图标列表
+
 | 尺寸 | 设备 | 文件名 |
 |------|------|--------|
 | 57x57 | iPhone (iOS 6-) | apple-touch-icon-57x57.svg |
@@ -30,11 +32,13 @@
 ## 🤖 Android PWA优化
 
 ### Android图标配置
+
 - **9个标准尺寸**：覆盖Android所有密度
 - **2个Maskable图标**：支持Android自适应图标
 - **Android专用meta标签**：优化Android Chrome体验
 
 ### Android标准图标列表
+
 | 尺寸 | 密度 | 设备类型 | 文件名 |
 |------|------|----------|--------|
 | 36x36 | LDPI (0.75x) | 低密度 | android-chrome-36x36.svg |
@@ -48,6 +52,7 @@
 | 512x512 | - | 最高分辨率 | android-chrome-512x512.svg |
 
 ### Android Maskable图标
+
 | 尺寸 | 用途 | 文件名 |
 |------|------|--------|
 | 192x192 | 标准自适应 | maskable-icon-192x192.svg |
@@ -88,6 +93,7 @@
 ### HTML配置优化
 
 ```html
+
 <!-- iOS PWA 专用配置 -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -106,11 +112,13 @@
 <!-- Android 图标链接 -->
 <link rel="icon" sizes="192x192" href="./icons/android-chrome-192x192.svg" />
 <link rel="shortcut icon" href="./icons/android-chrome-192x192.svg" />
+
 ```
 
 ### Manifest.json优化
 
 ```json
+
 {
   "icons": [
     // iOS图标
@@ -140,6 +148,7 @@
   "theme_color": "#667eea",
   "background_color": "#667eea"
 }
+
 ```
 
 ## 🛠️ 自动化工具
@@ -147,22 +156,24 @@
 ### NPM脚本命令
 
 ```json
+
 {
   "scripts": {
     // iOS相关
     "generate-icons": "node scripts/generate-ios-icons.js",
     "update-ios-config": "node scripts/update-ios-config.js",
     "setup-ios-pwa": "npm run generate-icons && npm run update-ios-config",
-    
+
     // Android相关
     "generate-android-icons": "node scripts/generate-android-icons.js",
     "update-android-config": "node scripts/update-android-config.js",
     "setup-android-pwa": "npm run generate-android-icons && npm run update-android-config",
-    
+
     // 全平台
     "setup-all-pwa": "npm run setup-ios-pwa && npm run setup-android-pwa"
   }
 }
+
 ```
 
 ### 生成脚本功能
@@ -175,12 +186,14 @@
 ## 📱 安装测试
 
 ### iOS测试步骤
+
 1. 在iOS Safari中访问应用
 2. 点击分享按钮 → "添加到主屏幕"
 3. 确认应用名称和图标
 4. 检查主屏幕图标显示
 
 ### Android测试步骤
+
 1. 在Android Chrome中访问应用
 2. 查看"添加到主屏幕"横幅或菜单选项
 3. 确认安装并检查图标
@@ -189,12 +202,14 @@
 ## 🎯 预期效果
 
 ### iOS设备
+
 - ✅ **正确的应用图标**：显示设计的待办清单图标
 - ✅ **适配所有设备**：iPhone/iPad各种尺寸完美显示
 - ✅ **独立应用体验**：全屏运行，无Safari界面
 - ✅ **快速启动**：从主屏幕直接启动
 
 ### Android设备
+
 - ✅ **正确的应用图标**：显示设计的待办清单图标
 - ✅ **自适应图标支持**：根据系统主题自动适配形状
 - ✅ **多密度支持**：在各种Android设备上清晰显示

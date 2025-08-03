@@ -3,8 +3,9 @@
 🎯 一个简洁高效的待办事项管理工具，基于 React + Vite 构建，支持数据导入导出、隐私设置、主题切换等功能。
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-19.1.0-blue.svg)
-![Vite](https://img.shields.io/badge/Vite-5.4.19-green.svg)
+![React](https://img.shields.io/badge/React-19.1.1-blue.svg)
+![Vite](https://img.shields.io/badge/Vite-7.0.6-green.svg)
+![Node](https://img.shields.io/badge/Node.js-22.17.1-green.svg)
 
 ## ✨ 功能特色
 
@@ -22,40 +23,79 @@
 
 ### 环境要求
 
-- Node.js 16.0+
-- npm 或 yarn
+- **Node.js**: ^20.19.0 || >=22.12.0 (推荐 22.17.1)
+- **npm**: >=9.0.0
+- **Vite**: 7.1.0-beta.0
 
-> **CentOS 7 兼容性说明**：项目已针对 CentOS 7 + Node.js 16 环境进行优化，添加了必要的 polyfill 以解决 `crypto.getRandomValues` 兼容性问题。
+> **⚠️ 重要提示**：由于使用了 Vite 7.x，需要 Node.js 20.19.0+ 或 22.12.0+ 版本。
+> 推荐使用 Node.js 22.17.1 以获得最佳性能和兼容性。
+
+### Node.js 版本管理
+
+如果你使用 nvm，可以通过以下命令切换到推荐版本：
+
+```bash
+
+# 安装并使用推荐的 Node.js 版本
+
+nvm install 22.17.1
+nvm use 22.17.1
+
+# 或者使用项目根目录的 .nvmrc 文件
+
+nvm use
+
+```
+
+项目包含自动版本检查，运行开发或构建命令时会自动验证 Node.js 版本：
+
+```bash
+
+# 手动检查版本兼容性
+
+npm run check-node
+
+```
 
 ### 本地开发
 
 ```bash
+
 # 克隆项目
+
 git clone https://github.com/xinlingfeiwu/react-todo-app.git
 cd react-todo-app
 
 # 安装依赖
+
 npm install
 
 # 启动开发服务器
+
 npm run dev
 
 # 打开浏览器访问 http://localhost:5173
+
 ```
 
 ### 构建生产版本
 
 ```bash
+
 # 构建项目
+
 npm run build
 
 # 预览构建结果
+
 npm run preview
+
 ```
 
 ## 📁 项目结构
 
-```
+```text
+
 react-todo-app/
 ├── public/                 # 静态资源
 │   ├── favicon.svg        # 网站图标
@@ -93,6 +133,7 @@ react-todo-app/
 ├── package.json          # 项目配置
 ├── vite.config.js        # Vite配置
 └── README.md            # 项目说明
+
 ```
 
 ## 🛠️ 技术栈
@@ -108,6 +149,7 @@ react-todo-app/
 ## 📋 可用脚本
 
 ```bash
+
 npm run dev         # 启动开发服务器
 npm run build       # 构建生产版本
 npm run build:prod  # 生产环境构建
@@ -115,11 +157,13 @@ npm run preview     # 预览构建结果
 npm run lint        # 代码检查
 npm run lint:fix    # 自动修复代码问题
 npm run analyze     # 构建分析
+
 ```
 
 ## 🎨 主要功能
 
 ### 任务管理
+
 - ✅ 创建新任务
 - ✏️ 编辑现有任务
 - 🗑️ 删除任务
@@ -127,12 +171,14 @@ npm run analyze     # 构建分析
 - 🔍 任务过滤和搜索
 
 ### 数据管理
+
 - 📤 导出数据为JSON格式
 - 📥 从JSON文件导入数据
 - 🔄 数据备份和恢复
 - 🧹 清空所有数据
 
 ### 用户体验
+
 - 🌙 明亮/暗黑主题切换
 - 📱 完全响应式设计
 - ⚡ 快速响应的交互
@@ -141,15 +187,18 @@ npm run analyze     # 构建分析
 ## 🔧 配置说明
 
 ### 环境变量
+
 项目不需要特殊的环境变量配置，开箱即用。
 
 ### 自定义配置
+
 - 主题配色可在 `src/styles/Todo.css` 中的CSS变量部分修改
 - 应用配置可在 `src/constants/todoConstants.js` 中调整
 
 ## 🚀 部署
 
 ### 静态托管
+
 构建后的 `dist` 目录可以部署到任何静态托管服务：
 
 - **Vercel**: 连接GitHub自动部署
@@ -157,14 +206,19 @@ npm run analyze     # 构建分析
 - **GitHub Pages**: 使用GitHub Actions自动部署
 
 ### 服务器部署
+
 项目包含完整的服务器部署脚本：
 
 ```bash
+
 # 使用自动部署脚本
+
 ./deploy/deploy.sh your-domain.com
+
 ```
 
 支持的服务器环境：
+
 - CentOS 7/8
 - Ubuntu 18.04+
 - 自动配置Nginx + SSL证书
@@ -187,7 +241,7 @@ npm run analyze     # 构建分析
 
 - 🐛 [报告Bug](https://github.com/xinlingfeiwu/react-todo-app/issues)
 - 💡 [功能建议](https://github.com/xinlingfeiwu/react-todo-app/issues)
-- 📧 邮箱：lovexinlingfeiwu@foxmail.com
+- 📧 邮箱：<lovexinlingfeiwu@foxmail.com>
 
 ## 🙏 致谢
 

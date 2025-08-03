@@ -55,11 +55,13 @@ iOS Safari会缓存PWA图标，即使更新了PNG文件，也可能显示旧的�
 ### 检查文件访问
 
 在Safari中直接访问图标URL：
+
 - https://your-domain.com/icons/apple-touch-icon-180x180.png
 
 ### 检查HTML源码
 
 在Safari中查看页面源码，确认：
+
 - apple-touch-icon链接指向PNG文件
 - 文件路径正确
 - 没有404错误

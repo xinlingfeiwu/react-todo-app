@@ -32,6 +32,7 @@
 在`index.html`中添加了完整的iOS PWA配置：
 
 ```html
+
 <!-- iOS PWA 专用配置 -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -43,6 +44,7 @@
 <link rel="apple-touch-icon" sizes="60x60" href="./icons/apple-touch-icon-60x60.svg" />
 <!-- ... 其他尺寸 ... -->
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180x180.svg" />
+
 ```
 
 ### 3. **Manifest.json优化**
@@ -50,6 +52,7 @@
 更新了`manifest.json`以包含所有iOS图标：
 
 ```json
+
 {
   "icons": [
     {
@@ -70,6 +73,7 @@
     "mobile_web_app_title": "待办清单"
   }
 }
+
 ```
 
 ### 4. **自动化脚本**
@@ -84,6 +88,7 @@
 添加了便捷的NPM脚本：
 
 ```json
+
 {
   "scripts": {
     "generate-icons": "node scripts/generate-ios-icons.js",
@@ -91,6 +96,7 @@
     "setup-ios-pwa": "npm run generate-icons && npm run update-ios-config"
   }
 }
+
 ```
 
 ## 📱 iOS PWA安装测试
@@ -115,8 +121,11 @@
 ### 如果图标仍然不正确
 
 1. **清除Safari缓存**
+
    ```
+
    设置 → Safari → 清除历史记录和网站数据
+
    ```
 
 2. **删除并重新安装PWA**

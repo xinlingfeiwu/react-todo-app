@@ -5,7 +5,9 @@
 在 CentOS 7 环境中使用 Node.js 16 进行构建时，会遇到以下错误：
 
 ```bash
+
 TypeError: crypto$2.getRandomValues is not a function
+
 ```
 
 这是因为 Node.js 16 环境中缺少 Web API `crypto.getRandomValues` 方法导致的。
@@ -15,7 +17,9 @@ TypeError: crypto$2.getRandomValues is not a function
 ### 1. 添加 crypto-browserify polyfill
 
 ```bash
+
 npm install --save-dev crypto-browserify
+
 ```
 
 ### 2. 更新 vite.config.js
@@ -23,6 +27,7 @@ npm install --save-dev crypto-browserify
 添加了以下配置：
 
 ```javascript
+
 export default defineConfig({
   define: {
     global: 'globalThis',
@@ -38,6 +43,7 @@ export default defineConfig({
   },
   // ... 其他配置
 })
+
 ```
 
 ### 3. 创建 polyfill 文件
@@ -49,7 +55,9 @@ export default defineConfig({
 在 `src/main.jsx` 中首先导入 polyfill：
 
 ```javascript
+
 import './polyfills.js'
+
 ```
 
 ## 验证方法
@@ -57,17 +65,23 @@ import './polyfills.js'
 运行以下命令验证修复是否成功：
 
 ```bash
+
 # 安装依赖
+
 npm install
 
 # 代码检查
+
 npm run lint
 
 # 构建测试
+
 npm run build
 
 # 预览构建结果
+
 npm run preview
+
 ```
 
 如果所有命令都执行成功且没有 crypto 相关错误，说明修复生效。
@@ -77,11 +91,15 @@ npm run preview
 完整的部署验证步骤：
 
 ```bash
+
 # 1. 运行预部署检查
+
 ./deploy/pre-deploy-check.sh
 
 # 2. 执行完整部署
+
 ./deploy.sh todo
+
 ```
 
 ## 兼容性说明
