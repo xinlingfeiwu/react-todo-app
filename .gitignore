@@ -90,3 +90,6 @@ deploy/backup-*
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Augment Agent context files
+AUGMENT_AGENT_PROJECT_CONTEXT.md
