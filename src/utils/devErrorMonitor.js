@@ -7,7 +7,7 @@ class DevErrorMonitor {
   constructor() {
     this.errors = [];
     this.warnings = [];
-    this.isEnabled = import.meta.env.DEV;
+    this.isEnabled = import.meta.env.DEV || (typeof import.meta.env.DEV !== 'undefined' ? import.meta.env.DEV : process.env.NODE_ENV === 'development');
     this.maxErrors = 50;
     
     if (this.isEnabled) {
@@ -84,9 +84,20 @@ class DevErrorMonitor {
   }
 
   logError(type, details) {
+    // 安全地序列化 details，避免循环引用
+    let safeDetails;
+    try {
+      // 尝试序列化以检测循环引用
+      JSON.stringify(details);
+      safeDetails = details;
+    } catch {
+      // 处理循环引用
+      safeDetails = this.sanitizeCircularReferences(details);
+    }
+
     const error = {
       type,
-      details,
+      details: safeDetails,
       timestamp: new Date().toISOString(),
       url: window.location.href,
       userAgent: navigator.userAgent
@@ -101,6 +112,29 @@ class DevErrorMonitor {
 
     // 特殊处理一些常见错误
     this.handleSpecialErrors(error);
+  }
+
+  sanitizeCircularReferences(obj, seen = new WeakSet()) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+
+    if (seen.has(obj)) {
+      return '[Circular Reference]';
+    }
+
+    seen.add(obj);
+
+    const result = Array.isArray(obj) ? [] : {};
+    
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        result[key] = this.sanitizeCircularReferences(obj[key], seen);
+      }
+    }
+
+    seen.delete(obj);
+    return result;
   }
 
   logWarning(type, details) {
@@ -251,7 +285,7 @@ if (import.meta.env.DEV) {
   devErrorMonitor.logReactError = function(error, errorInfo) {
     if (!this.isEnabled) return;
 
-    this.logError('React Component Error', {
+    this.logError('React Error', {
       message: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack
@@ -263,9 +297,10 @@ if (import.meta.env.DEV) {
     if (!this.isEnabled) return;
 
     if (renderTime > 50) { // 50ms阈值
-      this.logWarning('Slow Render', {
+      this.logWarning('Performance Warning', {
         component: componentName,
-        renderTime: `${renderTime}ms`
+        renderTime: renderTime,
+        message: `Slow render detected in ${componentName}: ${renderTime}ms`
       });
     }
   };
@@ -275,7 +310,7 @@ if (import.meta.env.DEV) {
     if (!this.isEnabled) return;
 
     if (memoryInfo.usedJSHeapSize > memoryInfo.jsHeapSizeLimit * 0.9) {
-      this.logWarning('High Memory Usage', {
+      this.logWarning('Memory Warning', {
         used: memoryInfo.usedJSHeapSize,
         limit: memoryInfo.jsHeapSizeLimit,
         percentage: Math.round((memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit) * 100)
@@ -304,6 +339,7 @@ if (import.meta.env.DEV) {
     return {
       errors: this.errors,
       warnings: this.warnings,
+      exportDate: new Date().toISOString(),
       exportTime: new Date().toISOString(),
       version: '1.0'
     };
@@ -336,9 +372,11 @@ if (import.meta.env.DEV) {
     return {
       mostCommonErrors: Object.entries(errorTypes)
         .sort(([,a], [,b]) => b - a)
-        .slice(0, 5),
+        .slice(0, 5)
+        .map(([type, count]) => ({ type, count })),
       totalErrors: this.errors.length,
-      errorTypes: Object.keys(errorTypes)
+      errorTypes: Object.keys(errorTypes),
+      errorFrequency: errorTypes
     };
   };
 
@@ -354,6 +392,7 @@ if (import.meta.env.DEV) {
     return {
       recentErrors: recentErrors.length,
       hourlyRate: recentErrors.length,
+      errorRate: recentErrors.length,
       trend: recentErrors.length > 5 ? 'increasing' : 'stable'
     };
   };
@@ -369,5 +408,5 @@ if (import.meta.env.DEV) {
   console.log('- errorClear(): 清除错误记录');
 }
 
-export { devErrorMonitor };
+export { DevErrorMonitor, devErrorMonitor };
 export default devErrorMonitor;

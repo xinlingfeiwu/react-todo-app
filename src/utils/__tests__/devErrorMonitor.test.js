@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { devErrorMonitor } from '../devErrorMonitor'
+import { DevErrorMonitor, devErrorMonitor } from '../devErrorMonitor'
 
 describe('devErrorMonitor', () => {
   let consoleSpy = {}
@@ -7,6 +7,12 @@ describe('devErrorMonitor', () => {
   let originalFetch
 
   beforeEach(() => {
+    // 清理之前的错误记录
+    if (devErrorMonitor) {
+      devErrorMonitor.errors = []
+      devErrorMonitor.warnings = []
+    }
+
     // 模拟 console 方法
     consoleSpy.log = vi.spyOn(console, 'log').mockImplementation(() => {})
     consoleSpy.error = vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -32,7 +38,10 @@ describe('devErrorMonitor', () => {
 
   describe('初始化', () => {
     it('应该在开发环境中初始化', () => {
-      expect(devErrorMonitor.isEnabled).toBe(true)
+      // 创建新实例以测试初始化过程
+      const testInstance = new DevErrorMonitor()
+      
+      expect(testInstance.isEnabled).toBe(true)
       expect(window.addEventListener).toHaveBeenCalledWith('error', expect.any(Function))
       expect(window.addEventListener).toHaveBeenCalledWith('unhandledrejection', expect.any(Function))
       expect(consoleSpy.log).toHaveBeenCalledWith('🔍 开发环境错误监控已启动')
@@ -42,7 +51,7 @@ describe('devErrorMonitor', () => {
       vi.stubEnv('DEV', false)
       
       // 重新创建实例
-      const prodMonitor = new (devErrorMonitor.constructor)()
+      const prodMonitor = new DevErrorMonitor()
       
       expect(prodMonitor.isEnabled).toBe(false)
     })
@@ -198,11 +207,11 @@ describe('devErrorMonitor', () => {
     })
 
     it('应该检测内存泄漏', () => {
-      // 模拟内存使用增长
+      // 模拟内存使用增长（设置为超过90%阈值）
       const memoryUsage = {
-        usedJSHeapSize: 50000000, // 50MB
-        totalJSHeapSize: 100000000,
-        jsHeapSizeLimit: 2000000000
+        usedJSHeapSize: 1900000000, // 1.9GB，超过 90% of 2GB
+        totalJSHeapSize: 2000000000,
+        jsHeapSizeLimit: 2000000000 // 2GB limit
       }
 
       devErrorMonitor.checkMemoryUsage(memoryUsage)

@@ -101,14 +101,14 @@ describe('storageCleanup', () => {
     })
 
     it('应该处理 localStorage 访问错误', () => {
-      mockLocalStorage.key.mockImplementation(() => {
+      mockLocalStorage.getItem.mockImplementation(() => {
         throw new Error('Storage error')
       })
 
       const appItems = getAppStorageItems()
 
       expect(appItems).toEqual({})
-      expect(consoleSpy.warn).toHaveBeenCalled()
+      expect(consoleSpy.warn).toHaveBeenCalledWith('获取存储项 "ylingtech-todo-app" 时出错:', expect.any(Error))
     })
   })
 
@@ -116,13 +116,17 @@ describe('storageCleanup', () => {
     it('应该清理过期的数据', () => {
       const now = Date.now()
       const expiredData = {
-        'app_update_snoozed': JSON.stringify({
-          snoozedAt: now - 2 * 60 * 60 * 1000, // 2小时前
-          version: '1.0.0'
+        'react-todo-app-cache': JSON.stringify({
+          data: 'some data',
+          expireAt: now - 1000 // 1秒前过期
         }),
-        'valid_data': JSON.stringify({
-          snoozedAt: now - 30 * 60 * 1000, // 30分钟前
-          version: '1.0.1'
+        'react-todo-app-temp': JSON.stringify({
+          data: 'temp data',
+          expireAt: now + 1000 // 1秒后过期，不应该被清理
+        }),
+        'other-app-data': JSON.stringify({
+          data: 'other data',
+          expireAt: now - 1000 // 不是 react-todo-app 开头，不应该被清理
         })
       }
 
@@ -133,7 +137,8 @@ describe('storageCleanup', () => {
       const cleanedCount = cleanupExpiredData()
 
       expect(cleanedCount).toBeGreaterThan(0)
-      expect(consoleSpy.log).toHaveBeenCalled()
+      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('react-todo-app-cache')
+      expect(mockLocalStorage.removeItem).not.toHaveBeenCalledWith('react-todo-app-temp')
     })
 
     it('应该处理无效的 JSON 数据', () => {
@@ -154,7 +159,7 @@ describe('storageCleanup', () => {
 
       autoCleanup()
 
-      expect(consoleSpy.log).toHaveBeenCalledWith('🧹 开始自动清理存储数据...')
+      expect(consoleSpy.log).toHaveBeenCalledWith('🔄 开始自动清理旧的存储数据...')
     })
 
     it('应该处理清理过程中的错误', () => {
@@ -170,27 +175,24 @@ describe('storageCleanup', () => {
   describe('getStorageUsage', () => {
     it('应该计算存储使用情况', () => {
       const mockData = {
-        'key1': 'value1',
-        'key2': 'value2',
-        'key3': 'value3'
+        'ylingtech-todo-app': 'value1',
+        'react-todo-app': 'value2',
+        'todo-app-theme': 'value3'
       }
 
-      mockLocalStorage.length = Object.keys(mockData).length
-      mockLocalStorage.key.mockImplementation((index) => Object.keys(mockData)[index])
-      mockLocalStorage.getItem.mockImplementation((key) => mockData[key])
+      mockLocalStorage.getItem.mockImplementation((key) => mockData[key] || null)
 
       const usage = getStorageUsage()
 
       expect(usage).toHaveProperty('totalItems')
       expect(usage).toHaveProperty('totalSize')
-      expect(usage).toHaveProperty('appItems')
-      expect(usage).toHaveProperty('appSize')
+      expect(usage).toHaveProperty('items')
       expect(usage.totalItems).toBe(3)
+      expect(usage.totalSize).toBeGreaterThan(0)
     })
 
     it('应该处理存储访问错误', () => {
-      mockLocalStorage.length = 1
-      mockLocalStorage.key.mockImplementation(() => {
+      mockLocalStorage.getItem.mockImplementation(() => {
         throw new Error('Storage error')
       })
 
@@ -199,9 +201,7 @@ describe('storageCleanup', () => {
       expect(usage).toEqual({
         totalItems: 0,
         totalSize: 0,
-        appItems: 0,
-        appSize: 0,
-        error: true
+        items: {}
       })
     })
 
@@ -250,7 +250,7 @@ describe('storageCleanup', () => {
 
       const usage = getStorageUsage()
 
-      expect(usage.totalItems).toBe(1)
+      expect(usage.totalItems).toBe(0) // 因为 getStorageUsage 只返回应用相关的项，null 值会被过滤掉
       expect(usage.totalSize).toBe(0)
     })
   })

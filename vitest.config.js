@@ -14,6 +14,11 @@ export default defineConfig({
     // 全局设置
     globals: true,
 
+    // 环境变量
+    env: {
+      NODE_ENV: 'test'
+    },
+
     // 环境选项
     environmentOptions: {
       jsdom: {

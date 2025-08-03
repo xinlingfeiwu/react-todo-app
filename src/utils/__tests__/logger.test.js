@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { logger, migrationLogger } from '../logger'
 
 describe('logger', () => {
   // 保存原始的 console 方法
@@ -33,11 +32,16 @@ describe('logger', () => {
   })
 
   describe('开发环境', () => {
-    beforeEach(() => {
+    let logger
+
+    beforeEach(async () => {
       // 模拟开发环境
-      vi.stubEnv('PROD', false)
+      vi.stubEnv('NODE_ENV', 'development')
+      vi.stubEnv('VITE_NODE_ENV', 'development')
       // 重新导入模块以应用新的环境变量
       vi.resetModules()
+      const loggerModule = await import('../logger')
+      logger = loggerModule.logger
     })
 
     it('应该在开发环境中输出 log', () => {
@@ -84,9 +88,16 @@ describe('logger', () => {
   })
 
   describe('生产环境', () => {
-    beforeEach(() => {
+    let logger
+
+    beforeEach(async () => {
       // 模拟生产环境
-      vi.stubEnv('PROD', true)
+      vi.stubEnv('NODE_ENV', 'production')
+      vi.stubEnv('VITE_NODE_ENV', 'production')
+      // 重新导入模块以应用新的环境变量
+      vi.resetModules()
+      const loggerModule = await import('../logger')
+      logger = loggerModule.logger
     })
 
     it('不应该在生产环境中输出 log', () => {
@@ -121,17 +132,20 @@ describe('logger', () => {
   })
 
   describe('migrationLogger', () => {
+    let migrationLogger
+
+    beforeEach(async () => {
+      const loggerModule = await import('../logger')
+      migrationLogger = loggerModule.migrationLogger
+    })
+
     it('应该在开发环境中输出迁移日志', () => {
-      vi.stubEnv('PROD', false)
-      
       migrationLogger.log('migration message')
       
       expect(mockConsole.log).toHaveBeenCalledWith('[MIGRATION]', 'migration message')
     })
 
     it('应该在生产环境中输出迁移日志', () => {
-      vi.stubEnv('PROD', true)
-      
       migrationLogger.log('migration message')
       
       expect(mockConsole.log).toHaveBeenCalledWith('[MIGRATION]', 'migration message')
@@ -151,6 +165,12 @@ describe('logger', () => {
   })
 
   describe('错误处理', () => {
+    let logger
+
+    beforeEach(async () => {
+      const loggerModule = await import('../logger')
+      logger = loggerModule.logger
+    })
     it('应该处理 console 方法不存在的情况', () => {
       // 临时删除 console.log
       const originalLog = console.log
@@ -176,9 +196,15 @@ describe('logger', () => {
   })
 
   describe('性能测试', () => {
+    let logger
+
+    beforeEach(async () => {
+      vi.stubEnv('NODE_ENV', 'production')
+      vi.resetModules()
+      const loggerModule = await import('../logger')
+      logger = loggerModule.logger
+    })
     it('生产环境中被跳过的日志应该有最小的性能影响', () => {
-      vi.stubEnv('PROD', true)
-      
       const start = performance.now()
       
       // 执行大量日志调用
@@ -202,6 +228,13 @@ describe('logger', () => {
   })
 
   describe('类型安全', () => {
+    let logger, migrationLogger
+
+    beforeEach(async () => {
+      const loggerModule = await import('../logger')
+      logger = loggerModule.logger
+      migrationLogger = loggerModule.migrationLogger
+    })
     it('应该处理各种数据类型', () => {
       const testData = [
         'string',
@@ -235,9 +268,13 @@ describe('logger', () => {
   })
 
   describe('环境变量处理', () => {
-    it('应该正确处理未定义的环境变量', () => {
+    it('应该正确处理未定义的环境变量', async () => {
       // 清除环境变量
       vi.unstubAllEnvs()
+      vi.resetModules()
+      
+      const loggerModule = await import('../logger')
+      const logger = loggerModule.logger
       
       expect(() => {
         logger.log('test')
@@ -245,8 +282,12 @@ describe('logger', () => {
       }).not.toThrow()
     })
 
-    it('应该处理字符串形式的环境变量', () => {
-      vi.stubEnv('PROD', 'true')
+    it('应该处理字符串形式的环境变量', async () => {
+      vi.stubEnv('NODE_ENV', 'production')
+      vi.resetModules()
+      
+      const loggerModule = await import('../logger')
+      const logger = loggerModule.logger
       
       logger.log('test message')
       

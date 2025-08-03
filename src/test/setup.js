@@ -115,20 +115,32 @@ window.Blob = class MockBlob {
 }
 
 // 模拟 console 方法以避免测试输出污染
+// 保存原始 console 方法以供测试使用
 const originalConsole = { ...console }
-window.console = {
-  ...console,
-  // 在测试中静默这些方法，除非明确需要
-  log: vi.fn(),
-  info: vi.fn(),
-  warn: vi.fn(),
-  error: vi.fn(),
-  debug: vi.fn(),
-}
 
-// 在需要时恢复原始 console
+// 为了避免测试中的控制台污染，我们可以选择性地模拟
+// 但保留原始方法以供需要验证 console 调用的测试使用
+globalThis.originalConsole = originalConsole
+
+// 不默认模拟 console，让测试自行决定是否需要模拟
+// 这样可以避免 logger 测试失败的问题
+
+// 恢复原始 console 的工具函数
 window.restoreConsole = () => {
   window.console = originalConsole
+}
+
+// 模拟 console 的工具函数（供需要的测试使用）
+window.mockConsole = () => {
+  window.console = {
+    ...console,
+    log: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+  }
+  return window.console
 }
 
 // 模拟 crypto.getRandomValues (用于 ID 生成)

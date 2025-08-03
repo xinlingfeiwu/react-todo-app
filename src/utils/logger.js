@@ -3,8 +3,23 @@
  * 在生产环境中移除或替换 console.log
  */
 
-// 生产环境检测
-const isProduction = import.meta.env.PROD;
+// 环境检测函数
+const getEnvironment = () => {
+  // 检测生产环境
+  const isProd = import.meta.env.PROD || 
+    import.meta.env.NODE_ENV === 'production' ||
+    (typeof process !== 'undefined' && process.env.NODE_ENV === 'production');
+  
+  // 检测测试环境
+  const isTestEnv = import.meta.env.MODE === 'test' || 
+    import.meta.env.NODE_ENV === 'test' ||
+    (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') ||
+    (typeof global !== 'undefined' && global.__vitest);
+  
+  return { isProd, isTestEnv };
+};
+
+const { isProd: isProduction } = getEnvironment();
 
 // 创建安全的日志函数
 export const logger = {

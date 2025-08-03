@@ -78,10 +78,17 @@ export function safeGetLocalStorage(key, defaultValue = null) {
     const value = localStorage.getItem(key);
     if (value === null) return defaultValue;
     
-    // 尝试解析 JSON，如果失败则返回原始字符串
+    // 尝试解析 JSON
     try {
       return JSON.parse(value);
-    } catch {
+    } catch (parseError) {
+      // 如果提供了非 null 的默认值，说明期望的是 JSON 数据
+      // 解析失败时返回默认值
+      if (defaultValue !== null) {
+        console.warn('JSON 解析失败，返回默认值:', parseError);
+        return defaultValue;
+      }
+      // 如果没有提供默认值，可能存储的就是字符串，直接返回
       return value;
     }
   } catch (error) {

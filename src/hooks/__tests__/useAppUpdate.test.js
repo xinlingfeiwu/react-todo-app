@@ -139,18 +139,16 @@ describe('useAppUpdate Hook', () => {
         result.current.applyUpdate()
       })
 
-      expect(reloadSpy).toHaveBeenCalled()
-      
-      expect(result.current.hasUpdate).toBe(false)
-      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith(APP_UPDATE_DISMISSED_KEY)
-      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith(APP_UPDATE_SNOOZED_KEY)
-      
       // 等待延迟的刷新
       act(() => {
         vi.advanceTimersByTime(500)
       })
 
       expect(reloadSpy).toHaveBeenCalled()
+      
+      expect(result.current.hasUpdate).toBe(false)
+      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith(APP_UPDATE_DISMISSED_KEY)
+      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith(APP_UPDATE_SNOOZED_KEY)
     })
 
     it('应该暂缓更新', async () => {

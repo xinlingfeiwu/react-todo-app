@@ -11,47 +11,68 @@ class PerformanceMonitor {
 
   // 标记性能起点
   mark(name) {
-    performance.mark(`${name}-start`);
-    this.metrics.set(name, { start: performance.now() });
+    if (typeof performance !== 'undefined' && performance.mark) {
+      try {
+        performance.mark(`${name}-start`);
+        this.metrics.set(name, { start: performance.now() });
+      } catch (error) {
+        console.warn('性能标记失败:', error);
+      }
+    }
   }
 
   // 测量性能
   measure(name) {
-    const startMark = `${name}-start`;
-    const endMark = `${name}-end`;
-    
-    performance.mark(endMark);
-    
-    try {
-      performance.measure(name, startMark, endMark);
-      const measure = performance.getEntriesByName(name)[0];
+    if (typeof performance !== 'undefined' && performance.mark && performance.measure && performance.getEntriesByName) {
+      const startMark = `${name}-start`;
+      const endMark = `${name}-end`;
       
-      console.log(`⚡ 性能指标 [${name}]:`, {
-        duration: `${measure.duration.toFixed(2)}ms`,
-        start: `${measure.startTime.toFixed(2)}ms`,
-        end: `${(measure.startTime + measure.duration).toFixed(2)}ms`
-      });
-      
-      return measure.duration;
-    } catch (error) {
-      console.warn(`性能测量失败 [${name}]:`, error);
+      try {
+        performance.mark(endMark);
+        
+        performance.measure(name, startMark, endMark);
+        const measure = performance.getEntriesByName(name)[0];
+        
+        console.log(`⚡ 性能指标 [${name}]:`, {
+          duration: `${measure.duration.toFixed(2)}ms`,
+          start: `${measure.startTime.toFixed(2)}ms`,
+          end: `${(measure.startTime + measure.duration).toFixed(2)}ms`
+        });
+        
+        return measure.duration;
+      } catch (error) {
+        console.warn(`性能测量失败 [${name}]:`, error);
+      }
     }
   }
 
   // 获取页面加载性能
   getPageLoadMetrics() {
-    if (typeof performance !== 'undefined' && performance.navigation) {
-      const navigation = performance.getEntriesByType('navigation')[0];
-      if (navigation) {
-        return {
-          dns: navigation.domainLookupEnd - navigation.domainLookupStart,
-          tcp: navigation.connectEnd - navigation.connectStart,
-          request: navigation.responseStart - navigation.requestStart,
-          response: navigation.responseEnd - navigation.responseStart,
-          domParsing: navigation.domInteractive - navigation.responseEnd,
-          domReady: navigation.domContentLoadedEventEnd - navigation.navigationStart,
-          loadComplete: navigation.loadEventEnd - navigation.navigationStart
-        };
+    if (typeof performance !== 'undefined' && performance.getEntriesByType) {
+      try {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        if (navigation) {
+          const dns = navigation.domainLookupEnd - navigation.domainLookupStart;
+          const tcp = navigation.connectEnd - navigation.connectStart;
+          const request = navigation.responseStart - navigation.requestStart;
+          const response = navigation.responseEnd - navigation.responseStart;
+          const domContentLoaded = navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart;
+          const loadComplete = navigation.loadEventEnd - navigation.loadEventStart;
+          
+          const total = dns + tcp + request + response + domContentLoaded + loadComplete;
+          
+          return {
+            dns,
+            tcp,
+            request,
+            response,
+            domContentLoaded,
+            loadComplete,
+            total
+          };
+        }
+      } catch (error) {
+        console.warn('获取页面加载指标失败:', error);
       }
     }
     return null;
@@ -82,9 +103,9 @@ class PerformanceMonitor {
   getMemoryInfo() {
     if (performance.memory) {
       return {
-        used: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024),
-        total: Math.round(performance.memory.totalJSHeapSize / 1024 / 1024),
-        limit: Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)
+        used: performance.memory.usedJSHeapSize / 1024 / 1024,
+        total: performance.memory.totalJSHeapSize / 1024 / 1024,
+        limit: performance.memory.jsHeapSizeLimit / 1024 / 1024
       };
     }
     return null;
@@ -92,7 +113,16 @@ class PerformanceMonitor {
 
   // 内存使用监控（测试兼容）
   getMemoryUsage() {
-    return this.getMemoryInfo();
+    const memInfo = this.getMemoryInfo();
+    if (memInfo) {
+      return {
+        used: `${memInfo.used.toFixed(2)} MB`,
+        total: `${memInfo.total.toFixed(2)} MB`,
+        limit: `${memInfo.limit.toFixed(2)} MB`,
+        percentage: Math.round((memInfo.used / memInfo.total) * 100)
+      };
+    }
+    return null;
   }
 
   // FPS监控
@@ -112,30 +142,49 @@ class PerformanceMonitor {
 
   // 错误记录
   logError(component, error) {
-    console.error(`[${component}] 错误:`, error);
+    const errorInfo = {
+      message: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString()
+    };
+    console.error(`❌ 错误 [${component}]:`, errorInfo);
   }
 
   logWarning(component, message) {
-    console.warn(`[${component}] 警告:`, message);
+    const warningInfo = {
+      message: message,
+      timestamp: new Date().toISOString()
+    };
+    console.warn(`⚠️ 警告 [${component}]:`, warningInfo);
   }
 
   // 性能报告
   getPerformanceReport() {
-    return {
+    const report = {
       pageLoad: this.getPageLoadMetrics(),
       memory: this.getMemoryUsage(),
+      timestamp: new Date().toISOString(),
       metrics: Object.fromEntries(this.metrics)
     };
+    
+    console.log('📊 性能报告:', report);
+    return report;
   }
 
   // 资源监控
   getResourceMetrics() {
-    if (typeof performance !== 'undefined') {
-      return performance.getEntriesByType('resource').map(entry => ({
-        name: entry.name,
-        duration: entry.duration,
-        size: entry.transferSize || 0
-      }));
+    if (typeof performance !== 'undefined' && performance.getEntriesByType) {
+      try {
+        return performance.getEntriesByType('resource').map(entry => ({
+          name: entry.name,
+          type: entry.initiatorType || 'other',
+          duration: entry.duration,
+          size: entry.transferSize || 0
+        }));
+      } catch (error) {
+        console.warn('获取资源指标失败:', error);
+        return [];
+      }
     }
     return [];
   }

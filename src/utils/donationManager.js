@@ -181,10 +181,12 @@ export function importDonationData(data) {
   try {
     // 验证数据结构
     if (!data || typeof data !== 'object') {
+      console.error('导入数据无效: 数据不是对象');
       return false;
     }
 
     if (!data.donations || !Array.isArray(data.donations)) {
+      console.error('导入数据无效: 缺少 donations 数组');
       return false;
     }
 
@@ -199,6 +201,7 @@ export function importDonationData(data) {
 
     // 如果没有有效的捐赠记录，返回false
     if (validDonations.length === 0) {
+      console.error('导入数据无效: 没有有效的捐赠记录');
       return false;
     }
 

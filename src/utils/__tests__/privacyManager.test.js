@@ -12,18 +12,19 @@ import {
 import { STORAGE_KEYS, COOKIE_CONSENT_VALUES } from '../../constants/storageKeys'
 
 describe('privacyManager', () => {
-  // 模拟 localStorage
-  const mockLocalStorage = {
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn()
-  }
+  let mockLocalStorage
 
   beforeEach(() => {
     vi.clearAllMocks()
     
-    // 设置 localStorage 模拟
+    // 每次创建新的 localStorage 模拟
+    mockLocalStorage = {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+      clear: vi.fn()
+    }
+    
     Object.defineProperty(window, 'localStorage', {
       value: mockLocalStorage,
       writable: true
