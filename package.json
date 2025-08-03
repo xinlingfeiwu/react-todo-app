@@ -18,7 +18,7 @@
   "author": "Leo Liu <lovexinlingfeiwu@foxmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=18.18.0",
+    "node": "^20.19.0 || >=22.12.0",
     "npm": ">=9.0.0"
   },
   "repository": {
@@ -30,7 +30,9 @@
   },
   "homepage": "https://xinlingfeiwu.github.com/react-todo-app",
   "scripts": {
+    "predev": "node scripts/check-node-version.js",
     "dev": "vite",
+    "prebuild": "node scripts/check-node-version.js",
     "build": "npm run generate-version && vite build",
     "build:prod": "npm run generate-version && npm run inject-beian-vars && NODE_ENV=production vite build && npm run cleanup-beian-vars",
     "inject-beian-vars": "node scripts/inject-beian-vars.js",
@@ -66,6 +68,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:performance": "vitest run src/__tests__/performance.test.js",
+    "check-node": "node scripts/check-node-version.js",
     "generate-icons": "node scripts/generate-ios-icons.js",
     "update-ios-config": "node scripts/update-ios-config.js",
     "setup-ios-pwa": "npm run generate-icons && npm run update-ios-config",
@@ -81,35 +84,39 @@
     "prebuild:prod": "npm run prepare-release"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.30.1",
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.54.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.1.8",
+    "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.6.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.30.1",
+    "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
+    "markdownlint-cli": "^0.45.0",
     "sass": "^1.77.6",
+    "semver": "^7.7.2",
     "sharp": "^0.34.3",
     "terser": "^5.43.1",
-    "vite": "^5.4.19"
+    "vite": "^7.0.6",
+    "vitest": "^3.2.4"
   },
   "browserslist": {
     "production": [
