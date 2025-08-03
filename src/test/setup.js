@@ -21,12 +21,15 @@ beforeEach(() => {
 
   // 重置 localStorage（安全方式）
   try {
-    localStorage.clear()
+    if (localStorage && typeof localStorage.clear === 'function') {
+      localStorage.clear()
+    } else if (localStorage && typeof localStorage === 'object') {
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key)
+      })
+    }
   } catch {
-    // 如果 localStorage.clear 不存在，手动清理
-    Object.keys(localStorage).forEach(key => {
-      localStorage.removeItem(key)
-    })
+    // 忽略 localStorage 访问错误
   }
 
   // 重置 sessionStorage（安全方式）

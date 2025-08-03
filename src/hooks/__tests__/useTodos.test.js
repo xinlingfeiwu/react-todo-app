@@ -468,6 +468,107 @@ describe('useTodos Hook', () => {
     })
   })
 
+  describe('数据导入', () => {
+    it('应该成功导入有效的 JSON 文件', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      const validData = {
+        todos: [
+          { id: '1', content: '导入任务 1', isCompleted: false, createdAt: '2023-01-01' },
+          { id: '2', content: '导入任务 2', isCompleted: true, createdAt: '2023-01-02' }
+        ]
+      }
+
+      const file = new File([JSON.stringify(validData)], 'todos.json', { type: 'application/json' })
+
+      const importedTodos = await result.current.importData(file)
+
+      expect(importedTodos).toHaveLength(2)
+      expect(importedTodos[0]).toHaveProperty('content', '导入任务 1')
+      expect(importedTodos[1]).toHaveProperty('content', '导入任务 2')
+      expect(importedTodos[0]).toHaveProperty('isEditing', false)
+      expect(importedTodos[1]).toHaveProperty('isEditing', false)
+    })
+
+    it('应该拒绝无效的 JSON 格式', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      const file = new File(['invalid json'], 'invalid.json', { type: 'application/json' })
+
+      await expect(result.current.importData(file)).rejects.toMatchObject({
+        error: '文件格式错误'
+      })
+    })
+
+    it('应该拒绝缺少 todos 数组的文件', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      const invalidData = { data: 'some data' }
+      const file = new File([JSON.stringify(invalidData)], 'invalid.json', { type: 'application/json' })
+
+      await expect(result.current.importData(file)).rejects.toMatchObject({
+        error: '文件格式不正确'
+      })
+    })
+
+    it('应该拒绝空的 todos 数组', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      const emptyData = { todos: [] }
+      const file = new File([JSON.stringify(emptyData)], 'empty.json', { type: 'application/json' })
+
+      await expect(result.current.importData(file)).rejects.toMatchObject({
+        error: '文件中没有有效的待办事项'
+      })
+    })
+
+    it('应该过滤掉空内容的待办事项', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      const dataWithEmpty = {
+        todos: [
+          { id: '1', content: '有效任务', isCompleted: false },
+          { id: '2', content: '', isCompleted: false },
+          { id: '3', content: '   ', isCompleted: false },
+          { id: '4', content: '另一个有效任务', isCompleted: true }
+        ]
+      }
+
+      const file = new File([JSON.stringify(dataWithEmpty)], 'mixed.json', { type: 'application/json' })
+
+      const importedTodos = await result.current.importData(file)
+
+      expect(importedTodos).toHaveLength(2)
+      expect(importedTodos[0]).toHaveProperty('content', '有效任务')
+      expect(importedTodos[1]).toHaveProperty('content', '另一个有效任务')
+    })
+
+    it('应该处理文件读取错误', async () => {
+      const { result } = renderHook(() => useTodos())
+
+      // 创建一个模拟的错误文件
+      const errorFile = {
+        name: 'error.json',
+        type: 'application/json'
+      }
+
+      // 模拟 FileReader 错误
+      const originalFileReader = window.FileReader
+      window.FileReader = function() {
+        this.readAsText = function() {
+          setTimeout(() => this.onerror(), 0)
+        }
+      }
+
+      await expect(result.current.importData(errorFile)).rejects.toMatchObject({
+        error: '文件读取失败'
+      })
+
+      // 恢复原始 FileReader
+      window.FileReader = originalFileReader
+    })
+  })
+
   describe.skip('数据持久化 (跳过 - DOM 容器问题)', () => {
     it('应该在数据变化时保存到 localStorage', () => {
       // 测试被跳过

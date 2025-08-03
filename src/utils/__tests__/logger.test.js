@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { logger, migrationLogger } from '../logger'
 
-describe.skip('logger (跳过 - 环境和模拟问题)', () => {
+describe('logger', () => {
   // 保存原始的 console 方法
   const originalConsole = {
     log: console.log,
