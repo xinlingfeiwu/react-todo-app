@@ -92,12 +92,84 @@ export function autoCleanup() {
   console.log('🔄 开始自动清理旧的存储数据...');
   
   // 清理旧的更新相关key
-  const cleanedCount = cleanupOldUpdateKeys();
-  
-  // 显示当前存储使用情况
-  if (import.meta.env.DEV) {
-    showStorageUsage();
+  try {
+    const cleanedCount = cleanupOldUpdateKeys();
+
+    // 显示当前存储使用情况
+    if (import.meta.env.DEV) {
+      showStorageUsage();
+    }
+
+    return cleanedCount;
+  } catch (error) {
+    console.warn('自动清理过程中出现错误:', error);
+    return 0;
   }
-  
-  return cleanedCount;
+}
+
+/**
+ * 清理过期数据
+ */
+export function cleanupExpiredData() {
+  try {
+    let cleanedCount = 0;
+    const now = Date.now();
+    const expiredKeys = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('react-todo-app')) {
+        try {
+          const value = localStorage.getItem(key);
+          const data = JSON.parse(value);
+
+          // 检查是否有过期时间字段
+          if (data && data.expireAt && data.expireAt < now) {
+            expiredKeys.push(key);
+          }
+        } catch {
+          // 忽略JSON解析错误
+        }
+      }
+    }
+
+    // 删除过期的键
+    expiredKeys.forEach(key => {
+      localStorage.removeItem(key);
+      cleanedCount++;
+    });
+
+    return cleanedCount;
+  } catch (error) {
+    console.warn('清理过期数据失败:', error);
+    return 0;
+  }
+}
+
+/**
+ * 获取存储使用情况
+ */
+export function getStorageUsage() {
+  try {
+    const items = getAppStorageItems();
+    const totalItems = Object.keys(items).length;
+    let totalSize = 0;
+
+    Object.values(items).forEach(value => {
+      totalSize += new Blob([value]).size;
+    });
+
+    return {
+      totalItems,
+      totalSize,
+      items
+    };
+  } catch (error) {
+    console.warn('获取存储使用情况失败:', error);
+    return {
+      totalItems: 0,
+      totalSize: 0,
+      items: {}
+    };
+  }
 }

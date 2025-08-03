@@ -481,7 +481,8 @@ describe('useTodos Hook', () => {
 
       const file = new File([JSON.stringify(validData)], 'todos.json', { type: 'application/json' })
 
-      const importedTodos = await result.current.importData(file)
+      await result.current.actions.importTodos(file)
+      const importedTodos = result.current.todos
 
       expect(importedTodos).toHaveLength(2)
       expect(importedTodos[0]).toHaveProperty('content', '导入任务 1')
@@ -495,9 +496,9 @@ describe('useTodos Hook', () => {
 
       const file = new File(['invalid json'], 'invalid.json', { type: 'application/json' })
 
-      await expect(result.current.importData(file)).rejects.toMatchObject({
-        error: '文件格式错误'
-      })
+      const importResult = await result.current.actions.importTodos(file)
+      expect(importResult.success).toBe(false)
+      expect(importResult.error).toContain('文件格式')
     })
 
     it('应该拒绝缺少 todos 数组的文件', async () => {
@@ -506,9 +507,9 @@ describe('useTodos Hook', () => {
       const invalidData = { data: 'some data' }
       const file = new File([JSON.stringify(invalidData)], 'invalid.json', { type: 'application/json' })
 
-      await expect(result.current.importData(file)).rejects.toMatchObject({
-        error: '文件格式不正确'
-      })
+      const importResult = await result.current.actions.importTodos(file)
+      expect(importResult.success).toBe(false)
+      expect(importResult.error).toContain('文件格式')
     })
 
     it('应该拒绝空的 todos 数组', async () => {
@@ -517,9 +518,9 @@ describe('useTodos Hook', () => {
       const emptyData = { todos: [] }
       const file = new File([JSON.stringify(emptyData)], 'empty.json', { type: 'application/json' })
 
-      await expect(result.current.importData(file)).rejects.toMatchObject({
-        error: '文件中没有有效的待办事项'
-      })
+      const importResult = await result.current.actions.importTodos(file)
+      expect(importResult.success).toBe(false)
+      expect(importResult.error).toContain('没有有效')
     })
 
     it('应该过滤掉空内容的待办事项', async () => {
@@ -536,7 +537,8 @@ describe('useTodos Hook', () => {
 
       const file = new File([JSON.stringify(dataWithEmpty)], 'mixed.json', { type: 'application/json' })
 
-      const importedTodos = await result.current.importData(file)
+      await result.current.actions.importTodos(file)
+      const importedTodos = result.current.todos
 
       expect(importedTodos).toHaveLength(2)
       expect(importedTodos[0]).toHaveProperty('content', '有效任务')
@@ -560,9 +562,9 @@ describe('useTodos Hook', () => {
         }
       }
 
-      await expect(result.current.importData(errorFile)).rejects.toMatchObject({
-        error: '文件读取失败'
-      })
+      const importResult = await result.current.actions.importTodos(errorFile)
+      expect(importResult.success).toBe(false)
+      expect(importResult.error).toContain('读取失败')
 
       // 恢复原始 FileReader
       window.FileReader = originalFileReader

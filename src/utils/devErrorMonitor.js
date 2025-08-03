@@ -247,15 +247,127 @@ if (import.meta.env.DEV) {
   // 暴露到全局作用域，方便在控制台中使用
   window.devErrorMonitor = devErrorMonitor;
   
+  // React错误记录
+  devErrorMonitor.logReactError = function(error, errorInfo) {
+    if (!this.isEnabled) return;
+
+    this.logError('React Component Error', {
+      message: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack
+    });
+  };
+
+  // 性能检查
+  devErrorMonitor.checkRenderPerformance = function(componentName, renderTime) {
+    if (!this.isEnabled) return;
+
+    if (renderTime > 50) { // 50ms阈值
+      this.logWarning('Slow Render', {
+        component: componentName,
+        renderTime: `${renderTime}ms`
+      });
+    }
+  };
+
+  // 内存使用检查
+  devErrorMonitor.checkMemoryUsage = function(memoryInfo) {
+    if (!this.isEnabled) return;
+
+    if (memoryInfo.usedJSHeapSize > memoryInfo.jsHeapSizeLimit * 0.9) {
+      this.logWarning('High Memory Usage', {
+        used: memoryInfo.usedJSHeapSize,
+        limit: memoryInfo.jsHeapSizeLimit,
+        percentage: Math.round((memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit) * 100)
+      });
+    }
+  };
+
+  // 生成错误报告
+  devErrorMonitor.generateReport = function() {
+    return {
+      errors: this.errors,
+      warnings: this.warnings,
+      timestamp: new Date().toISOString(),
+      summary: {
+        totalErrors: this.errors.length,
+        totalWarnings: this.warnings.length,
+        recentErrors: this.errors.filter(e =>
+          new Date(e.timestamp) > new Date(Date.now() - 24 * 60 * 60 * 1000)
+        ).length
+      }
+    };
+  };
+
+  // 导出错误数据
+  devErrorMonitor.exportErrors = function() {
+    return {
+      errors: this.errors,
+      warnings: this.warnings,
+      exportTime: new Date().toISOString(),
+      version: '1.0'
+    };
+  };
+
+  // 清理错误
+  devErrorMonitor.clearErrors = function() {
+    this.errors = [];
+    this.warnings = [];
+  };
+
+  // 清理旧错误
+  devErrorMonitor.cleanupOldErrors = function() {
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    this.errors = this.errors.filter(error =>
+      new Date(error.timestamp) > oneDayAgo
+    );
+    this.warnings = this.warnings.filter(warning =>
+      new Date(warning.timestamp) > oneDayAgo
+    );
+  };
+
+  // 错误分析
+  devErrorMonitor.analyzeErrors = function() {
+    const errorTypes = {};
+    this.errors.forEach(error => {
+      errorTypes[error.type] = (errorTypes[error.type] || 0) + 1;
+    });
+
+    return {
+      mostCommonErrors: Object.entries(errorTypes)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5),
+      totalErrors: this.errors.length,
+      errorTypes: Object.keys(errorTypes)
+    };
+  };
+
+  // 错误趋势
+  devErrorMonitor.getErrorTrends = function() {
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+
+    const recentErrors = this.errors.filter(error =>
+      new Date(error.timestamp) > oneHourAgo
+    );
+
+    return {
+      recentErrors: recentErrors.length,
+      hourlyRate: recentErrors.length,
+      trend: recentErrors.length > 5 ? 'increasing' : 'stable'
+    };
+  };
+
   // 添加快捷命令
   window.errorStatus = () => devErrorMonitor.status();
   window.errorExport = () => devErrorMonitor.exportReport();
   window.errorClear = () => devErrorMonitor.clear();
-  
+
   console.log('🛠️ 开发工具已加载，可用命令:');
   console.log('- errorStatus(): 查看错误状态');
   console.log('- errorExport(): 导出错误报告');
   console.log('- errorClear(): 清除错误记录');
 }
 
+export { devErrorMonitor };
 export default devErrorMonitor;
