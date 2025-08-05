@@ -116,15 +116,22 @@ function main() {
           value.substring(0, 8) + '***' : 
           value;
         console.log(`   ${key}=${maskedValue}`);
+        
+        // 直接设置到当前进程的环境变量中
+        process.env[key] = value;
       });
     } else {
       console.log('⚠️ 未在.env.local中找到备案信息，将使用示例配置');
+      // 设置默认值
+      process.env.VITE_ICP_BEIAN_NUMBER = '京ICP备12345678号-1';
+      process.env.VITE_ICP_BEIAN_URL = 'https://beian.miit.gov.cn';
     }
     
     // 创建临时的.env.production文件
     const { envProductionPath } = createTempProductionEnv(beianVars);
 
     console.log(`✅ 临时.env.production文件已创建: ${envProductionPath}`);
+    console.log('✅ 环境变量已注入到当前进程');
     console.log('💡 构建完成后请运行 npm run cleanup-beian-vars 清理临时文件');
     
     // 设置清理脚本
