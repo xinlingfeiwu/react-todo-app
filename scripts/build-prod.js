@@ -121,6 +121,25 @@ async function main() {
       });
     });
 
+    // 4. 后处理构建输出：替换HTML中的备案信息占位符
+    console.log('🔧 注入备案信息到HTML...');
+    const htmlPath = path.join(projectRoot, 'dist', 'index.html');
+    if (fs.existsSync(htmlPath)) {
+      let htmlContent = fs.readFileSync(htmlPath, 'utf8');
+      
+      // 替换备案信息占位符
+      BEIAN_ENV_KEYS.forEach(key => {
+        const placeholder = `%${key}%`;
+        const value = beianVars[key] || '';
+        htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), value);
+      });
+      
+      fs.writeFileSync(htmlPath, htmlContent);
+      console.log('✅ 备案信息已注入到HTML文件');
+    } else {
+      console.warn('⚠️ 未找到构建输出的HTML文件');
+    }
+
     console.log('✅ 生产构建完成！');
     
   } catch (error) {

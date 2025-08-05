@@ -4,7 +4,7 @@
 .todo-app-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  /* 完全移除高度限制，让容器根据内容自然伸展 */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -28,31 +28,26 @@
 .todo-wrapper {
   max-width: 650px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px; /* 减少内边距，降低整体高度 */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  min-height: calc(100vh - 120px); /* 为 BeianInfo 组件预留空间 */
+  /* 移除flex属性，让容器根据内容自然伸展 */
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* 防止整个容器滚动 */
-}
-
-.todo-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  z-index: -1;
+  overflow: visible; /* 改为visible，允许内容正常显示 */
+  min-height: 0; /* 确保flex子项可以正确缩放 */
+  /* 防止背景层溢出影响其他元素 */
+  isolation: isolate; /* 创建新的层叠上下文，防止背景层影响外部元素 */
+  contain: layout style; /* 限制容器的渲染影响范围 */
+  /* 容器高度自适应内容，不再限制最大高度 */
+  /* max-height: calc(100vh - 80px); 移除固定高度限制 */
+  box-sizing: border-box;
 }
 
 .todo-header {
   text-align: center;
-  padding-top: 20px;
-  margin-top: 20px;
+  padding-top: 10px; /* 减少顶部内边距 */
+  margin-top: 10px; /* 减少顶部外边距 */
   flex-shrink: 0; /* 固定不缩放 */
 }
 
@@ -61,7 +56,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin-bottom: 10px; /* 桌面端较小间距 */
+  margin-bottom: 5px; /* 减少底部间距 */
 }
 
 .header-content h1 {
@@ -86,19 +81,23 @@
 .todo-main {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* flex: 1; 移除flex属性，让内容区域根据内容自然伸展 */
   overflow: visible; /* 改为visible，允许CreateForm焦点效果显示完整 */
   min-height: 0; /* 重要：允许flex子项缩小 */
 }
 
 /* 可滚动内容区域 - 仅应用于列表容器 */
 .todo-main > .todo-content {
-  flex: 1;
+  /* flex: 1; 移除flex属性，让内容区域根据内容自然伸展 */
   overflow-y: auto;
-  padding: 0 10px 15px 0;
+  overflow-x: hidden;
+  padding: 0 10px 8px 0; /* 减少底部内边距 */
   min-height: 0;
+  max-height: 390px; /* 调整为390px，优化显示效果 */
   box-sizing: border-box;
-  /* 去掉 display: flex 以达到预期效果 */
+  /* 平滑滚动 */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS滚动优化 */
 }
 
 /* 自定义滚动条样式 - 应用到 todo-content */
@@ -107,17 +106,27 @@
 }
 
 .todo-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent; /* 移除白色背景，使滚动条轨道透明 */
   border-radius: 10px;
 }
 
 .todo-content::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .todo-content::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+/* 深色主题下的滚动条优化 */
+[data-theme="dark"] .todo-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .todo-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* 标题 tooltip 特殊样式 */
@@ -227,12 +236,16 @@
 /* 响应式设计 */
 @media (max-width: 768px) {
   .todo-wrapper {
-    padding: 15px;
+    padding: 8px; /* 移动端进一步减少内边距 */
+    max-width: calc(100% - 16px); /* 移动端留出左右边距 */
+    margin: 5px auto; /* 减少上下边距 */
+    /* 移动端容器高度自适应内容 */
+    /* max-height: calc(100vh - 70px); 移除固定高度限制 */
   }
   
   .header-content {
     justify-content: space-between;
-    margin-bottom: 40px; /* 移动端较大间距 */
+    margin-bottom: 20px; /* 移动端减少间距 */
   }
   
   .header-content .tooltip {
@@ -242,6 +255,10 @@
     justify-content: center;
     text-align: center;
     margin: 0 10px; /* 左右留出按钮空间 */
+  }
+  /* 移动端调整滚动区域高度 */
+  .todo-main > .todo-content {
+    max-height: 250px; /* 移动端进一步减少高度，为备案信息腾出空间 */
   }
   
   .header-content h1 {
@@ -277,6 +294,14 @@
 }
 
 @media (max-width: 480px) {
+  .todo-wrapper {
+    padding: 6px; /* 小屏幕最小内边距 */
+    max-width: calc(100% - 12px); /* 小屏幕更紧凑的边距 */
+    margin: 3px auto; /* 最小上下边距 */
+    /* 小屏幕容器高度自适应内容 */
+    /* max-height: calc(100vh - 90px); 移除固定高度限制 */
+  }
+  
   .header-content {
     justify-content: space-between;
     align-items: center;
@@ -319,6 +344,14 @@
 }
 
 @media (max-width: 360px) {
+  .todo-wrapper {
+    padding: 5px; /* 超小屏幕最紧凑内边距 */
+    max-width: calc(100% - 10px); /* 超小屏幕最紧凑边距 */
+    margin: 2px auto; /* 最小上下边距 */
+    /* 超小屏幕容器高度自适应内容 */
+    /* max-height: calc(100vh - 110px); 移除固定高度限制 */
+  }
+  
   .header-content .tooltip {
     flex: 1;
     display: flex;
@@ -567,6 +600,13 @@
 
 /* ========== 桌面端大字体强化 ========== */
 @media (min-width: 769px) {
+  .todo-wrapper {
+    padding: 15px; /* 桌面端适度的内边距 */
+    max-width: 680px; /* 稍微增加最大宽度 */
+    /* 桌面端容器高度自适应内容 */
+    /* max-height: calc(100vh - 70px); 移除固定高度限制 */
+  }
+  
   .header-content h1 {
     font-size: 2.8rem !important; /* 桌面端适中的大字体 */
     font-weight: 700; /* 保持原有字体粗细 */
@@ -575,13 +615,30 @@
 }
 
 @media (min-width: 1024px) {
+  .todo-wrapper {
+    padding: 18px; /* 大屏幕适度的内边距 */
+    max-width: 720px;
+    /* 大屏幕容器高度自适应内容 */
+    /* max-height: calc(100vh - 60px); 移除固定高度限制 */
+  }
+  
   .header-content h1 {
     font-size: 3.2rem !important; /* 大屏幕下稍大字体 */
   }
 }
 
 @media (min-width: 1440px) {
+  .todo-wrapper {
+    padding: 20px; /* 超大屏幕适度的内边距 */
+    max-width: 760px;
+    /* 超大屏幕容器高度自适应内容 */
+    /* max-height: calc(100vh - 50px); 移除固定高度限制 */
+  }
+  
   .header-content h1 {
     font-size: 3.5rem !important; /* 超大屏幕下最大字体 */
   }
 }
+
+/* ========== 高分辨率设备优化 ========== */
+/* 移除了todo-wrapper背景相关样式 */

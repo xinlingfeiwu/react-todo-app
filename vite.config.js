@@ -1,12 +1,24 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const base = process.env.BUILD_BASE || '/';
-
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base,
+export default defineConfig(({ mode }) => {
+  // 加载环境变量
+  const env = loadEnv(mode, process.cwd(), '')
+  const base = env.BUILD_BASE || process.env.BUILD_BASE || '/';
+
+  return {
+    plugins: [react()],
+    base,
+    // 明确定义环境变量
+    define: {
+      // 确保备案信息环境变量在客户端可用
+      'import.meta.env.VITE_ICP_BEIAN_NUMBER': JSON.stringify(env.VITE_ICP_BEIAN_NUMBER),
+      'import.meta.env.VITE_ICP_BEIAN_URL': JSON.stringify(env.VITE_ICP_BEIAN_URL),
+      'import.meta.env.VITE_POLICE_BEIAN_NUMBER': JSON.stringify(env.VITE_POLICE_BEIAN_NUMBER),
+      'import.meta.env.VITE_POLICE_BEIAN_CODE': JSON.stringify(env.VITE_POLICE_BEIAN_CODE),
+      'import.meta.env.VITE_POLICE_BEIAN_URL': JSON.stringify(env.VITE_POLICE_BEIAN_URL),
+    },
   css: {
     preprocessorOptions: {
       scss: {
@@ -95,4 +107,4 @@ export default defineConfig({
     // 排除不需要预构建的依赖
     exclude: []
   }
-})
+}})

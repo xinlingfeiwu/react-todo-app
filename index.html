@@ -135,6 +135,41 @@
     }
     </script>
     
+    <!-- 备案信息初始化脚本 -->
+    <script>
+      // 初始化全局备案信息
+      window.__BEIAN_INFO__ = {
+        icpNumber: '%VITE_ICP_BEIAN_NUMBER%',
+        icpUrl: '%VITE_ICP_BEIAN_URL%',
+        policeNumber: '%VITE_POLICE_BEIAN_NUMBER%',
+        policeCode: '%VITE_POLICE_BEIAN_CODE%',
+        policeUrl: '%VITE_POLICE_BEIAN_URL%'
+      };
+      
+      // 清理空值
+      Object.keys(window.__BEIAN_INFO__).forEach(key => {
+        const value = window.__BEIAN_INFO__[key];
+        if (!value || value.startsWith('%VITE_') || value === 'undefined' || value === 'null') {
+          window.__BEIAN_INFO__[key] = null;
+        }
+      });
+    </script>
+
+    <!-- 开发环境备案信息增强脚本 -->
+    <script>
+      // 开发环境下直接从环境变量设置备案信息
+      if (import.meta.env && import.meta.env.DEV) {
+        window.__BEIAN_INFO__ = {
+          icpNumber: '冀ICP备2025123290号-1',
+          icpUrl: 'https://beian.miit.gov.cn',
+          policeNumber: null,
+          policeCode: null,
+          policeUrl: null
+        };
+        console.log('🔧 开发环境备案信息已设置:', window.__BEIAN_INFO__);
+      }
+    </script>
+
     <title>待办清单 - 简洁高效的任务管理工具</title>
   </head>
   <body>

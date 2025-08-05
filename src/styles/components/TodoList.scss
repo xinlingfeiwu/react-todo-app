@@ -1,6 +1,37 @@
 /* ========== TodoList 组件样式 ========== */
 
-/* TodoList容器样式 */
+/* TodoList外层容器样式 */
+.todo-list-container {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%; /* 继承父容器的高度限制 */
+  padding-right: 5px; /* 为滚动条预留空间 */
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS滚动优化 */
+}
+
+/* 自定义滚动条样式 - 应用到 todo-list-container */
+.todo-list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.todo-list-container::-webkit-scrollbar-track {
+  background: transparent; /* 移除白色背景，使滚动条轨道透明 */
+  border-radius: 10px;
+}
+
+.todo-list-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.todo-list-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* TodoList内层容器样式 */
 .todo-list {
   width: 100%;
   padding: 5px 0 15px 0; /* 增加顶部padding为第一个Todo的hover效果预留空间 */

@@ -41,6 +41,12 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
+    
+    /* 确保BeianInfo始终在底部可见 */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    
+    /* 移除高度限制，让内容自然布局 */
+    overflow: visible;
 }
 
 /* 全局滚动条样式 */

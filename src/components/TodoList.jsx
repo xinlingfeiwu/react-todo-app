@@ -50,17 +50,19 @@ function TodoList({
   }
 
   return (
-    <div className="todo-list">
-      {filteredTodos.map((todo) => (
-        <Todo 
-          key={todo.id} 
-          todo={todo} 
-          deleteTodo={deleteTodo} 
-          editTodo={editTodo} 
-          toggleCompletion={toggleCompletion} 
-          toggleEditing={toggleEditing} 
-        />
-      ))}
+    <div className="todo-list-container">
+      <div className="todo-list">
+        {filteredTodos.map((todo) => (
+          <Todo 
+            key={todo.id} 
+            todo={todo} 
+            deleteTodo={deleteTodo} 
+            editTodo={editTodo} 
+            toggleCompletion={toggleCompletion} 
+            toggleEditing={toggleEditing} 
+          />
+        ))}
+      </div>
     </div>
   );
 }
