@@ -1,0 +1,17 @@
+{
+  "name": "react-todo-app",
+  "version": "1.4.5",
+  "buildTime": "2025-08-05T09:39:30.663Z",
+  "buildTimestamp": 1754386770,
+  "buildHash": "1f0bde8aa25d",
+  "git": {
+    "hash": "2abbbf5",
+    "branch": "main",
+    "tag": "v1.4.5"
+  },
+  "environment": {
+    "node": "v18.20.8",
+    "npm": "10.8.2"
+  },
+  "timestamp": 1754386770
+}

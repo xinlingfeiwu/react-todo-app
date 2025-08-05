@@ -1,0 +1,216 @@
+{
+  "name": "我的待办清单 - 简洁高效的任务管理工具",
+  "short_name": "待办清单",
+  "description": "简洁高效的待办事项管理工具，支持任务创建、编辑、删除和数据管理",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "lang": "zh-CN",
+  "categories": [
+    "productivity",
+    "utilities",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon-57x57.svg",
+      "sizes": "57x57",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon-72x72.svg",
+      "sizes": "72x72",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon-120x120.svg",
+      "sizes": "120x120",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon-152x152.svg",
+      "sizes": "152x152",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon-180x180.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/android-chrome-36x36.svg",
+      "sizes": "36x36",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "0.75"
+    },
+    {
+      "src": "./icons/android-chrome-48x48.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "1.0"
+    },
+    {
+      "src": "./icons/android-chrome-72x72.svg",
+      "sizes": "72x72",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "1.5"
+    },
+    {
+      "src": "./icons/android-chrome-96x96.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "2.0"
+    },
+    {
+      "src": "./icons/android-chrome-144x144.svg",
+      "sizes": "144x144",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "3.0"
+    },
+    {
+      "src": "./icons/android-chrome-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any",
+      "density": "4.0"
+    },
+    {
+      "src": "./icons/android-chrome-256x256.svg",
+      "sizes": "256x256",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/android-chrome-384x384.svg",
+      "sizes": "384x384",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/android-chrome-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/maskable-icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/maskable-icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./share-image.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "label": "应用主界面展示"
+    }
+  ],
+  "features": [
+    "创建和管理待办事项",
+    "数据导入导出",
+    "深色浅色主题",
+    "本地数据存储",
+    "离线使用"
+  ],
+  "shortcuts": [
+    {
+      "name": "添加新任务",
+      "short_name": "新任务",
+      "description": "快速添加新的待办事项",
+      "url": "./?action=add",
+      "icons": [
+        {
+          "src": "./icons/android-chrome-192x192.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "查看所有任务",
+      "short_name": "所有任务",
+      "description": "查看所有待办事项",
+      "url": "./?filter=all",
+      "icons": [
+        {
+          "src": "./icons/android-chrome-192x192.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "prefer_related_applications": false,
+  "apple": {
+    "touch_icon": {
+      "sizes": "180x180",
+      "href": "./icons/apple-touch-icon-180x180.svg"
+    },
+    "mobile_web_app_capable": true,
+    "mobile_web_app_status_bar_style": "default",
+    "mobile_web_app_title": "待办清单"
+  },
+  "android": {
+    "package_name": "com.todoapp.pwa",
+    "sha256_cert_fingerprints": [],
+    "version_code": 1,
+    "version_name": "1.0.0",
+    "min_sdk_version": 21,
+    "target_sdk_version": 33,
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "features": [
+      "android.software.webview",
+      "android.hardware.touchscreen"
+    ]
+  },
+  "related_applications": [],
+  "iarc_rating_id": ""
+}
