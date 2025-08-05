@@ -104,14 +104,39 @@ print_info "更新环境变量文件..."
 
 # 备份现有的.env.local（如果存在）
 if [ -f "$ENV_FILE" ]; then
-    # 移除现有的版本相关变量
-    grep -v "VITE_APP_VERSION\|VITE_BUILD_TIME\|VITE_BUILD_HASH\|VITE_GIT_HASH" "$ENV_FILE" > "${ENV_FILE}.tmp" || true
-    mv "${ENV_FILE}.tmp" "$ENV_FILE"
+    # 创建临时文件，移除所有版本相关的内容（包括注释和变量）
+    awk '
+    BEGIN { in_version_block = 0 }
+    /^# 应用版本信息 \(自动生成\)$/ { in_version_block = 1; next }
+    /^VITE_APP_VERSION=|^VITE_BUILD_TIME=|^VITE_BUILD_HASH=|^VITE_GIT_HASH=/ {
+        if (in_version_block) next
+        else next
+    }
+    /^$/ && in_version_block { next }
+    {
+        if (in_version_block && !/^VITE_/) in_version_block = 0
+        if (!in_version_block) print
+    }
+    ' "$ENV_FILE" > "${ENV_FILE}.tmp"
+
+    # 移除末尾的空行
+    if [ -f "${ENV_FILE}.tmp" ]; then
+        awk 'NF {p=1} p' "${ENV_FILE}.tmp" > "${ENV_FILE}.clean"
+        mv "${ENV_FILE}.clean" "$ENV_FILE"
+        rm -f "${ENV_FILE}.tmp"
+    fi
 fi
 
 # 添加新的版本变量
-cat >> "$ENV_FILE" << EOF
+# 确保文件末尾有且仅有一个空行，然后添加版本信息
+if [ -s "$ENV_FILE" ]; then
+    # 如果文件不为空，确保末尾有一个空行
+    if [ "$(tail -c1 "$ENV_FILE" | wc -l)" -eq 0 ]; then
+        echo "" >> "$ENV_FILE"
+    fi
+fi
 
+cat >> "$ENV_FILE" << EOF
 # 应用版本信息 (自动生成)
 VITE_APP_VERSION=$VERSION
 VITE_BUILD_TIME=$BUILD_TIME
